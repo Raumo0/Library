@@ -1,6 +1,6 @@
-package com.netcracker.library.Views;
+package com.netcracker.library.views;
 
-import com.netcracker.library.Models.LibrarianModel;
+import com.netcracker.library.models.LibrarianModel;
 
 import javax.swing.*;
 

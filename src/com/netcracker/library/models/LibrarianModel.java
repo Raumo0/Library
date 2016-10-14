@@ -1,4 +1,4 @@
-package com.netcracker.library.Models;
+package com.netcracker.library.models;
 
 import com.netcracker.library.Person;
 

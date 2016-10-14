@@ -1,7 +1,8 @@
-package com.netcracker.library.Controllers;
+package com.netcracker.library.controllers;
 
-import com.netcracker.library.Models.LibrarianModel;
-import com.netcracker.library.Views.LibrarianView;
+import com.netcracker.library.Book;
+import com.netcracker.library.models.LibrarianModel;
+import com.netcracker.library.views.LibrarianView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,5 +30,13 @@ public class LibrarianController implements ActionListener {
 
     public void CancelMembership(){
         //TODO
+    }
+
+    public void UpdateReaderDetails(long id, String email){
+        //TODO
+    }
+
+    public void ReturnBook(Book book){
+
     }
 }

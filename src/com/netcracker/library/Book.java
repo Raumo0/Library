@@ -1,5 +1,9 @@
 package com.netcracker.library;
 
+import com.netcracker.library.enums.Category;
+
+import java.util.List;
+
 /**
  * Created by raumo0 on 14.10.16.
  */
@@ -8,6 +12,7 @@ public class Book {
     private Author author;
     private String description;
     private String isbn;
+    private List<Category> categories;
 
     public Book(String title, Author author, String isbn) {
         this.title = title;
@@ -36,6 +41,18 @@ public class Book {
 
     public String getIsbn() {
         return isbn;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
+    }
+    
+    public void removeCategory(Category category){
+        this.categories.remove(category);
     }
 
     public void setDescription(String description) {

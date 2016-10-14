@@ -1,8 +1,8 @@
-package com.netcracker.library.Controllers;
+package com.netcracker.library.controllers;
 
 import com.netcracker.library.Book;
-import com.netcracker.library.Models.ReaderModel;
-import com.netcracker.library.Views.ReaderView;
+import com.netcracker.library.models.ReaderModel;
+import com.netcracker.library.views.ReaderView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,4 +23,10 @@ public class ReaderController  implements ActionListener {
         //TODO
         return null;
     }
+
+    public void ReturnBook(Book book){
+
+    }
+
+
 }

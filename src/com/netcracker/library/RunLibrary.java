@@ -1,8 +1,8 @@
 package com.netcracker.library;
 
-import com.netcracker.library.Controllers.LibrarianController;
-import com.netcracker.library.Models.LibrarianModel;
-import com.netcracker.library.Views.LibrarianView;
+import com.netcracker.library.controllers.LibrarianController;
+import com.netcracker.library.models.LibrarianModel;
+import com.netcracker.library.views.LibrarianView;
 
 /**
  * Created by raumo0 on 13.10.16.
