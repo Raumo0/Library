@@ -1,4 +1,4 @@
-package com.netcracker.library;
+package com.netcracker.library.entities;
 
 import com.netcracker.library.enums.Category;
 
@@ -50,7 +50,7 @@ public class Book {
     public void addCategory(Category category) {
         this.categories.add(category);
     }
-    
+
     public void removeCategory(Category category){
         this.categories.remove(category);
     }
