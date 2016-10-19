@@ -61,20 +61,20 @@ public class Book {
     }
 
     public boolean inStore(){
-        if (bookPosition == BookPosition.inStore)
+        if (bookPosition == BookPosition.IN_STORE)
             return true;
         return false;
     }
 
     public boolean inReadingRoom(){
-        if (bookPosition == BookPosition.inReadingRoom)
+        if (bookPosition == BookPosition.IN_READING_ROOM)
             return true;
         return false;
     }
 
     //RENAME it
     public boolean inReader(){
-        if (bookPosition == BookPosition.inReader)
+        if (bookPosition == BookPosition.IN_READER)
             return true;
         return false;
     }
