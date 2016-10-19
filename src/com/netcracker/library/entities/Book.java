@@ -1,61 +1,81 @@
 package com.netcracker.library.entities;
 
-import com.netcracker.library.enums.Category;
-
-import java.util.List;
+import com.netcracker.library.enums.BookPosition;
+import com.netcracker.library.enums.BookState;
 
 /**
  * Created by raumo0 on 14.10.16.
  */
 public class Book {
-    private String title;
-    private Author author;
-    private String description;
-    private String isbn;
-    private List<Category> categories;
+    private long id;
+    private BookEdition bookEdition;
+    private Person lastOwner;
+    private BookState bookState;
+    private BookPosition bookPosition;
 
-    public Book(String title, Author author, String isbn) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
+    public Book(long id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition) {
+        this.id = id;
+        this.bookEdition = bookEdition;
+        this.bookState = bookState;
+        this.bookPosition = bookPosition;
     }
 
-    public Book(String title, Author author, String description, String isbn) throws Exception {
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.isbn = isbn;
+    public Book(long id, BookEdition bookEdition, Person lastOwner, BookState bookState, BookPosition bookPosition) {
+        this.id = id;
+        this.bookEdition = bookEdition;
+        this.lastOwner = lastOwner;
+        this.bookState = bookState;
+        this.bookPosition = bookPosition;
     }
 
-    public String getTitle() {
-        return title;
+    public long getId() {
+        return id;
     }
 
-    public Author getAuthor() {
-        return author;
+    public BookEdition getBookEdition() {
+        return bookEdition;
     }
 
-    public String getDescription() {
-        return description;
+    public Person getLastOwner() {
+        return lastOwner;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public void setLastOwner(Person lastOwner) {
+        this.lastOwner = lastOwner;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public BookState getBookState() {
+        return bookState;
     }
 
-    public void addCategory(Category category) {
-        this.categories.add(category);
+    public void setBookState(BookState bookState) {
+        this.bookState = bookState;
     }
 
-    public void removeCategory(Category category){
-        this.categories.remove(category);
+    public BookPosition getBookPosition() {
+        return bookPosition;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setBookPosition(BookPosition bookPosition) {
+        this.bookPosition = bookPosition;
+    }
+
+    public boolean inStore(){
+        if (bookPosition == BookPosition.inStore)
+            return true;
+        return false;
+    }
+
+    public boolean inReadingRoom(){
+        if (bookPosition == BookPosition.inReadingRoom)
+            return true;
+        return false;
+    }
+
+    //RENAME it
+    public boolean inReader(){
+        if (bookPosition == BookPosition.inReader)
+            return true;
+        return false;
     }
 }
