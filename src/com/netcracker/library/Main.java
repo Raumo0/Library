@@ -1,7 +1,6 @@
 package com.netcracker.library;
 
-import com.netcracker.library.menu.CommandProcessor;
-import com.netcracker.library.views.LibraryView;
+import com.netcracker.library.menu.LibraryView;
 
 /**
  * Created by raumo0 on 14.10.16.
