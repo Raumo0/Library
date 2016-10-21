@@ -3,6 +3,7 @@ package com.netcracker.library.service.impl;
 import com.netcracker.library.entities.Book;
 import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
+import com.netcracker.library.exceptions.BookException;
 import com.netcracker.library.service.BookService;
 
 import java.util.ArrayList;
@@ -14,6 +15,21 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getById(long id) {
         return null;
+    }
+
+    @Override
+    public long insertBook(Book book) {
+        return 0;
+    }
+
+    @Override
+    public boolean deleteBook(long id) throws BookException {
+        return false;
+    }
+
+    @Override
+    public boolean updateBook(Book book) {
+        return false;
     }
 
     @Override
