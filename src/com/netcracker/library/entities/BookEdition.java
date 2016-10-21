@@ -3,6 +3,7 @@ package com.netcracker.library.entities;
 import com.netcracker.library.enums.BookCategory;
 import com.netcracker.library.enums.BookLanguage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by raumo0 on 18.10.16.
  */
-public class BookEdition {
+public class BookEdition implements Serializable {
     private long id;
     private LinkedList<Book> books;
     private GregorianCalendar releaseDate;
@@ -22,6 +23,11 @@ public class BookEdition {
     private List<BookCategory> categories;
     private BookLanguage language;
     private int pageCount;
+
+    public BookEdition(long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
 
     public BookEdition(long id, String title, ArrayList<Author> authors, String isbn, List<BookCategory> categories) {
         this.id = id;
@@ -136,5 +142,56 @@ public class BookEdition {
         if (pageCount < 0)
             throw new Exception();
         this.pageCount = pageCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BookEdition that = (BookEdition) o;
+
+        if (id != that.id) return false;
+        if (pageCount != that.pageCount) return false;
+        if (books != null ? !books.equals(that.books) : that.books != null) return false;
+        if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
+        if (!title.equals(that.title)) return false;
+        if (authors != null ? !authors.equals(that.authors) : that.authors != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (isbn != null ? !isbn.equals(that.isbn) : that.isbn != null) return false;
+        if (categories != null ? !categories.equals(that.categories) : that.categories != null) return false;
+        return language == that.language;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (books != null ? books.hashCode() : 0);
+        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
+        result = 31 * result + title.hashCode();
+        result = 31 * result + (authors != null ? authors.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + (language != null ? language.hashCode() : 0);
+        result = 31 * result + pageCount;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "BookEdition{" +
+                "id=" + id +
+                ", books=" + books +
+                ", releaseDate=" + releaseDate +
+                ", title='" + title + '\'' +
+                ", authors=" + authors +
+                ", description='" + description + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", categories=" + categories +
+                ", language=" + language +
+                ", pageCount=" + pageCount +
+                '}';
     }
 }

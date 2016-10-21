@@ -2,12 +2,13 @@ package com.netcracker.library.entities;
 
 import com.netcracker.library.enums.Country;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
  * Created by raumo0 on 14.10.16.
  */
-public abstract class Person {
+public abstract class Person implements Serializable {
     private String firstName;
     private String lastName;
     private String email;

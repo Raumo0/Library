@@ -3,10 +3,12 @@ package com.netcracker.library.entities;
 import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
 
+import java.io.Serializable;
+
 /**
  * Created by raumo0 on 14.10.16.
  */
-public class Book {
+public class Book implements Serializable {
     private long id;
     private BookEdition bookEdition;
     private Person lastOwner;
@@ -77,5 +79,41 @@ public class Book {
         if (bookPosition == BookPosition.IN_READER)
             return true;
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", bookEdition=" + bookEdition +
+                ", lastOwner=" + lastOwner +
+                ", bookState=" + bookState +
+                ", bookPosition=" + bookPosition +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (id != book.id) return false;
+        if (bookEdition != null ? !bookEdition.equals(book.bookEdition) : book.bookEdition != null) return false;
+        if (!lastOwner.equals(book.lastOwner)) return false;
+        if (bookState != book.bookState) return false;
+        return bookPosition == book.bookPosition;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (bookEdition != null ? bookEdition.hashCode() : 0);
+        result = 31 * result + lastOwner.hashCode();
+        result = 31 * result + (bookState != null ? bookState.hashCode() : 0);
+        result = 31 * result + (bookPosition != null ? bookPosition.hashCode() : 0);
+        return result;
     }
 }
