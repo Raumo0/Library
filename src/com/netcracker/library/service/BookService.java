@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * Created by raumo0 on 19.10.16.
  */
 public interface BookService {
-    Book searchById(long id);
+    Book getById(long id);
 
-    ArrayList<Book> searchByState(BookState state);
+    ArrayList<Book> getByState(BookState state);
 
-    ArrayList<Book> searchByPosition(BookPosition position);
+    ArrayList<Book> getByPosition(BookPosition position);
 }

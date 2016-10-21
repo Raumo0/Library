@@ -10,15 +10,15 @@ import java.util.GregorianCalendar;
  * Created by raumo0 on 19.10.16.
  */
 public interface PersonService {
-    Person searchById(long id);
+    Person getById(long id);
 
-    Person searchByEmail(String email);
+    Person getByEmail(String email);
 
-    ArrayList<Person> searchByFirstName(String firstName);
+    ArrayList<Person> getByFirstName(String firstName);
 
-    ArrayList<Person> searchByLastName(String lastName);
+    ArrayList<Person> getByLastName(String lastName);
 
-    ArrayList<Person> searchByCountry(Country country);
+    ArrayList<Person> getByCountry(Country country);
 
-    ArrayList<Person> searchByBirthday(GregorianCalendar birthday);
+    ArrayList<Person> getByBirthday(GregorianCalendar birthday);
 }

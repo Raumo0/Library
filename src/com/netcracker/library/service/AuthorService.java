@@ -9,5 +9,5 @@ import java.util.ArrayList;
  * Created by raumo0 on 19.10.16.
  */
 public interface AuthorService extends PersonService {
-    ArrayList<Author> searchByBookCategory(BookCategory bookCategory);
+    ArrayList<Author> getByBookCategory(BookCategory bookCategory);
 }

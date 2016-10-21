@@ -1,6 +1,5 @@
-package com.netcracker.library.views;
+package com.netcracker.library.menu;
 
-import java.io.File;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;

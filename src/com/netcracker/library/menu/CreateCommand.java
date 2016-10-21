@@ -1,4 +1,8 @@
-package com.netcracker.library.views;
+package com.netcracker.library.menu;
+
+import com.netcracker.library.entities.BookEdition;
+
+import java.util.ArrayList;
 
 /**
  * Created by raumo0 on 21.10.16.
@@ -7,6 +11,13 @@ public class CreateCommand implements Command {
     @Override
     public boolean execute(String... args) {
         //TODO
+        ArrayList<BookEdition> a = new ArrayList<>();
+        a.add(new BookEdition(9, "My first step."));
+        a.add(new BookEdition(3, "Wow, not bad!"));
+        a.add(new BookEdition(5, "My beautiful mom."));
+        for (BookEdition val : a){
+            System.out.println(val);
+        }
         return false;
     }
 

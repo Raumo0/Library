@@ -12,17 +12,17 @@ import java.util.List;
  * Created by raumo0 on 19.10.16.
  */
 public interface BookEditionService {
-    BookEdition searchById(long id);
+    BookEdition getById(long id);
 
-    BookEdition searchByISBN(String isbn);
+    BookEdition getByISBN(String isbn);
 
-    ArrayList<BookEdition> searchByTitle(String title);
+    ArrayList<BookEdition> getByTitle(String title);
 
-    ArrayList<BookEdition> searchByReleaseDate(GregorianCalendar releaseDate);
+    ArrayList<BookEdition> getByReleaseDate(GregorianCalendar releaseDate);
 
-    ArrayList<BookEdition> searchByCategories(List<BookCategory> categories);
+    ArrayList<BookEdition> getByCategories(List<BookCategory> categories);
 
-    ArrayList<BookEdition> searchByLanguage(BookLanguage language);
+    ArrayList<BookEdition> getByLanguage(BookLanguage language);
 
-    ArrayList<BookEdition> searchByPageCount(int pageCount);
+    ArrayList<BookEdition> getByPageCount(int pageCount);
 }

@@ -1,4 +1,4 @@
-package com.netcracker.library.views;
+package com.netcracker.library.menu;
 
 /**
  * Created by raumo0 on 21.10.16.
