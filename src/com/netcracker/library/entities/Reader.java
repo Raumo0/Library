@@ -14,18 +14,19 @@ public class Reader extends Person {
         super(firstName, lastName, email, id);
         this.login = login;
         this.password = password;
+        this.cartularies = new LinkedList<>();
     }
 
-    public Book SearchBook(){
+    public Book searchBook(){
         //TODO
         return null;
     }
 
-    public void ReturnBook(Book book){
+    public void returnBook(Book book){
 
     }
 
-    public Book GetBook(){
+    public Book getBook(){
         //TODO
         return null;
     }
@@ -53,5 +54,13 @@ public class Reader extends Person {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 "} " + super.toString();
+    }
+
+    public LinkedList<Cartulary> getCartularies() {
+        return cartularies;
+    }
+
+    public void setCartularies(LinkedList<Cartulary> cartularies) {
+        this.cartularies = cartularies;
     }
 }

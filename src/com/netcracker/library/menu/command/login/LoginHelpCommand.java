@@ -1,14 +1,15 @@
-package com.netcracker.library.menu.command;
+package com.netcracker.library.menu.command.login;
 
 import com.netcracker.library.menu.LibraryView;
+import com.netcracker.library.menu.command.Command;
 
 /**
- * Created by raumo0 on 21.10.16.
+ * Created by raumo0 on 27.10.16.
  */
-public class HelpCommand implements Command {
-    private LibraryView commandProcessor;
+public class LoginHelpCommand implements Command {
+    private LoginReaderCommand commandProcessor;
 
-    public HelpCommand(LibraryView commandProcessor) {
+    public LoginHelpCommand(LoginReaderCommand commandProcessor) {
         this.commandProcessor = commandProcessor;
     }
 

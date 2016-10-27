@@ -16,7 +16,7 @@ public class ReaderServiceImpl implements ReaderService {
     private static ArrayList<Reader> readers = new ArrayList<>();
 
     @Override
-    public Person getById(long id) {
+    public Reader getById(long id) {
         for (Reader author : readers) {
             if (author.getId() == id){
                 return  author;

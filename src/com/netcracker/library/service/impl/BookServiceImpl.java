@@ -17,6 +17,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getById(long id) {
+        for (Book book : books) {
+            if (book.getId() == id)
+                return book;
+        }
         return null;
     }
 
