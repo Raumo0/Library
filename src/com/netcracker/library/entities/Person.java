@@ -53,6 +53,10 @@ public abstract class Person implements Serializable {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public GregorianCalendar getBirthday() {
         return birthday;
     }

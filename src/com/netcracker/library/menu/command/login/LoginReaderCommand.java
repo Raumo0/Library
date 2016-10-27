@@ -1,12 +1,9 @@
-package com.netcracker.library.menu;
+package com.netcracker.library.menu.command.login;
 
 /**
- * Created by raumo0 on 21.10.16.
+ * Created by raumo0 on 27.10.16.
  */
-public class LoginCommand implements Command {
-    public LoginCommand() {
-    }
-
+public class LoginReaderCommand implements LoginPersonCommand {
     @Override
     public boolean execute(String... args) {
         return false;
@@ -19,12 +16,12 @@ public class LoginCommand implements Command {
 
     @Override
     public String getName() {
-        return "LOGIN";
+        return "READER";
     }
 
     @Override
     public String getDescription() {
         return String.format("Log into library to start sharing\n" +
-                "and connecting. Use \"LOGIN <person>\", where\n" +
-                "person id READER or LIBRARIAN.");    }
+                "and connecting. Use \"LOGIN READER\".");
+    }
 }

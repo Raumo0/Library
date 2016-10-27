@@ -3,11 +3,11 @@ package com.netcracker.library.menu;
 /**
  * Created by raumo0 on 21.10.16.
  */
-class ParsedCommand {
+public class ParsedCommand {
 
-    String command;
+    private String command;
 
-    String[] args;
+    private String[] args;
 
     public ParsedCommand(String line) {
         String parts[] = line.split(" ");
@@ -18,5 +18,13 @@ class ParsedCommand {
                 System.arraycopy(parts, 1, args, 0, args.length);
             }
         }
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public String[] getArgs() {
+        return args;
     }
 }

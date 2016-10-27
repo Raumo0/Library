@@ -4,20 +4,17 @@ import com.netcracker.library.enums.BookCategory;
 import com.netcracker.library.enums.BookLanguage;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by raumo0 on 18.10.16.
  */
-public class BookEdition implements Serializable {
+public class BookEdition implements Serializable, Comparable<BookEdition> {
     private long id;
     private LinkedList<Book> books;
     private GregorianCalendar releaseDate;
     private String title;
-    private ArrayList<Author> authors;
+    private TreeSet<Author> authors;
     private String description;
     private String isbn;
     private List<BookCategory> categories;
@@ -27,9 +24,10 @@ public class BookEdition implements Serializable {
     public BookEdition(long id, String title) {
         this.id = id;
         this.title = title;
+        this.authors = new TreeSet<>();
     }
 
-    public BookEdition(long id, String title, ArrayList<Author> authors, String isbn, List<BookCategory> categories) {
+    public BookEdition(long id, String title, TreeSet<Author> authors, String isbn, List<BookCategory> categories) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -38,7 +36,7 @@ public class BookEdition implements Serializable {
     }
 
     public BookEdition(long id, LinkedList<Book> books, GregorianCalendar releaseDate, String title,
-                       ArrayList<Author> authors, String description, String isbn, List<BookCategory> categories,
+                       TreeSet<Author> authors, String description, String isbn, List<BookCategory> categories,
                        BookLanguage language, int pageCount) {
         this.id = id;
         this.books = books;
@@ -54,6 +52,10 @@ public class BookEdition implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public LinkedList<Book> getBooks() {
@@ -89,12 +91,16 @@ public class BookEdition implements Serializable {
         this.title = title;
     }
 
-    public ArrayList<Author> getAuthor() {
+    public TreeSet<Author> getAuthor() {
         return authors;
     }
 
-    public void setAuthors(ArrayList<Author> authors) {
+    public void setAuthors(TreeSet<Author> authors) {
         this.authors = authors;
+    }
+
+    public void addAuthor(Author author) {
+        this.authors.add(author);
     }
 
     public String getDescription() {
@@ -193,5 +199,48 @@ public class BookEdition implements Serializable {
                 ", language=" + language +
                 ", pageCount=" + pageCount +
                 '}';
+    }
+
+    /**
+     * Compares this object with the specified object for order.  Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified object.
+     * <p>
+     * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
+     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
+     * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
+     * <tt>y.compareTo(x)</tt> throws an exception.)
+     * <p>
+     * <p>The implementor must also ensure that the relation is transitive:
+     * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
+     * <tt>x.compareTo(z)&gt;0</tt>.
+     * <p>
+     * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
+     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
+     * all <tt>z</tt>.
+     * <p>
+     * <p>It is strongly recommended, but <i>not</i> strictly required that
+     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
+     * class that implements the <tt>Comparable</tt> interface and violates
+     * this condition should clearly indicate this fact.  The recommended
+     * language is "Note: this class has a natural ordering that is
+     * inconsistent with equals."
+     * <p>
+     * <p>In the foregoing description, the notation
+     * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
+     * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
+     * <tt>0</tt>, or <tt>1</tt> according to whether the value of
+     * <i>expression</i> is negative, zero or positive.
+     *
+     * @param o the object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object
+     * is less than, equal to, or greater than the specified object.
+     * @throws NullPointerException if the specified object is null
+     * @throws ClassCastException   if the specified object's type prevents it
+     *                              from being compared to this object.
+     */
+    @Override
+    public int compareTo(BookEdition o) {
+        return (int) (this.getId() - o.getId());
     }
 }

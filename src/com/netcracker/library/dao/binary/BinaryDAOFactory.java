@@ -9,6 +9,6 @@ import com.netcracker.library.dao.DAOFactory;
 public class BinaryDAOFactory extends DAOFactory {
     @Override
     public BookDAO getBookDAO() {
-        return new BinaryBokDAO();
+        return new BinaryBookDAO();
     }
 }

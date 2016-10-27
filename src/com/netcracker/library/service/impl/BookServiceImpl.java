@@ -7,11 +7,14 @@ import com.netcracker.library.exceptions.BookException;
 import com.netcracker.library.service.BookService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by raumo0 on 21.10.16.
  */
 public class BookServiceImpl implements BookService {
+    private static ArrayList<Book> books = new ArrayList<>();
+
     @Override
     public Book getById(long id) {
         return null;
@@ -19,7 +22,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public long insertBook(Book book) {
-        return 0;
+        if (books.size() == 0) {
+            book.setId(1);
+        }
+        else {
+            book.setId(books.get(books.size() - 1).getId() + 1);
+        }
+        books.add(book);
+        return book.getId();
     }
 
     @Override
@@ -30,6 +40,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean updateBook(Book book) {
         return false;
+    }
+
+    @Override
+    public Collection<Book> getBooks() {
+        return books;
     }
 
     @Override

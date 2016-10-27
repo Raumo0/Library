@@ -5,21 +5,23 @@ import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
 import com.netcracker.library.exceptions.BookException;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by raumo0 on 19.10.16.
  */
 public interface BookService {
-    public Book getById(long id);
+    Book getById(long id);
 
-    public long insertBook(Book book);
+    long insertBook(Book book);
 
-    public boolean deleteBook(long id) throws BookException;
+    boolean deleteBook(long id) throws BookException;
 
-    public boolean updateBook(Book book);
+    boolean updateBook(Book book);
 
-    public ArrayList<Book> getByState(BookState state);
+    Collection<Book> getBooks();
 
-    public ArrayList<Book> getByPosition(BookPosition position);
+    Collection<Book> getByState(BookState state);
+
+    Collection<Book> getByPosition(BookPosition position);
 }

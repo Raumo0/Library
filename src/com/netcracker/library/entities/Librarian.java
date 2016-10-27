@@ -46,4 +46,9 @@ public class Librarian extends Person {
     public void UpdateBook(Book book){
         //TODO
     }
+
+    @Override
+    public String toString() {
+        return "Librarian{} " + super.toString();
+    }
 }

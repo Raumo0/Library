@@ -11,7 +11,7 @@ import java.util.Collection;
  * Created by raumo0 on 20.10.16.
  */
 public interface BookDAO {
-    // Implement insert book here.
+    // Implement insertBookEdition book here.
     // Return newly created book number
     // or a -1 on error
     public long insertBook(Book book);

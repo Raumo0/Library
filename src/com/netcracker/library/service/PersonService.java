@@ -3,7 +3,7 @@ package com.netcracker.library.service;
 import com.netcracker.library.entities.Person;
 import com.netcracker.library.enums.Country;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 
 /**
@@ -14,11 +14,11 @@ public interface PersonService {
 
     Person getByEmail(String email);
 
-    ArrayList<Person> getByFirstName(String firstName);
+    Collection<Person> getByFirstName(String firstName);
 
-    ArrayList<Person> getByLastName(String lastName);
+    Collection<Person> getByLastName(String lastName);
 
-    ArrayList<Person> getByCountry(Country country);
+    Collection<Person> getByCountry(Country country);
 
-    ArrayList<Person> getByBirthday(GregorianCalendar birthday);
+    Collection<Person> getByBirthday(GregorianCalendar birthday);
 }

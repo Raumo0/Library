@@ -12,10 +12,10 @@ import java.util.Collection;
 /**
  * Created by raumo0 on 20.10.16.
  */
-public class BinaryBokDAO implements BookDAO {
+public class BinaryBookDAO implements BookDAO {
     private static ArrayList<Book> books = new ArrayList<>();
 
-    public BinaryBokDAO() {
+    public BinaryBookDAO() {
 //        try {
 //            FileOutputStream fos = new FileOutputStream("book.out");
 //        } catch (FileNotFoundException e){}
@@ -48,6 +48,7 @@ public class BinaryBokDAO implements BookDAO {
             FileInputStream fis = new FileInputStream("book.out");
             ObjectInputStream oin = new ObjectInputStream(fis);
             book = (Book) oin.readObject();
+            oin.close();
         } catch (Exception e) {
             return null;
         }

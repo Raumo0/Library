@@ -4,6 +4,7 @@ import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 14.10.16.
@@ -11,39 +12,46 @@ import java.io.Serializable;
 public class Book implements Serializable {
     private long id;
     private BookEdition bookEdition;
-    private Person lastOwner;
+//    private Person lastOwner;
     private BookState bookState;
     private BookPosition bookPosition;
+    private LinkedList<Cartulary> cartularies;
 
     public Book(long id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition) {
         this.id = id;
         this.bookEdition = bookEdition;
         this.bookState = bookState;
         this.bookPosition = bookPosition;
+        this.cartularies = new LinkedList<>();
     }
 
-    public Book(long id, BookEdition bookEdition, Person lastOwner, BookState bookState, BookPosition bookPosition) {
+    public Book(long id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition,
+                LinkedList<Cartulary> cartularies) {
         this.id = id;
         this.bookEdition = bookEdition;
-        this.lastOwner = lastOwner;
         this.bookState = bookState;
         this.bookPosition = bookPosition;
+        this.cartularies = cartularies;
+    }
+
+    public LinkedList<Cartulary> getCartularies() {
+        return cartularies;
+    }
+
+    public void setCartularies(LinkedList<Cartulary> cartularies) {
+        this.cartularies = cartularies;
     }
 
     public long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public BookEdition getBookEdition() {
         return bookEdition;
-    }
-
-    public Person getLastOwner() {
-        return lastOwner;
-    }
-
-    public void setLastOwner(Person lastOwner) {
-        this.lastOwner = lastOwner;
     }
 
     public BookState getBookState() {
@@ -86,9 +94,9 @@ public class Book implements Serializable {
         return "Book{" +
                 "id=" + id +
                 ", bookEdition=" + bookEdition +
-                ", lastOwner=" + lastOwner +
                 ", bookState=" + bookState +
                 ", bookPosition=" + bookPosition +
+                ", cartularies=" + cartularies +
                 '}';
     }
 
@@ -100,20 +108,20 @@ public class Book implements Serializable {
         Book book = (Book) o;
 
         if (id != book.id) return false;
-        if (bookEdition != null ? !bookEdition.equals(book.bookEdition) : book.bookEdition != null) return false;
-        if (!lastOwner.equals(book.lastOwner)) return false;
+        if (!bookEdition.equals(book.bookEdition)) return false;
         if (bookState != book.bookState) return false;
-        return bookPosition == book.bookPosition;
+        if (bookPosition != book.bookPosition) return false;
+        return cartularies.equals(book.cartularies);
 
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (bookEdition != null ? bookEdition.hashCode() : 0);
-        result = 31 * result + lastOwner.hashCode();
-        result = 31 * result + (bookState != null ? bookState.hashCode() : 0);
-        result = 31 * result + (bookPosition != null ? bookPosition.hashCode() : 0);
+        result = 31 * result + bookEdition.hashCode();
+        result = 31 * result + bookState.hashCode();
+        result = 31 * result + bookPosition.hashCode();
+        result = 31 * result + cartularies.hashCode();
         return result;
     }
 }

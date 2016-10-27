@@ -1,9 +1,9 @@
-package com.netcracker.library.menu;
+package com.netcracker.library.menu.command;
 
 /**
  * Created by raumo0 on 21.10.16.
  */
-class ExitCommand implements Command {
+public class ExitCommand implements Command {
     @Override
     public boolean execute(String... args) {
         System.out.println("Finishing command processor... done.");

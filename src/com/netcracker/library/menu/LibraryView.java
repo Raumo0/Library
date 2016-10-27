@@ -1,5 +1,8 @@
 package com.netcracker.library.menu;
 
+import com.netcracker.library.menu.command.*;
+import com.netcracker.library.menu.command.CreateCommand;
+
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -8,10 +11,10 @@ import java.util.TreeMap;
  * Created by raumo0 on 17.10.16.
  */
 public class LibraryView {
-    static final String MSG_COMMAND_NOT_FOUND = "Command not found";
-    static final String MSG_DELIM = "==========================================";
+    private static final String MSG_COMMAND_NOT_FOUND = "Command not found";
+    private static final String MSG_DELIM = "==========================================";
 
-    Map<String, Command> commands;
+    private Map<String, Command> commands;
 
     private String consoleEncoding;
 
@@ -31,19 +34,33 @@ public class LibraryView {
     public void execute() {
         boolean result = true;
         Scanner scanner = new Scanner(System.in, consoleEncoding);
+        Command cmd = commands.get(new ParsedCommand("HELP").getCommand().toUpperCase());
+        cmd.execute(null);
         do {
             System.out.print("> ");
             String fullCommand = scanner.nextLine();
             ParsedCommand pc = new ParsedCommand(fullCommand);
-            if (pc.command == null || "".equals(pc.command)) {
+            if (pc.getCommand() == null || "".equals(pc.getCommand())) {
                 continue;
             }
-            Command cmd = commands.get(pc.command.toUpperCase());
+            cmd = commands.get(pc.getCommand().toUpperCase());
             if (cmd == null) {
                 System.out.println(MSG_COMMAND_NOT_FOUND);
                 continue;
             }
-            result = cmd.execute(pc.args);
+            result = cmd.execute(pc.getArgs());
         } while (result);
+    }
+
+    public static String getMsgCommandNotFound() {
+        return MSG_COMMAND_NOT_FOUND;
+    }
+
+    public static String getMSG_DELIM() {
+        return MSG_DELIM;
+    }
+
+    public Map<String, Command> getCommands() {
+        return commands;
     }
 }
