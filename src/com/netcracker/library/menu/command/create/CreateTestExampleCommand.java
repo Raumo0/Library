@@ -72,13 +72,12 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
 
     @Override
     public String getName() {
-        return "TEST";
+        return "1";
     }
 
     @Override
     public String getDescription() {
-        return String.format("Creates test entities for use library.\n" +
-                "Use \"CREATE TEST\".");    }
+        return String.format("Creates test entities for use library.");    }
 
     private Author createAuthor() {
         Collection authors = authorService.getAuthors();

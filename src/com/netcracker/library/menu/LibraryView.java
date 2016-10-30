@@ -37,7 +37,7 @@ public class LibraryView {
         Command cmd = commands.get(new ParsedCommand("HELP").getCommand().toUpperCase());
         cmd.execute(null);
         do {
-            System.out.print("Main menu:\n" + "> ");
+            System.out.print("Main menu:" + "> ");
             String fullCommand = scanner.nextLine();
             ParsedCommand pc = new ParsedCommand(fullCommand);
             if (pc.getCommand() == null || "".equals(pc.getCommand())) {
