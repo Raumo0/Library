@@ -16,7 +16,6 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
     private AuthorService authorService = new AuthorServiceImpl();
     private BookEditionService bookEditionService = new BookEditionServiceImpl();
     private BookService bookService = new BookServiceImpl();
-    private CartularyService cartularyService = new CartularyServiceImpl();
     private ReaderService readerService = new ReaderServiceImpl();
     private LibrarianService librarianService = new LibrarianServiceImpl();
     private Random rnd = new Random();

@@ -15,7 +15,7 @@ public class HelpCommand implements Command {
     @Override
     public boolean execute(String... args) {
         if (args == null) {
-            System.out.println("Avaliable commands:\n" + LibraryView.getMSG_DELIM());
+            System.out.println("Available commands:\n" + LibraryView.getMSG_DELIM());
             for (Command cmd : commandProcessor.getCommands().values()) {
                 System.out.println("\n" + cmd.getName() + ": " + cmd.getDescription());
             }

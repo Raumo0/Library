@@ -21,7 +21,7 @@ public class CreateCommand implements Command {
         commands.put(cmd.getName(), cmd);
         cmd = new CreateHelpCommand(this);
         commands.put(cmd.getName(), cmd);
-        cmd = new BaskCommand();
+        cmd = new BackCommand();
         commands.put(cmd.getName(), cmd);
         cmd = new ExitCommand();
         commands.put(cmd.getName(), cmd);
@@ -30,28 +30,12 @@ public class CreateCommand implements Command {
 
     @Override
     public boolean execute(String... args) {
-//        if (args == null) {
-//            System.out.println("Write the necessary arguments.\n" + LibraryView.getMSG_DELIM() + "\n " + getDescription());
-//            System.out.println(LibraryView.getMSG_DELIM());
-//        } else {
-//            for (String cmd : args) {
-//                Command command = commands.get(cmd.toUpperCase());
-//                if (command == null) {
-//                    System.out.println(LibraryView.getMsgCommandNotFound());
-//                } else {
-//                    command.execute(null);
-//                }
-//                System.out.println(LibraryView.getMSG_DELIM());
-//            }
-//        }
-//        return true;
-
         boolean result = true;
         Scanner scanner = new Scanner(System.in);
         Command cmd = commands.get(new ParsedCommand("HELP").getCommand().toUpperCase());
         cmd.execute(null);
         do {
-            System.out.print("Create menu:" + "> ");
+            System.out.print("Create menu:> ");
             String fullCommand = scanner.nextLine();
             ParsedCommand pc = new ParsedCommand(fullCommand);
             if (pc.getCommand() == null || "".equals(pc.getCommand())) {

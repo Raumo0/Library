@@ -3,7 +3,7 @@ package com.netcracker.library.menu.command.create;
 /**
  * Created by raumo0 on 30.10.16.
  */
-public class BaskCommand implements CreateEntityCommand {
+public class BackCommand implements CreateEntityCommand {
     @Override
     public boolean execute(String... args) {
         return false;

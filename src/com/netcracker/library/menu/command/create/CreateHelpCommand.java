@@ -2,7 +2,6 @@ package com.netcracker.library.menu.command.create;
 
 import com.netcracker.library.menu.LibraryView;
 import com.netcracker.library.menu.command.CreateCommand;
-import com.netcracker.library.menu.command.login.LoginReaderCommand;
 
 /**
  * Created by raumo0 on 30.10.16.
@@ -17,7 +16,7 @@ public class CreateHelpCommand implements CreateEntityCommand {
     @Override
     public boolean execute(String... args) {
         if (args == null) {
-            System.out.println("Avaliable commands:\n" + LibraryView.getMSG_DELIM());
+            System.out.println("Available commands:\n" + LibraryView.getMSG_DELIM());
             for (CreateEntityCommand cmd : commandProcessor.getCommands().values()) {
                 System.out.println("\n" + cmd.getName() + ": " + cmd.getDescription());
             }

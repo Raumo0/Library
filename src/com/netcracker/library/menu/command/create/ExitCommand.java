@@ -7,6 +7,7 @@ public class ExitCommand implements CreateEntityCommand {
     @Override
     public boolean execute(String... args) {
         System.out.println("Finishing command processor... done.");
+        System.exit(0);
         return false;
     }
 
