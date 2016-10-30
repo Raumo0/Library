@@ -49,6 +49,6 @@ public class Librarian extends Person {
 
     @Override
     public String toString() {
-        return "Librarian{} " + super.toString();
+        return "Librarian{id=" + super.getId() + '}';
     }
 }

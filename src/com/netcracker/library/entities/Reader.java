@@ -49,11 +49,7 @@ public class Reader extends Person {
 
     @Override
     public String toString() {
-        return "Reader{" +
-                "cartularies=" + cartularies +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                "} " + super.toString();
+        return "Reader{id=" + super.getId() + '}';
     }
 
     public LinkedList<Cartulary> getCartularies() {

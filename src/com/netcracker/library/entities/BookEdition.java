@@ -187,18 +187,7 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
 
     @Override
     public String toString() {
-        return "BookEdition{" +
-                "id=" + id +
-                ", books=" + books +
-                ", releaseDate=" + releaseDate +
-                ", title='" + title + '\'' +
-                ", authors=" + authors +
-                ", description='" + description + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", categories=" + categories +
-                ", language=" + language +
-                ", pageCount=" + pageCount +
-                '}';
+        return "BookEdition{id=" + id + '}';
     }
 
     /**
