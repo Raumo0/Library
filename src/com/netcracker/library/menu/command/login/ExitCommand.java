@@ -1,12 +1,14 @@
 package com.netcracker.library.menu.command.login;
 
 /**
- * Created by raumo0 on 27.10.16.
+ * Created by raumo0 on 30.10.16.
  */
-public class LoginLibrarianCommand implements LoginPersonCommand {
+public class ExitCommand implements LoginPersonCommand {
     @Override
     public boolean execute(String... args) {
-        return true;
+        System.out.println("Finishing command processor... done.");
+        System.exit(0);
+        return false;
     }
 
     @Override
@@ -16,11 +18,11 @@ public class LoginLibrarianCommand implements LoginPersonCommand {
 
     @Override
     public String getName() {
-        return "2";
+        return "EXIT";
     }
 
     @Override
     public String getDescription() {
-        return String.format("Librarians log into library to start administrate.");
+        return "Exits from command processor";
     }
 }

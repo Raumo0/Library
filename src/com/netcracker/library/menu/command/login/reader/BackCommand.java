@@ -1,11 +1,9 @@
-package com.netcracker.library.menu.command.login;
-
-import com.netcracker.library.menu.command.Command;
+package com.netcracker.library.menu.command.login.reader;
 
 /**
  * Created by raumo0 on 27.10.16.
  */
-public class LogoutCommand implements Command {
+public class BackCommand implements ReaderCommand {
     @Override
     public boolean execute(String... args) {
         return false;
@@ -18,12 +16,11 @@ public class LogoutCommand implements Command {
 
     @Override
     public String getName() {
-        return "LOGOUT";
+        return "BACK";
     }
 
     @Override
     public String getDescription() {
-        return String.format("Log out library to main menu.\n" +
-                "Use \"LOGOUT\".");
+        return String.format("Log out library to the login menu.");
     }
 }

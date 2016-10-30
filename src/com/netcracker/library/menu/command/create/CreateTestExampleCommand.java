@@ -97,8 +97,6 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
     }
 
     private Book createBook(BookEdition bookEdition) {
-        Collection books = bookService.getBooks();
-        long count = books.size() + 1;
         Book book = new Book(0, bookEdition, BookState.GOOD, BookPosition.IN_STORE);
         bookService.insertBook(book);
         return book;

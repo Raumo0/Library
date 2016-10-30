@@ -4,6 +4,7 @@ import com.netcracker.library.menu.LibraryView;
 import com.netcracker.library.menu.ParsedCommand;
 import com.netcracker.library.menu.command.create.*;
 import com.netcracker.library.menu.command.create.ExitCommand;
+import com.netcracker.library.menu.command.create.HelpCommand;
 
 import java.util.Map;
 import java.util.Scanner;
@@ -19,7 +20,7 @@ public class CreateCommand implements Command {
         commands = new TreeMap<>();
         CreateEntityCommand cmd = new CreateTestExampleCommand();
         commands.put(cmd.getName(), cmd);
-        cmd = new CreateHelpCommand(this);
+        cmd = new HelpCommand(this);
         commands.put(cmd.getName(), cmd);
         cmd = new BackCommand();
         commands.put(cmd.getName(), cmd);

@@ -3,8 +3,10 @@ package com.netcracker.library.menu.command.login;
 import com.netcracker.library.entities.Reader;
 import com.netcracker.library.menu.LibraryView;
 import com.netcracker.library.menu.ParsedCommand;
-import com.netcracker.library.menu.command.Command;
-import com.netcracker.library.menu.command.ExitCommand;
+import com.netcracker.library.menu.command.login.reader.*;
+import com.netcracker.library.menu.command.login.reader.BackCommand;
+import com.netcracker.library.menu.command.login.reader.ExitCommand;
+import com.netcracker.library.menu.command.login.reader.HelpCommand;
 import com.netcracker.library.service.impl.ReaderServiceImpl;
 
 import java.util.Map;
@@ -15,13 +17,13 @@ import java.util.TreeMap;
  * Created by raumo0 on 27.10.16.
  */
 public class LoginReaderCommand implements LoginPersonCommand {
-    private Map<String, Command> commands;
+    private Map<String, ReaderCommand> commands;
     private ReaderServiceImpl readerService;
     private Reader reader;
 
     public LoginReaderCommand() {
         commands = new TreeMap<>();
-        Command cmd = new ReturnBookCommand(this);
+        ReaderCommand cmd = new ReturnBookCommand(this);
         commands.put(cmd.getName(), cmd);
         cmd = new SearchBookCommand();
         commands.put(cmd.getName(), cmd);
@@ -29,9 +31,11 @@ public class LoginReaderCommand implements LoginPersonCommand {
         commands.put(cmd.getName(), cmd);
         cmd = new ExitCommand();
         commands.put(cmd.getName(), cmd);
-        cmd = new LogoutCommand();
+        cmd = new BackCommand();
         commands.put(cmd.getName(), cmd);
-        cmd = new LoginHelpCommand(this);
+        cmd = new HelpCommand(this);
+        commands.put(cmd.getName(), cmd);
+        cmd = new PrintMyBookCommand(this);
         commands.put(cmd.getName(), cmd);
         readerService = new ReaderServiceImpl();
     }
@@ -45,10 +49,10 @@ public class LoginReaderCommand implements LoginPersonCommand {
         }
         boolean result = true;
         Scanner scanner = new Scanner(System.in);
-        Command cmd = commands.get(new ParsedCommand("HELP").getCommand().toUpperCase());
+        ReaderCommand cmd = commands.get(new ParsedCommand("HELP").getCommand().toUpperCase());
         cmd.execute(null);
         do {
-            System.out.print("Login reader menu:\n" + "> ");
+            System.out.print("Reader menu:> ");
             String fullCommand = scanner.nextLine();
             ParsedCommand pc = new ParsedCommand(fullCommand);
             if (pc.getCommand() == null || "".equals(pc.getCommand())) {
@@ -71,16 +75,16 @@ public class LoginReaderCommand implements LoginPersonCommand {
 
     @Override
     public String getName() {
-        return "READER";
+        return "1";
     }
 
     @Override
     public String getDescription() {
-        return String.format("Log into library to start sharing\n" +
+        return String.format("Readers log into library to start sharing\n" +
                 "and connecting. Use \"LOGIN READER\".");
     }
 
-    public Map<String, Command> getCommands() {
+    public Map<String, ReaderCommand> getCommands() {
         return commands;
     }
 

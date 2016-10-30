@@ -1,14 +1,16 @@
-package com.netcracker.library.menu.command;
+package com.netcracker.library.menu.command.login.reader;
 
 import com.netcracker.library.menu.LibraryView;
+import com.netcracker.library.menu.command.Command;
+import com.netcracker.library.menu.command.login.LoginReaderCommand;
 
 /**
- * Created by raumo0 on 21.10.16.
+ * Created by raumo0 on 27.10.16.
  */
-public class HelpCommand implements Command {
-    private LibraryView commandProcessor;
+public class HelpCommand implements ReaderCommand {
+    private LoginReaderCommand commandProcessor;
 
-    public HelpCommand(LibraryView commandProcessor) {
+    public HelpCommand(LoginReaderCommand commandProcessor) {
         this.commandProcessor = commandProcessor;
     }
 
@@ -16,14 +18,14 @@ public class HelpCommand implements Command {
     public boolean execute(String... args) {
         if (args == null) {
             System.out.println("Available commands:\n" + LibraryView.getMSG_DELIM());
-            for (Command cmd : commandProcessor.getCommands().values()) {
+            for (ReaderCommand cmd : commandProcessor.getCommands().values()) {
                 System.out.println("\n" + cmd.getName() + ": " + cmd.getDescription());
             }
             System.out.println(LibraryView.getMSG_DELIM());
         } else {
             for (String cmd : args) {
                 System.out.println("Help for command " + cmd + ":\n" + LibraryView.getMSG_DELIM());
-                Command command = commandProcessor.getCommands().get(cmd.toUpperCase());
+                ReaderCommand command = commandProcessor.getCommands().get(cmd.toUpperCase());
                 if (command == null) {
                     System.out.println(LibraryView.getMsgCommandNotFound());
                 } else {

@@ -1,21 +1,23 @@
-package com.netcracker.library.menu.command.login;
+package com.netcracker.library.menu.command.login.reader;
 
 import com.netcracker.library.entities.Book;
 import com.netcracker.library.entities.Cartulary;
 import com.netcracker.library.entities.Reader;
 import com.netcracker.library.enums.BookPosition;
-import com.netcracker.library.enums.BookState;
 import com.netcracker.library.menu.LibraryView;
-import com.netcracker.library.menu.command.Command;
+import com.netcracker.library.menu.ParsedCommand;
+import com.netcracker.library.menu.command.login.LoginReaderCommand;
 import com.netcracker.library.service.impl.BookServiceImpl;
+
+import java.util.Scanner;
 
 /**
  * Created by raumo0 on 27.10.16.
  */
-public class ReturnBookCommand implements Command {
+public class GetBookCommand implements ReaderCommand {
     private LoginReaderCommand loginReaderCommand;
 
-    public ReturnBookCommand(LoginReaderCommand loginReaderCommand) {
+    public GetBookCommand(LoginReaderCommand loginReaderCommand) {
         this.loginReaderCommand = loginReaderCommand;
     }
 
@@ -32,29 +34,36 @@ public class ReturnBookCommand implements Command {
                     System.out.println(cmd + " " + LibraryView.getMsgCommandNotFound());
                 } else {
                     if (book.inStore()) {
-                        System.out.println("The book " + cmd + " is already in the repository");
-//                        Reader reader = loginReaderCommand.getReader();
-//                        Cartulary cartulary = new Cartulary(1, book, reader, book.getBookState());
-//                        reader.getCartularies().add(cartulary);
-//                        book.getCartularies().add(cartulary);
-                    } else {
                         Reader reader = loginReaderCommand.getReader();
-                        Cartulary cartulary = book.getCartularies().getLast();
-                        if (book.getCartularies().getLast().getReader().getId() == reader.getId()) {
-                            cartulary.setComment("Nice book!");
-                            book.setBookState(BookState.BAD);
-                            cartulary.setAfter(book.getBookState());
-                            book.setBookPosition(BookPosition.IN_STORE);
-                            System.out.println("The book " + cmd + " returned");
-                        } else {
-                            System.out.println("The book " + cmd + " was not taken by you");
-                        }
+                        Cartulary cartulary = new Cartulary(1, book, reader, book.getBookState());
+                        reader.getCartularies().add(cartulary);
+                        book.getCartularies().add(cartulary);
+                        book.setBookPosition(selectQuery());
+                        System.out.println("Book " + cmd + " has been given");
+                    } else {
+                        System.out.println("The book " + cmd + " is not in the repository");
                     }
                 }
                 System.out.println(LibraryView.getMSG_DELIM());
             }
         }
         return true;
+    }
+
+    private BookPosition selectQuery() {
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.println("Type \"1\" for give at reading room or \"2\" for give at home.");
+            String fullCommand = scanner.nextLine();
+            ParsedCommand pc = new ParsedCommand(fullCommand);
+            if ("1".equals(pc.getCommand())){
+                return BookPosition.IN_READING_ROOM;
+            }
+            if ("2".equals(pc.getCommand())){
+                return BookPosition.IN_READER;
+            }
+            System.out.println("Wrong arguments.");
+        } while (true);
     }
 
     @Override
@@ -64,12 +73,11 @@ public class ReturnBookCommand implements Command {
 
     @Override
     public String getName() {
-        return "RETURN_BOOK";
+        return "2";
     }
 
     @Override
     public String getDescription() {
-        return String.format("Returns read book.\n" +
-                "Use \"RETURN_BOOK <ID>\", where id is your book id.\".");
+        return String.format("It gives the book to read at home.");
     }
 }

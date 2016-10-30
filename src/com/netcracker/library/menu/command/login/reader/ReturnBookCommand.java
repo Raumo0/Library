@@ -1,20 +1,21 @@
-package com.netcracker.library.menu.command.login;
+package com.netcracker.library.menu.command.login.reader;
 
 import com.netcracker.library.entities.Book;
 import com.netcracker.library.entities.Cartulary;
 import com.netcracker.library.entities.Reader;
 import com.netcracker.library.enums.BookPosition;
+import com.netcracker.library.enums.BookState;
 import com.netcracker.library.menu.LibraryView;
-import com.netcracker.library.menu.command.Command;
+import com.netcracker.library.menu.command.login.LoginReaderCommand;
 import com.netcracker.library.service.impl.BookServiceImpl;
 
 /**
  * Created by raumo0 on 27.10.16.
  */
-public class GetBookCommand implements Command {
+public class ReturnBookCommand implements ReaderCommand {
     private LoginReaderCommand loginReaderCommand;
 
-    public GetBookCommand(LoginReaderCommand loginReaderCommand) {
+    public ReturnBookCommand(LoginReaderCommand loginReaderCommand) {
         this.loginReaderCommand = loginReaderCommand;
     }
 
@@ -31,14 +32,19 @@ public class GetBookCommand implements Command {
                     System.out.println(cmd + " " + LibraryView.getMsgCommandNotFound());
                 } else {
                     if (book.inStore()) {
-                        Reader reader = loginReaderCommand.getReader();
-                        Cartulary cartulary = new Cartulary(1, book, reader, book.getBookState());
-                        reader.getCartularies().add(cartulary);
-                        book.getCartularies().add(cartulary);
-                        book.setBookPosition(BookPosition.IN_READER);
-                        System.out.println("Book " + cmd + " has been given");
+                        System.out.println("The book " + cmd + " is already in the repository");
                     } else {
-                        System.out.println("The book " + cmd + " is not in the repository");
+                        Reader reader = loginReaderCommand.getReader();
+                        Cartulary cartulary = book.getCartularies().getLast();
+                        if (book.getCartularies().getLast().getReader().getId() == reader.getId()) {
+                            cartulary.setComment("Nice book!");
+                            book.setBookState(BookState.BAD);
+                            cartulary.setAfter(book.getBookState());
+                            book.setBookPosition(BookPosition.IN_STORE);
+                            System.out.println("The book " + cmd + " returned");
+                        } else {
+                            System.out.println("The book " + cmd + " was not taken by you");
+                        }
                     }
                 }
                 System.out.println(LibraryView.getMSG_DELIM());
@@ -54,12 +60,13 @@ public class GetBookCommand implements Command {
 
     @Override
     public String getName() {
-        return "GET_BOOK";
+        return "3";
     }
 
     @Override
     public String getDescription() {
-        return String.format("It gives the book to read.\n" +
-                "Use \"GET_BOOK <ID>\", where id is book id.");
+        return String.format("Returns read book.\n" +
+                "Use \"<COMMAND> <ID>\", where ID is the ID of \n" +
+                "the book that you want to return.\".");
     }
 }

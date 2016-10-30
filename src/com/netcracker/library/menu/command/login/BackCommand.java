@@ -1,12 +1,12 @@
 package com.netcracker.library.menu.command.login;
 
 /**
- * Created by raumo0 on 27.10.16.
+ * Created by raumo0 on 30.10.16.
  */
-public class LoginLibrarianCommand implements LoginPersonCommand {
+public class BackCommand implements LoginPersonCommand {
     @Override
     public boolean execute(String... args) {
-        return true;
+        return false;
     }
 
     @Override
@@ -16,11 +16,11 @@ public class LoginLibrarianCommand implements LoginPersonCommand {
 
     @Override
     public String getName() {
-        return "2";
+        return "BACK";
     }
 
     @Override
     public String getDescription() {
-        return String.format("Librarians log into library to start administrate.");
+        return "Returns to the main menu.";
     }
 }
