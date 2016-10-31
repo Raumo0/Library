@@ -12,7 +12,6 @@ import java.util.LinkedList;
 public class Book implements Serializable {
     private long id;
     private BookEdition bookEdition;
-//    private Person lastOwner;
     private BookState bookState;
     private BookPosition bookPosition;
     private LinkedList<Cartulary> cartularies;
@@ -82,7 +81,6 @@ public class Book implements Serializable {
         return false;
     }
 
-    //RENAME it
     public boolean inReader(){
         if (bookPosition == BookPosition.IN_READER)
             return true;

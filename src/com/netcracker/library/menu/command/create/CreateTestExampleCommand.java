@@ -1,5 +1,7 @@
 package com.netcracker.library.menu.command.create;
 
+import com.netcracker.library.dao.DAOFactory;
+import com.netcracker.library.dao.ReaderDAO;
 import com.netcracker.library.entities.*;
 import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
@@ -36,6 +38,9 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
             for (int i = 0; i < 3; i++) {
                 createReader();
             }
+            serializeReader();
+            saveText();
+
             createLibrarian();
 
             for (int i = 0; i < authorService.getAuthors().size(); i ++) {
@@ -62,6 +67,19 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
             //TODO
         }
         return true;
+    }
+
+    private void serializeReader(){
+        DAOFactory binaryFactory = DAOFactory.getDAOFactory(DAOFactory.BINARY);
+        ReaderDAO readerDAO = binaryFactory.getReaderDAO();
+        readerDAO.saveAll(readerService.getReaders());
+        readerService.setReaders(readerDAO.readAll());
+    }
+
+    private void saveText(){
+        DAOFactory textFactory = DAOFactory.getDAOFactory(DAOFactory.TEXT);
+        ReaderDAO readerDAO = textFactory.getReaderDAO();
+        readerDAO.saveAll(readerService.getReaders());
     }
 
     @Override

@@ -7,9 +7,6 @@ import com.netcracker.library.menu.LibraryView;
  */
 public class Main {
     public static void main(String[] args) {
-//        ExampleRunDAO exampleRunDao = new ExampleRunDAO();
-//        exampleRunDao.runDao();
-//        RunLibrary mainRunLibrary = new RunLibrary();
         LibraryView cp = new LibraryView("Cp1251");
         cp.execute();
     }

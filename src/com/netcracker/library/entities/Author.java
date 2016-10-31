@@ -4,8 +4,6 @@ import com.netcracker.library.enums.BookCategory;
 import com.netcracker.library.enums.Country;
 
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.Set;
 import java.util.TreeSet;
 
 /**

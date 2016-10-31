@@ -1,6 +1,6 @@
 package com.netcracker.library.dao.binary;
 
-import com.netcracker.library.dao.BookDAO;
+import com.netcracker.library.dao.ReaderDAO;
 import com.netcracker.library.dao.DAOFactory;
 
 /**
@@ -8,7 +8,7 @@ import com.netcracker.library.dao.DAOFactory;
  */
 public class BinaryDAOFactory extends DAOFactory {
     @Override
-    public BookDAO getBookDAO() {
-        return new BinaryBookDAO();
+    public ReaderDAO getReaderDAO() {
+        return new BinaryReaderDAO();
     }
 }

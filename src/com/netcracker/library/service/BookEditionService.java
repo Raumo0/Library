@@ -4,7 +4,6 @@ import com.netcracker.library.entities.BookEdition;
 import com.netcracker.library.enums.BookCategory;
 import com.netcracker.library.enums.BookLanguage;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;

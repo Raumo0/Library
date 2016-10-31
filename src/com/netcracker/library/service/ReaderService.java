@@ -10,5 +10,7 @@ import java.util.Collection;
 public interface ReaderService extends PersonService {
     Collection getReaders();
 
+    void setReaders(Collection<Reader> readers);
+
     long insertReader(Reader reader);
 }

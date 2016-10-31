@@ -55,6 +55,10 @@ public class ReaderServiceImpl implements ReaderService {
         return readers;
     }
 
+    public void setReaders(Collection<Reader> readers) {
+        ReaderServiceImpl.readers = (ArrayList<Reader>) readers;
+    }
+
     @Override
     public long insertReader(Reader reader) {
         if (readers.size() == 0) {
