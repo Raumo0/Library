@@ -5,9 +5,12 @@ import com.netcracker.library.entities.Cartulary;
 import com.netcracker.library.entities.Reader;
 import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
+import com.netcracker.library.enums.IssueBook;
 import com.netcracker.library.menu.LibraryView;
 import com.netcracker.library.menu.command.login.LoginReaderCommand;
 import com.netcracker.library.service.impl.BookServiceImpl;
+
+import java.util.GregorianCalendar;
 
 /**
  * Created by raumo0 on 27.10.16.
@@ -31,7 +34,8 @@ public class ReturnBookCommand implements ReaderCommand {
                 if (book == null) {
                     System.out.println(cmd + " " + LibraryView.getMsgCommandNotFound());
                 } else {
-                    if (book.inStore()) {
+                    if (book.inStore() || book.getCartularies().size() == 0 ||
+                            book.getCartularies().getLast().getIssueBook() == IssueBook.BOOK_ORDERED) {
                         System.out.println("The book " + cmd + " is already in the repository");
                     } else {
                         Reader reader = loginReaderCommand.getReader();
@@ -40,6 +44,7 @@ public class ReturnBookCommand implements ReaderCommand {
                             cartulary.setComment("Nice book!");
                             book.setBookState(BookState.BAD);
                             cartulary.setAfter(book.getBookState());
+                            cartulary.setReturnDate(GregorianCalendar.getInstance().getTime());
                             book.setBookPosition(BookPosition.IN_STORE);
                             System.out.println("The book " + cmd + " returned");
                         } else {

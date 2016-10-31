@@ -81,7 +81,7 @@ public class LoginReaderCommand implements LoginPersonCommand {
     @Override
     public String getDescription() {
         return String.format("Readers log into library to start sharing\n" +
-                "and connecting. Use \"LOGIN READER\".");
+                "and connecting.");
     }
 
     public Map<String, ReaderCommand> getCommands() {

@@ -10,11 +10,7 @@ import java.util.LinkedList;
  * Created by raumo0 on 27.10.16.
  */
 public class CartularyServiceImpl implements CartularyService {
-    private LinkedList<Cartulary> cartularies;
-
-    public CartularyServiceImpl(){
-        cartularies = new LinkedList<>();
-    }
+    private static LinkedList<Cartulary> cartularies = new LinkedList<>();;
 
     @Override
     public long insertCartulary(Cartulary cartulary) {

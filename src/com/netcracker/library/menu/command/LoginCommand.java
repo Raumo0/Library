@@ -66,8 +66,7 @@ public class LoginCommand implements Command {
     @Override
     public String getDescription() {
         return String.format("Log into library to start sharing\n" +
-                "and connecting. Use \"LOGIN <person>\", where\n" +
-                "person id READER or LIBRARIAN.");    }
+                "and connecting.");    }
 
     public Map<String, LoginPersonCommand> getCommands() {
         return commands;

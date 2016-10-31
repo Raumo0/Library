@@ -4,11 +4,14 @@ import com.netcracker.library.entities.Book;
 import com.netcracker.library.entities.Cartulary;
 import com.netcracker.library.entities.Reader;
 import com.netcracker.library.enums.BookPosition;
+import com.netcracker.library.enums.IssueBook;
 import com.netcracker.library.menu.LibraryView;
 import com.netcracker.library.menu.ParsedCommand;
 import com.netcracker.library.menu.command.login.LoginReaderCommand;
 import com.netcracker.library.service.impl.BookServiceImpl;
+import com.netcracker.library.service.impl.CartularyServiceImpl;
 
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
@@ -33,15 +36,21 @@ public class GetBookCommand implements ReaderCommand {
                 if (book == null) {
                     System.out.println(cmd + " " + LibraryView.getMsgCommandNotFound());
                 } else {
-                    if (book.inStore()) {
+                    if (book.inStore() && (book.getCartularies().size() == 0 ||
+                            book.getCartularies().getLast().getIssueBook() != IssueBook.BOOK_ORDERED)) {
                         Reader reader = loginReaderCommand.getReader();
-                        Cartulary cartulary = new Cartulary(1, book, reader, book.getBookState());
+                        Cartulary cartulary = new Cartulary(1, book, reader, book.getBookState(),
+                                GregorianCalendar.getInstance().getTime());
+                        CartularyServiceImpl cartularyService = new CartularyServiceImpl();
+                        cartularyService.insertCartulary(cartulary);
+                        cartulary.setIssueBook(IssueBook.BOOK_ORDERED);
                         reader.getCartularies().add(cartulary);
                         book.getCartularies().add(cartulary);
                         book.setBookPosition(selectQuery());
-                        System.out.println("Book " + cmd + " has been given");
+                        System.out.println("Book " + cmd + " has been ordered.\n" +
+                            "Contact your librarian for get book.");
                     } else {
-                        System.out.println("The book " + cmd + " is not in the repository");
+                        System.out.println("The book " + cmd + " is not in the repository.");
                     }
                 }
                 System.out.println(LibraryView.getMSG_DELIM());

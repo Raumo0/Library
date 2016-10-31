@@ -1,8 +1,10 @@
 package com.netcracker.library.entities;
 
 import com.netcracker.library.enums.BookState;
+import com.netcracker.library.enums.IssueBook;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by raumo0 on 27.10.16.
@@ -14,12 +16,16 @@ public class Cartulary implements Serializable {
     private String comment;
     private BookState before;
     private BookState after;
+    private Date receiveDate;
+    private Date returnDate;
+    private IssueBook issueBook;
 
-    public Cartulary(long id, Book book, Reader reader, BookState before) {
+    public Cartulary(long id, Book book, Reader reader, BookState before, Date receiveDate) {
         this.book = book;
         this.reader = reader;
         this.before = before;
         this.id = id;
+        this.receiveDate = receiveDate;
     }
 
     public Book getBook() {
@@ -68,5 +74,29 @@ public class Cartulary implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Date getReceiveDate() {
+        return receiveDate;
+    }
+
+    public void setReceiveDate(Date receiveDate) {
+        this.receiveDate = receiveDate;
+    }
+
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public IssueBook getIssueBook() {
+        return issueBook;
+    }
+
+    public void setIssueBook(IssueBook issueBook) {
+        this.issueBook = issueBook;
     }
 }

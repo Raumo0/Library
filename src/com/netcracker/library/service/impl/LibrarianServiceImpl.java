@@ -17,7 +17,7 @@ public class LibrarianServiceImpl implements LibrarianService {
 
 
     @Override
-    public Person getById(long id) {
+    public Librarian getById(long id) {
         for (Librarian author : librarians) {
             if (author.getId() == id){
                 return  author;

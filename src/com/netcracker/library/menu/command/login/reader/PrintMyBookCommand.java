@@ -1,6 +1,8 @@
 package com.netcracker.library.menu.command.login.reader;
 
 import com.netcracker.library.entities.Cartulary;
+import com.netcracker.library.enums.BookPosition;
+import com.netcracker.library.enums.IssueBook;
 import com.netcracker.library.menu.command.login.LoginReaderCommand;
 
 /**
@@ -15,9 +17,33 @@ public class PrintMyBookCommand implements ReaderCommand {
 
     @Override
     public boolean execute(String... args) {
+        String read = "";
+        String returned = "";
+        String orders = "";
+        String denied = "";
         for (Cartulary cartulary : loginReaderCommand.getReader().getCartularies()) {
-            System.out.println(cartulary.getBook() + "\t" + cartulary.getBook().getBookPosition().toString());
+            if (cartulary.getIssueBook() == IssueBook.BOOK_ORDERED){
+                orders += String.format(cartulary.getBook() + "\t" + cartulary.getBook().getBookPosition().toString() +
+                        "\tReceive date:" + cartulary.getReceiveDate() + "\n");
+                continue;
+            }
+            if (cartulary.getIssueBook() == IssueBook.DENIED_ORDERING){
+                denied += String.format(cartulary.getBook() + "\t" + cartulary.getBook().getBookPosition().toString() +
+                        "\tReceive date:" + cartulary.getReceiveDate() + "\n");
+                continue;
+            }
+            if ((cartulary.getBook().getBookPosition() == BookPosition.IN_READER ||
+                            cartulary.getBook().getBookPosition() == BookPosition.IN_READING_ROOM) &&
+                    cartulary.getReturnDate() == null) {
+                read += String.format(cartulary.getBook() + "\t" + cartulary.getBook().getBookPosition().toString() +
+                        "\tReceive date:" + cartulary.getReceiveDate() + "\n");
+            } else {
+                returned += String.format(cartulary.getBook() + "\t" + cartulary.getBook().getBookPosition().toString() +
+                        "\tReceive date:" + cartulary.getReceiveDate() + "\tReturn date:" +
+                        cartulary.getReturnDate() + "\n");
+            }
         }
+        System.out.println("Orders:\n" + orders + "\nDenied:\n" + denied + "\nRead:\n" + read + "\nReturned\n" + returned);
         return true;
     }
 
