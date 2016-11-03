@@ -14,12 +14,12 @@ public class Author extends Person implements Comparable<Author> {
     private String bio;
     private BookCategory bookCategory;
 
-    public Author(String firstName, String lastName, String email, long id) {
+    public Author(String firstName, String lastName, String email, Integer id) {
         super(firstName, lastName, email, id);
         bookEditions = new TreeSet<>();
     }
 
-    public Author(String firstName, String lastName, String email, long id, GregorianCalendar birthday,
+    public Author(String firstName, String lastName, String email, Integer id, GregorianCalendar birthday,
                   Country country, TreeSet<BookEdition> bookEditions, String bio, BookCategory bookCategory) {
         super(firstName, lastName, email, id, birthday, country);
         this.bookEditions = bookEditions;

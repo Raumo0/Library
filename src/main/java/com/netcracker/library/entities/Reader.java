@@ -10,7 +10,7 @@ public class Reader extends Person {
     private String login;
     private String password;
 
-    public Reader(String firstName, String lastName, String email, long id, String login, String password) {
+    public Reader(String firstName, String lastName, String email, Integer id, String login, String password) {
         super(firstName, lastName, email, id);
         this.login = login;
         this.password = password;

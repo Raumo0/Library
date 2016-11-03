@@ -98,7 +98,7 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
 
     private Author createAuthor() {
         Collection authors = authorService.getAuthors();
-        long count = authors.size() + 1;
+        Integer count = authors.size() + 1;
         Author author = new Author(String.format("author" + count + "FirstName"),
                 String.format("author" + count + "lastName"),
                 String.format("author" + count + "@gmail.com"), count);
@@ -108,7 +108,7 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
 
     private BookEdition createBookEdition() {
         Collection<BookEdition> bookEditions = bookEditionService.getBookEditions();
-        long count = bookEditions.size() + 1;
+        Integer count = bookEditions.size() + 1;
         BookEdition bookEdition = new BookEdition(count, String.format("title" + count));
         bookEditionService.insertBookEdition(bookEdition);
         return bookEdition;
@@ -122,7 +122,7 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
 
     private Reader createReader() {
         Collection readers = readerService.getReaders();
-        long count = readers.size() + 1;
+        Integer count = readers.size() + 1;
         Reader reader = new Reader(String.format("reader" + count + "FirstName"),
                 String.format("reader" + count + "lastName"),
                 String.format("reader" + count + "@gmail.com"), count, String.format("login" + count),
@@ -133,7 +133,7 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
 
     private Librarian createLibrarian() {
         Collection librarians = readerService.getReaders();
-        long count = librarians.size() + 1;
+        Integer count = librarians.size() + 1;
         Librarian librarian = new Librarian(String.format("librarian" + count + "FirstName"),
                 String.format("librarian" + count + "lastName"),
                 String.format("librarian" + count + "@gmail.com"), count);

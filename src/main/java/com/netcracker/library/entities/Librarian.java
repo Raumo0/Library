@@ -5,7 +5,7 @@ package com.netcracker.library.entities;
  */
 public class Librarian extends Person {
 
-    public Librarian(String firstName, String lastName, String email, long id) {
+    public Librarian(String firstName, String lastName, String email, Integer id) {
         super(firstName, lastName, email, id);
     }
 
@@ -17,7 +17,7 @@ public class Librarian extends Person {
         //TODO
     }
 
-    public void UpdateReaderDetails(long id, String email){
+    public void UpdateReaderDetails(Integer id, String email){
         //TODO
     }
 

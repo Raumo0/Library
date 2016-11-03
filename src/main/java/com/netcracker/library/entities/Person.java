@@ -12,18 +12,18 @@ public abstract class Person implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private long id;
+    private Integer id;
     private GregorianCalendar birthday;
     private Country country;
 
-    public Person(String firstName, String lastName, String email, long id) {
+    public Person(String firstName, String lastName, String email, Integer id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.id = id;
     }
 
-    public Person(String firstName, String lastName, String email, long id, GregorianCalendar birthday,
+    public Person(String firstName, String lastName, String email, Integer id, GregorianCalendar birthday,
                   Country country) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,11 +49,11 @@ public abstract class Person implements Serializable {
         this.email = email;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -106,7 +106,7 @@ public abstract class Person implements Serializable {
         int result = firstName.hashCode();
         result = 31 * result + lastName.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + id.hashCode();
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
         return result;

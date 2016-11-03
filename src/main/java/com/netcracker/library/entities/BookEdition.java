@@ -10,7 +10,7 @@ import java.util.*;
  * Created by raumo0 on 18.10.16.
  */
 public class BookEdition implements Serializable, Comparable<BookEdition> {
-    private long id;
+    private Integer id;
     private LinkedList<Book> books;
     private GregorianCalendar releaseDate;
     private String title;
@@ -21,13 +21,13 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
     private BookLanguage language;
     private int pageCount;
 
-    public BookEdition(long id, String title) {
+    public BookEdition(Integer id, String title) {
         this.id = id;
         this.title = title;
         this.authors = new TreeSet<>();
     }
 
-    public BookEdition(long id, String title, TreeSet<Author> authors, String isbn, List<BookCategory> categories) {
+    public BookEdition(Integer id, String title, TreeSet<Author> authors, String isbn, List<BookCategory> categories) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -35,7 +35,7 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
         this.categories = categories;
     }
 
-    public BookEdition(long id, LinkedList<Book> books, GregorianCalendar releaseDate, String title,
+    public BookEdition(Integer id, LinkedList<Book> books, GregorianCalendar releaseDate, String title,
                        TreeSet<Author> authors, String description, String isbn, List<BookCategory> categories,
                        BookLanguage language, int pageCount) {
         this.id = id;
@@ -50,11 +50,11 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
         this.pageCount = pageCount;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -172,7 +172,7 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = (id ^ (id >>> 32));
         result = 31 * result + (books != null ? books.hashCode() : 0);
         result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
         result = 31 * result + title.hashCode();
@@ -230,6 +230,6 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
      */
     @Override
     public int compareTo(BookEdition o) {
-        return (int) (this.getId() - o.getId());
+        return this.getId() - o.getId();
     }
 }

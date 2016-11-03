@@ -10,13 +10,13 @@ import java.util.LinkedList;
  * Created by raumo0 on 14.10.16.
  */
 public class Book implements Serializable {
-    private long id;
+    private Integer id;
     private BookEdition bookEdition;
     private BookState bookState;
     private BookPosition bookPosition;
     private LinkedList<Cartulary> cartularies;
 
-    public Book(long id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition) {
+    public Book(Integer id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition) {
         this.id = id;
         this.bookEdition = bookEdition;
         this.bookState = bookState;
@@ -24,7 +24,7 @@ public class Book implements Serializable {
         this.cartularies = new LinkedList<>();
     }
 
-    public Book(long id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition,
+    public Book(Integer id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition,
                 LinkedList<Cartulary> cartularies) {
         this.id = id;
         this.bookEdition = bookEdition;
@@ -41,11 +41,11 @@ public class Book implements Serializable {
         this.cartularies = cartularies;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -109,7 +109,7 @@ public class Book implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = (id ^ (id >>> 32));
         result = 31 * result + bookEdition.hashCode();
         result = 31 * result + bookState.hashCode();
         result = 31 * result + bookPosition.hashCode();

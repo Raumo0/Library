@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by raumo0 on 27.10.16.
  */
 public class Cartulary implements Serializable {
-    private long id;
+    private Integer id;
     private Book book;
     private Reader reader;
     private String comment;
@@ -20,7 +20,7 @@ public class Cartulary implements Serializable {
     private Date returnDate;
     private IssueBook issueBook;
 
-    public Cartulary(long id, Book book, Reader reader, BookState before, Date receiveDate) {
+    public Cartulary(Integer id, Book book, Reader reader, BookState before, Date receiveDate) {
         this.book = book;
         this.reader = reader;
         this.before = before;
@@ -68,11 +68,11 @@ public class Cartulary implements Serializable {
         this.after = after;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
