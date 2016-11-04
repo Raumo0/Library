@@ -4,3 +4,5 @@
 *.txt
 *.out
 *.iml
+*.*~
+db_bump.sql
