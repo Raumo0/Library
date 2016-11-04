@@ -8,6 +8,7 @@ import com.netcracker.library.enums.BookState;
 import com.netcracker.library.service.*;
 import com.netcracker.library.service.impl.*;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Random;
 
@@ -39,7 +40,6 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
                 createReader();
             }
             serializeReader();
-            saveText();
 
             createLibrarian();
 
@@ -70,16 +70,29 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
     }
 
     private void serializeReader(){
-        DAOFactory binaryFactory = DAOFactory.getDAOFactory(DAOFactory.BINARY);
-        ReaderDAO readerDAO = binaryFactory.getReaderDAO();
-        readerDAO.saveAll(readerService.getReaders());
+        DAOFactory binaryFactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+        ReaderDAO readerDAO = null;
+        try {
+            readerDAO = binaryFactory.getReaderDAO();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+//        readerDAO.saveAll(readerService.getReaders());
+        int a = 0;
+        for (Reader reader : readerService.getReaders()) {
+            a = readerDAO.insert(reader);
+        }
+        Reader reader = readerDAO.read(a);
+        System.out.println("\n\n" + reader + " " + reader.getFirstName() + " " + reader.getLastName() + "\n\n");
+        reader.setFirstName("KLJLKJFELKFJ");
+        reader.setLastName("KLJFdfkdf");
+        readerDAO.update(reader);
+        reader = readerDAO.read(a);
+        System.out.println("\n\n" + reader + " " + reader.getFirstName() + " " + reader.getLastName() + "\n\n");
+        readerDAO.delete(a);
+        reader = readerDAO.read(a);
+        System.out.println("\n\n" + reader + "\n\n");
         readerService.setReaders(readerDAO.readAll());
-    }
-
-    private void saveText(){
-        DAOFactory textFactory = DAOFactory.getDAOFactory(DAOFactory.TEXT);
-        ReaderDAO readerDAO = textFactory.getReaderDAO();
-        readerDAO.saveAll(readerService.getReaders());
     }
 
     @Override
