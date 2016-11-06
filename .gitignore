@@ -6,3 +6,8 @@
 *.iml
 *.*~
 db_bump.sql
+*.mwb
+*.mwb.*
+classes.png
+entities.png
+library_db_diagram.png
