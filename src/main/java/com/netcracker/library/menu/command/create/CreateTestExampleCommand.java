@@ -46,15 +46,15 @@ public class CreateTestExampleCommand implements CreateEntityCommand {
             for (int i = 0; i < authorService.getAuthors().size(); i ++) {
                 Author author = (Author) authorService.getById(i+1);
                 BookEdition bookEdition = bookEditionService.getById(i+1);
-                author.addBookEdition(bookEdition);
-                bookEdition.addAuthor(author);
+                author.getBookEditions().add(bookEdition);
+                bookEdition.getAuthor().add(author);
             }
             for (int i = authorService.getAuthors().size()-1; i < bookEditionService.getBookEditions().size(); i++) {
                 for (int j = 0; j < rnd.nextInt(5); j++) {
                     Author author = (Author) authorService.getById(rnd.nextInt(5)+1);
                     BookEdition bookEdition = bookEditionService.getById(i+1);
-                    author.addBookEdition(bookEdition);
-                    bookEdition.addAuthor(author);
+                    author.getBookEditions().add(bookEdition);
+                    bookEdition.getAuthor().add(author);
                 }
             }
 

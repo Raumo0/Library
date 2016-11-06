@@ -10,6 +10,10 @@ public class Reader extends Person {
     private String login;
     private String password;
 
+    public Reader(String firstName, String lastName, String email, Integer id) {
+        super(firstName, lastName, email, id);
+    }
+
     public Reader(String firstName, String lastName, String email, Integer id, String login, String password) {
         super(firstName, lastName, email, id);
         this.login = login;
@@ -17,18 +21,12 @@ public class Reader extends Person {
         this.cartularies = new LinkedList<>();
     }
 
-    public Book searchBook(){
-        //TODO
-        return null;
+    public LinkedList<Cartulary> getCartularies() {
+        return cartularies;
     }
 
-    public void returnBook(Book book){
-
-    }
-
-    public Book getBook(){
-        //TODO
-        return null;
+    public void setCartularies(LinkedList<Cartulary> cartularies) {
+        this.cartularies = cartularies;
     }
 
     public String getLogin() {
@@ -50,13 +48,5 @@ public class Reader extends Person {
     @Override
     public String toString() {
         return "Reader{id=" + super.getId() + '}';
-    }
-
-    public LinkedList<Cartulary> getCartularies() {
-        return cartularies;
-    }
-
-    public void setCartularies(LinkedList<Cartulary> cartularies) {
-        this.cartularies = cartularies;
     }
 }

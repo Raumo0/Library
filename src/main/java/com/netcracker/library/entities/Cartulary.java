@@ -20,6 +20,9 @@ public class Cartulary implements Serializable {
     private Date returnDate;
     private IssueBook issueBook;
 
+    public Cartulary() {
+    }
+
     public Cartulary(Integer id, Book book, Reader reader, BookState before, Date receiveDate) {
         this.book = book;
         this.reader = reader;

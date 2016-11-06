@@ -23,22 +23,20 @@ public abstract class Person implements Serializable {
         this.id = id;
     }
 
-    public Person(String firstName, String lastName, String email, Integer id, GregorianCalendar birthday,
-                  Country country) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.id = id;
-        this.birthday = birthday;
-        this.country = country;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

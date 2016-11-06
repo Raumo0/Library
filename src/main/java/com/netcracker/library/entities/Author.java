@@ -1,9 +1,7 @@
 package com.netcracker.library.entities;
 
 import com.netcracker.library.enums.BookCategory;
-import com.netcracker.library.enums.Country;
 
-import java.util.GregorianCalendar;
 import java.util.TreeSet;
 
 /**
@@ -17,14 +15,6 @@ public class Author extends Person implements Comparable<Author> {
     public Author(String firstName, String lastName, String email, Integer id) {
         super(firstName, lastName, email, id);
         bookEditions = new TreeSet<>();
-    }
-
-    public Author(String firstName, String lastName, String email, Integer id, GregorianCalendar birthday,
-                  Country country, TreeSet<BookEdition> bookEditions, String bio, BookCategory bookCategory) {
-        super(firstName, lastName, email, id, birthday, country);
-        this.bookEditions = bookEditions;
-        this.bio = bio;
-        this.bookCategory = bookCategory;
     }
 
     public String getBio() {
@@ -41,10 +31,6 @@ public class Author extends Person implements Comparable<Author> {
 
     public void setBookEditions(TreeSet<BookEdition> bookEditions) {
         this.bookEditions = bookEditions;
-    }
-
-    public void addBookEdition(BookEdition bookEdition) {
-        this.bookEditions.add(bookEdition);
     }
 
     public BookCategory getBookCategory() {
@@ -95,7 +81,7 @@ public class Author extends Person implements Comparable<Author> {
      */
     @Override
     public int compareTo(Author o) {
-        return (int) (this.getId() - o.getId());
+        return this.getId() - o.getId();
     }
 
     @Override

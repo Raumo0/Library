@@ -36,7 +36,7 @@ public class GetBookCommand implements ReaderCommand {
                 if (book == null) {
                     System.out.println(cmd + " " + LibraryView.getMsgCommandNotFound());
                 } else {
-                    if (book.inStore() && (book.getCartularies().size() == 0 ||
+                    if (book.getBookPosition().equals(BookPosition.IN_STORE) && (book.getCartularies().size() == 0 ||
                             book.getCartularies().getLast().getIssueBook() != IssueBook.BOOK_ORDERED)) {
                         Reader reader = loginReaderCommand.getReader();
                         Cartulary cartulary = new Cartulary(1, book, reader, book.getBookState(),

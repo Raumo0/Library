@@ -26,7 +26,7 @@ public class GetBook implements LibrarianCommand {
                     if (book.getCartularies().size() != 0 &&
                             book.getCartularies().getLast().getIssueBook() == IssueBook.BOOK_ORDERED){
                         book.getCartularies().getLast().setIssueBook(IssueBook.BOOK_ISSUED);
-                        if (book.inStore()){
+                        if (book.getBookPosition().equals(BookPosition.IN_STORE)){
                             book.setBookPosition(BookPosition.IN_READING_ROOM);
                         }
                         System.out.println("Book " + cmd + " has been given");

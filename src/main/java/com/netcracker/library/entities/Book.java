@@ -53,6 +53,10 @@ public class Book implements Serializable {
         return bookEdition;
     }
 
+    public void setBookEdition(BookEdition bookEdition) {
+        this.bookEdition = bookEdition;
+    }
+
     public BookState getBookState() {
         return bookState;
     }
@@ -67,24 +71,6 @@ public class Book implements Serializable {
 
     public void setBookPosition(BookPosition bookPosition) {
         this.bookPosition = bookPosition;
-    }
-
-    public boolean inStore(){
-        if (bookPosition == BookPosition.IN_STORE)
-            return true;
-        return false;
-    }
-
-    public boolean inReadingRoom(){
-        if (bookPosition == BookPosition.IN_READING_ROOM)
-            return true;
-        return false;
-    }
-
-    public boolean inReader(){
-        if (bookPosition == BookPosition.IN_READER)
-            return true;
-        return false;
     }
 
     @Override

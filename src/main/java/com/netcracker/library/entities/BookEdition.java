@@ -66,15 +66,6 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
         this.books = books;
     }
 
-    public void addBook(Book book){
-        books.add(book);
-    }
-
-    public Book searchBook(long id){
-        //TODO serch
-        return null;
-    }
-
     public GregorianCalendar getReleaseDate() {
         return releaseDate;
     }
@@ -99,10 +90,6 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
         this.authors = authors;
     }
 
-    public void addAuthor(Author author) {
-        this.authors.add(author);
-    }
-
     public String getDescription() {
         return description;
     }
@@ -123,12 +110,8 @@ public class BookEdition implements Serializable, Comparable<BookEdition> {
         return categories;
     }
 
-    public void addCategory(BookCategory bookCategory) {
-        this.categories.add(bookCategory);
-    }
-
-    public void removeCategory(BookCategory bookCategory){
-        this.categories.remove(bookCategory);
+    public void setCategories(List<BookCategory> categories) {
+        this.categories = categories;
     }
 
     public BookLanguage getLanguage() {

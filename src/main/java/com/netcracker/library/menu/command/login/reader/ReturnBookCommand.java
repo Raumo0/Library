@@ -34,7 +34,7 @@ public class ReturnBookCommand implements ReaderCommand {
                 if (book == null) {
                     System.out.println(cmd + " " + LibraryView.getMsgCommandNotFound());
                 } else {
-                    if (book.inStore() || book.getCartularies().size() == 0 ||
+                    if (book.getBookPosition().equals(BookPosition.IN_STORE) || book.getCartularies().size() == 0 ||
                             book.getCartularies().getLast().getIssueBook() == IssueBook.BOOK_ORDERED) {
                         System.out.println("The book " + cmd + " is already in the repository");
                     } else {

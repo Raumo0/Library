@@ -27,7 +27,7 @@ public class DeniedBook implements LibrarianCommand {
                     Cartulary cartulary = book.getCartularies().getLast();
                     if (cartulary.getIssueBook() == IssueBook.BOOK_ORDERED){
                         cartulary.setIssueBook(IssueBook.DENIED_ORDERING);
-                        if (!book.inStore()){
+                        if (!book.getBookPosition().equals(BookPosition.IN_STORE)){
                             book.setBookPosition(BookPosition.IN_STORE);
                         }
                         System.out.println("Issue book " + cmd + " was denied.");
