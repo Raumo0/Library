@@ -1,4 +1,4 @@
-package com.netcracker.library.dao.mysql;
+package com.netcracker.library.dao.database;
 
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import com.netcracker.library.dao.DAOFactory;
@@ -59,7 +59,7 @@ public class DAOManager extends DAOFactory {
         } catch (SQLException e) {
             throw e;
         }
-        return new MysqlReaderDAO(this.connection);
+        return new DatabaseReaderDAO(this.connection);
     }
 
     @Override

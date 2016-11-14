@@ -1,7 +1,7 @@
 package com.netcracker.library.dao;
 
 //import com.netcracker.library.dao.binary.BinaryDAOFactory;
-import com.netcracker.library.dao.mysql.DAOManager;
+import com.netcracker.library.dao.database.DAOManager;
 //import com.netcracker.library.dao.text.TextDAOFactory;
 
 import java.sql.SQLException;

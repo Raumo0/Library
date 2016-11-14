@@ -1,4 +1,4 @@
-package com.netcracker.library.dao.mysql;
+package com.netcracker.library.dao.database;
 
 import com.netcracker.library.dao.ReaderDAO;
 import com.netcracker.library.entities.Reader;
@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * Created by raumo0 on 04.11.16.
  */
-public class MysqlReaderDAO extends MysqlAbstractDAO implements ReaderDAO {
+public class DatabaseReaderDAO extends DatabaseAbstractDAO implements ReaderDAO {
     private static final String INSERT_NEW = "INSERT INTO reader VALUES(?,?,?,?,?,?)";
     private static final String GET_ALL = "SELECT * FROM reader";
     private static final String GET_BY_ID = "SELECT * FROM reader WHERE id=?";
@@ -21,7 +21,7 @@ public class MysqlReaderDAO extends MysqlAbstractDAO implements ReaderDAO {
     private final static String TABLE_NAME = "reader";
     private Connection connection;
 
-    public MysqlReaderDAO(Connection connection){
+    public DatabaseReaderDAO(Connection connection){
         super(connection, TABLE_NAME);
         this.connection = connection;
     }
