@@ -1,4 +1,4 @@
-package com.netcracker.library.dao.database;
+package com.netcracker.library.dao.mysql;
 
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import com.netcracker.library.dao.AuthorDAO;

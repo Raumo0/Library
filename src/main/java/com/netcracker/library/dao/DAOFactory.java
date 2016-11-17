@@ -1,6 +1,6 @@
 package com.netcracker.library.dao;
 
-import com.netcracker.library.dao.database.DAOManager;
+import com.netcracker.library.dao.mysql.DAOManager;
 
 /**
  * Created by raumo0 on 20.10.16.

@@ -1,4 +1,4 @@
-package com.netcracker.library.dao.database;
+package com.netcracker.library.dao.mysql;
 
 import java.sql.Connection;
 

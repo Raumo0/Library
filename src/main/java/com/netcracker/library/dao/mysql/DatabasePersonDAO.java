@@ -1,4 +1,4 @@
-package com.netcracker.library.dao.database;
+package com.netcracker.library.dao.mysql;
 
 import com.netcracker.library.dao.PersonDAO;
 import com.netcracker.library.beans.Person;
