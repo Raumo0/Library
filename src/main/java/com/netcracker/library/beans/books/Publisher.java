@@ -1,7 +1,7 @@
-package com.netcracker.library.entities.books;
+package com.netcracker.library.beans.books;
 
-import com.netcracker.library.entities.Entity;
-import com.netcracker.library.entities.users.Address;
+import com.netcracker.library.beans.Entity;
+import com.netcracker.library.beans.users.Address;
 
 import java.util.List;
 

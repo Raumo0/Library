@@ -1,4 +1,4 @@
-package com.netcracker.library.entities;
+package com.netcracker.library.beans;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;

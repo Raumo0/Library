@@ -1,6 +1,6 @@
-package com.netcracker.library.entities.users;
+package com.netcracker.library.beans.users;
 
-import com.netcracker.library.entities.Entity;
+import com.netcracker.library.beans.Entity;
 
 import java.util.GregorianCalendar;
 

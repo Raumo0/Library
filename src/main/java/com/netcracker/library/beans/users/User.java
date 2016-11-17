@@ -1,7 +1,7 @@
-package com.netcracker.library.entities.users;
+package com.netcracker.library.beans.users;
 
-import com.netcracker.library.entities.Person;
-import com.netcracker.library.entities.business.Rental;
+import com.netcracker.library.beans.Person;
+import com.netcracker.library.beans.business.Rental;
 
 import java.util.List;
 

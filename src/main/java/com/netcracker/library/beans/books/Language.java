@@ -1,25 +1,25 @@
-package com.netcracker.library.entities.books;
+package com.netcracker.library.beans.books;
 
-import com.netcracker.library.entities.Entity;
+import com.netcracker.library.beans.Entity;
 
 import java.util.List;
 
 /**
  * Created by raumo0 on 15.11.16.
  */
-public class Category extends Entity {
+public class Language extends Entity {
     private static final long serialVersionUID = 1L;
-    private String category;
+    private String language;
     private List<BookEdition> bookEditions;
 
-    public Category() {}
+    public Language() {}
 
-    public String getCategory() {
-        return category;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public List<BookEdition> getBookEditions() {
@@ -36,25 +36,25 @@ public class Category extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Category category1 = (Category) o;
+        Language language1 = (Language) o;
 
-        if (category != null ? !category.equals(category1.category) : category1.category != null) return false;
-        return bookEditions != null ? bookEditions.equals(category1.bookEditions) : category1.bookEditions == null;
+        if (language != null ? !language.equals(language1.language) : language1.language != null) return false;
+        return bookEditions != null ? bookEditions.equals(language1.bookEditions) : language1.bookEditions == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (language != null ? language.hashCode() : 0);
         result = 31 * result + (bookEditions != null ? bookEditions.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Category{" +
-                "category='" + category + '\'' +
+        return "Language{" +
+                "language='" + language + '\'' +
                 ", bookEditions=" + bookEditions +
                 "} " + super.toString();
     }

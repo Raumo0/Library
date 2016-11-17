@@ -1,8 +1,8 @@
-package com.netcracker.library.entities.business;
+package com.netcracker.library.beans.business;
 
-import com.netcracker.library.entities.Entity;
-import com.netcracker.library.entities.books.Book;
-import com.netcracker.library.entities.users.User;
+import com.netcracker.library.beans.Entity;
+import com.netcracker.library.beans.books.Book;
+import com.netcracker.library.beans.users.User;
 import com.netcracker.library.enums.BookState;
 import com.netcracker.library.enums.BookIssue;
 

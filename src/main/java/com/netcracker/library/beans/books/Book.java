@@ -1,7 +1,7 @@
-package com.netcracker.library.entities.books;
+package com.netcracker.library.beans.books;
 
-import com.netcracker.library.entities.Entity;
-import com.netcracker.library.entities.business.Rental;
+import com.netcracker.library.beans.Entity;
+import com.netcracker.library.beans.business.Rental;
 import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
 

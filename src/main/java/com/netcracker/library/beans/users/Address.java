@@ -1,6 +1,6 @@
-package com.netcracker.library.entities.users;
+package com.netcracker.library.beans.users;
 
-import com.netcracker.library.entities.Entity;
+import com.netcracker.library.beans.Entity;
 
 /**
  * Created by raumo0 on 15.11.16.

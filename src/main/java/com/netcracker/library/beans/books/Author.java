@@ -1,6 +1,6 @@
-package com.netcracker.library.entities.books;
+package com.netcracker.library.beans.books;
 
-import com.netcracker.library.entities.Person;
+import com.netcracker.library.beans.Person;
 
 import java.util.ArrayList;
 import java.util.List;

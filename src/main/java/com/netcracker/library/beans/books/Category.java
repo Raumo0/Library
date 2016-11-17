@@ -1,26 +1,25 @@
-package com.netcracker.library.entities.books;
+package com.netcracker.library.beans.books;
 
-import com.netcracker.library.entities.Entity;
+import com.netcracker.library.beans.Entity;
 
-import java.awt.*;
 import java.util.List;
 
 /**
  * Created by raumo0 on 15.11.16.
  */
-public class Language extends Entity {
+public class Category extends Entity {
     private static final long serialVersionUID = 1L;
-    private String language;
+    private String category;
     private List<BookEdition> bookEditions;
 
-    public Language() {}
+    public Category() {}
 
-    public String getLanguage() {
-        return language;
+    public String getCategory() {
+        return category;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public List<BookEdition> getBookEditions() {
@@ -37,25 +36,25 @@ public class Language extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Language language1 = (Language) o;
+        Category category1 = (Category) o;
 
-        if (language != null ? !language.equals(language1.language) : language1.language != null) return false;
-        return bookEditions != null ? bookEditions.equals(language1.bookEditions) : language1.bookEditions == null;
+        if (category != null ? !category.equals(category1.category) : category1.category != null) return false;
+        return bookEditions != null ? bookEditions.equals(category1.bookEditions) : category1.bookEditions == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (language != null ? language.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (bookEditions != null ? bookEditions.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Language{" +
-                "language='" + language + '\'' +
+        return "Category{" +
+                "category='" + category + '\'' +
                 ", bookEditions=" + bookEditions +
                 "} " + super.toString();
     }
