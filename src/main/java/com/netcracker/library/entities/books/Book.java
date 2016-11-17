@@ -1,5 +1,7 @@
-package com.netcracker.library.entities;
+package com.netcracker.library.entities.books;
 
+import com.netcracker.library.entities.Entity;
+import com.netcracker.library.entities.business.Rental;
 import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
 
@@ -9,14 +11,14 @@ import java.util.LinkedList;
 /**
  * Created by raumo0 on 14.10.16.
  */
-public class Book implements Serializable {
-    private Integer id;
+public class Book extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private BookEdition bookEdition;
     private BookState bookState;
     private BookPosition bookPosition;
-    private LinkedList<Cartulary> cartularies;
+    private LinkedList<Rental> cartularies;
 
-    public Book(Integer id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition) {
+    public Book(int id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition) {
         this.id = id;
         this.bookEdition = bookEdition;
         this.bookState = bookState;
@@ -24,8 +26,8 @@ public class Book implements Serializable {
         this.cartularies = new LinkedList<>();
     }
 
-    public Book(Integer id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition,
-                LinkedList<Cartulary> cartularies) {
+    public Book(int id, BookEdition bookEdition, BookState bookState, BookPosition bookPosition,
+                LinkedList<Rental> cartularies) {
         this.id = id;
         this.bookEdition = bookEdition;
         this.bookState = bookState;
@@ -33,19 +35,19 @@ public class Book implements Serializable {
         this.cartularies = cartularies;
     }
 
-    public LinkedList<Cartulary> getCartularies() {
+    public LinkedList<Rental> getCartularies() {
         return cartularies;
     }
 
-    public void setCartularies(LinkedList<Cartulary> cartularies) {
+    public void setCartularies(LinkedList<Rental> cartularies) {
         this.cartularies = cartularies;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

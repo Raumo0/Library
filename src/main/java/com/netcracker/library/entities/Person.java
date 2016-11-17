@@ -1,26 +1,22 @@
 package com.netcracker.library.entities;
 
-import com.netcracker.library.enums.Country;
-
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
  * Created by raumo0 on 14.10.16.
  */
-public abstract class Person implements Serializable {
+public abstract class Person extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String firstName;
     private String lastName;
     private String email;
-    private Integer id;
     private GregorianCalendar birthday;
-    private Country country;
 
-    public Person(String firstName, String lastName, String email, Integer id) {
+    public Person(String firstName, String lastName, int id) {
+        super(id);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -47,7 +43,7 @@ public abstract class Person implements Serializable {
         this.email = email;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -63,14 +59,6 @@ public abstract class Person implements Serializable {
         this.birthday = birthday;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
     @Override
     public String toString() {
         return "Person{" +
@@ -79,7 +67,6 @@ public abstract class Person implements Serializable {
                 ", email='" + email + '\'' +
                 ", id=" + id +
                 ", birthday=" + birthday +
-                ", country=" + country +
                 '}';
     }
 
@@ -87,26 +74,23 @@ public abstract class Person implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Person person = (Person) o;
 
-        if (id != person.id) return false;
         if (!firstName.equals(person.firstName)) return false;
         if (!lastName.equals(person.lastName)) return false;
-        if (!email.equals(person.email)) return false;
-        if (birthday != null ? !birthday.equals(person.birthday) : person.birthday != null) return false;
-        return country == person.country;
-
+        if (email != null ? !email.equals(person.email) : person.email != null) return false;
+        return birthday != null ? birthday.equals(person.birthday) : person.birthday == null;
     }
 
     @Override
     public int hashCode() {
-        int result = firstName.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + firstName.hashCode();
         result = 31 * result + lastName.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + id.hashCode();
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
         return result;
     }
 }

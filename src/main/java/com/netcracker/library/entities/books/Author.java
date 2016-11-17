@@ -1,6 +1,6 @@
-package com.netcracker.library.entities;
+package com.netcracker.library.entities.books;
 
-import com.netcracker.library.enums.BookCategory;
+import com.netcracker.library.entities.Person;
 
 import java.util.TreeSet;
 
@@ -8,12 +8,18 @@ import java.util.TreeSet;
  * Created by raumo0 on 14.10.16.
  */
 public class Author extends Person implements Comparable<Author> {
+    private static final long serialVersionUID = 1L;
     private TreeSet<BookEdition> bookEditions;
     private String bio;
     private BookCategory bookCategory;
 
-    public Author(String firstName, String lastName, String email, Integer id) {
-        super(firstName, lastName, email, id);
+    public Author(String firstName, String lastName, int id) {
+        super(firstName, lastName, id);
+        bookEditions = new TreeSet<>();
+    }
+
+    public Author(Person person){
+        super(person.getFirstName(), person.getLastName(), person.getId());
         bookEditions = new TreeSet<>();
     }
 

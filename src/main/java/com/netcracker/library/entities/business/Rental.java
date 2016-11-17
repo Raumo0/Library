@@ -1,7 +1,9 @@
-package com.netcracker.library.entities;
+package com.netcracker.library.entities.business;
 
+import com.netcracker.library.entities.Entity;
+import com.netcracker.library.entities.books.Book;
 import com.netcracker.library.enums.BookState;
-import com.netcracker.library.enums.IssueBook;
+import com.netcracker.library.enums.BookIssue;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,7 +11,8 @@ import java.util.Date;
 /**
  * Created by raumo0 on 27.10.16.
  */
-public class Cartulary implements Serializable {
+public class Rental extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private Book book;
     private Reader reader;
@@ -18,12 +21,12 @@ public class Cartulary implements Serializable {
     private BookState after;
     private Date receiveDate;
     private Date returnDate;
-    private IssueBook issueBook;
+    private BookIssue bookIssue;
 
-    public Cartulary() {
+    public Rental() {
     }
 
-    public Cartulary(Integer id, Book book, Reader reader, BookState before, Date receiveDate) {
+    public Rental(Integer id, Book book, Reader reader, BookState before, Date receiveDate) {
         this.book = book;
         this.reader = reader;
         this.before = before;
@@ -95,11 +98,11 @@ public class Cartulary implements Serializable {
         this.returnDate = returnDate;
     }
 
-    public IssueBook getIssueBook() {
-        return issueBook;
+    public BookIssue getBookIssue() {
+        return bookIssue;
     }
 
-    public void setIssueBook(IssueBook issueBook) {
-        this.issueBook = issueBook;
+    public void setBookIssue(BookIssue bookIssue) {
+        this.bookIssue = bookIssue;
     }
 }
