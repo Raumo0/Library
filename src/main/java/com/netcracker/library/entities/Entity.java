@@ -8,8 +8,26 @@ import java.util.GregorianCalendar;
  */
 public abstract class Entity implements Serializable {
     private static final long serialVersionUID = 1L;
-    protected int id;
-    protected GregorianCalendar lastUpdate;
+    private int id;
+    private GregorianCalendar lastUpdate;
+
+    public Entity() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public GregorianCalendar getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(GregorianCalendar lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -18,37 +36,23 @@ public abstract class Entity implements Serializable {
 
         Entity entity = (Entity) o;
 
-        return id == entity.id;
+        if (id != entity.id) return false;
+        return lastUpdate != null ? lastUpdate.equals(entity.lastUpdate) : entity.lastUpdate == null;
+
     }
 
     @Override
     public int hashCode() {
-        return id;
+        int result = id;
+        result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Entity{" +
                 "id=" + id +
+                ", lastUpdate=" + lastUpdate +
                 '}';
-    }
-
-    public Entity() {}
-
-    public Entity(int id) {
-        this.id = id;
-    }
-
-    public Entity(int id, GregorianCalendar lastUpdate) {
-        this.id = id;
-        this.lastUpdate = lastUpdate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

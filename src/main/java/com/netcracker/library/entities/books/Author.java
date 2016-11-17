@@ -2,49 +2,43 @@ package com.netcracker.library.entities.books;
 
 import com.netcracker.library.entities.Person;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by raumo0 on 14.10.16.
  */
 public class Author extends Person implements Comparable<Author> {
     private static final long serialVersionUID = 1L;
-    private TreeSet<BookEdition> bookEditions;
-    private String bio;
-    private BookCategory bookCategory;
+    private String biography;
+    private List<BookEdition> bookEditions;
+
+    public Author(){}
 
     public Author(String firstName, String lastName, int id) {
         super(firstName, lastName, id);
-        bookEditions = new TreeSet<>();
+        bookEditions = new ArrayList<BookEdition>();
     }
 
     public Author(Person person){
         super(person.getFirstName(), person.getLastName(), person.getId());
-        bookEditions = new TreeSet<>();
+        bookEditions = new ArrayList<BookEdition>();
     }
 
-    public String getBio() {
-        return bio;
+    public String getBiography() {
+        return biography;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
-    public TreeSet<BookEdition> getBookEditions() {
+    public List<BookEdition> getBookEditions() {
         return bookEditions;
     }
 
-    public void setBookEditions(TreeSet<BookEdition> bookEditions) {
+    public void setBookEditions(List<BookEdition> bookEditions) {
         this.bookEditions = bookEditions;
-    }
-
-    public BookCategory getBookCategory() {
-        return bookCategory;
-    }
-
-    public void setBookCategory(BookCategory bookCategory) {
-        this.bookCategory = bookCategory;
     }
 
     /**
@@ -98,24 +92,23 @@ public class Author extends Person implements Comparable<Author> {
 
         Author author = (Author) o;
 
-        if (bookEditions != null ? !bookEditions.equals(author.bookEditions) : author.bookEditions != null)
-            return false;
-        if (bio != null ? !bio.equals(author.bio) : author.bio != null) return false;
-        return bookCategory == author.bookCategory;
-
+        if (biography != null ? !biography.equals(author.biography) : author.biography != null) return false;
+        return bookEditions != null ? bookEditions.equals(author.bookEditions) : author.bookEditions == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        result = 31 * result + (biography != null ? biography.hashCode() : 0);
         result = 31 * result + (bookEditions != null ? bookEditions.hashCode() : 0);
-        result = 31 * result + (bio != null ? bio.hashCode() : 0);
-        result = 31 * result + (bookCategory != null ? bookCategory.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Author{id=" + super.getId() + "} ";
+        return "Author{" +
+                "biography='" + biography + '\'' +
+                ", bookEditions=" + bookEditions +
+                "} " + super.toString();
     }
 }

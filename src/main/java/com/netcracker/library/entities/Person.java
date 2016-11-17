@@ -1,22 +1,27 @@
 package com.netcracker.library.entities;
 
-import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
  * Created by raumo0 on 14.10.16.
  */
-public abstract class Person extends Entity implements Serializable {
+public abstract class Person extends Entity {
     private static final long serialVersionUID = 1L;
     private String firstName;
     private String lastName;
     private String email;
     private GregorianCalendar birthday;
+    private int personId;
+    private String image;
 
-    public Person(String firstName, String lastName, int id) {
-        super(id);
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Person(){}
+
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getFirstName() {
@@ -43,14 +48,6 @@ public abstract class Person extends Entity implements Serializable {
         this.email = email;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public GregorianCalendar getBirthday() {
         return birthday;
     }
@@ -59,15 +56,12 @@ public abstract class Person extends Entity implements Serializable {
         this.birthday = birthday;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", id=" + id +
-                ", birthday=" + birthday +
-                '}';
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
@@ -78,19 +72,36 @@ public abstract class Person extends Entity implements Serializable {
 
         Person person = (Person) o;
 
-        if (!firstName.equals(person.firstName)) return false;
-        if (!lastName.equals(person.lastName)) return false;
+        if (personId != person.personId) return false;
+        if (firstName != null ? !firstName.equals(person.firstName) : person.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(person.lastName) : person.lastName != null) return false;
         if (email != null ? !email.equals(person.email) : person.email != null) return false;
-        return birthday != null ? birthday.equals(person.birthday) : person.birthday == null;
+        if (birthday != null ? !birthday.equals(person.birthday) : person.birthday != null) return false;
+        return image != null ? image.equals(person.image) : person.image == null;
+
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + personId;
+        result = 31 * result + (image != null ? image.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", birthday=" + birthday +
+                ", personId=" + personId +
+                ", image='" + image + '\'' +
+                "} " + super.toString();
     }
 }

@@ -1,77 +1,31 @@
 package com.netcracker.library.entities.books;
 
 import com.netcracker.library.entities.Entity;
+import com.netcracker.library.enums.Bookbinding;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by raumo0 on 18.10.16.
  */
-public class BookEdition extends Entity implements Serializable, Comparable<BookEdition> {
+public class BookEdition extends Entity implements Comparable<BookEdition> {
     private static final long serialVersionUID = 1L;
-    private LinkedList<Book> books;
-    private GregorianCalendar releaseDate;
     private String title;
-    private TreeSet<Author> authors;
+    private int pageCount;
+    private GregorianCalendar releaseYear;
     private String description;
     private String isbn;
-    private List<BookCategory> categories;
-    private BookLanguage language;
-    private int pageCount;
+    private int weight;
+    private Bookbinding bookbinding;
+    private String image;
+    private Publisher publisher;
+    private List<Author> authors;
+    private Language language;
+    private Language originalLanguage;
+    private List<Category> categories;
+    private List<Book> books;
 
-    public BookEdition(int id, String title) {
-        this.id = id;
-        this.title = title;
-        this.authors = new TreeSet<>();
-    }
-
-    public BookEdition(int id, String title, TreeSet<Author> authors, String isbn, List<BookCategory> categories) {
-        this.id = id;
-        this.title = title;
-        this.authors = authors;
-        this.isbn = isbn;
-        this.categories = categories;
-    }
-
-    public BookEdition(int id, LinkedList<Book> books, GregorianCalendar releaseDate, String title,
-                       TreeSet<Author> authors, String description, String isbn, List<BookCategory> categories,
-                       BookLanguage language, int pageCount) {
-        this.id = id;
-        this.books = books;
-        this.releaseDate = releaseDate;
-        this.title = title;
-        this.authors = authors;
-        this.description = description;
-        this.isbn = isbn;
-        this.categories = categories;
-        this.language = language;
-        this.pageCount = pageCount;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LinkedList<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(LinkedList<Book> books) {
-        this.books = books;
-    }
-
-    public GregorianCalendar getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(GregorianCalendar releaseDate) {
-        this.releaseDate = releaseDate;
-    }
+    public BookEdition() {}
 
     public String getTitle() {
         return title;
@@ -81,12 +35,20 @@ public class BookEdition extends Entity implements Serializable, Comparable<Book
         this.title = title;
     }
 
-    public TreeSet<Author> getAuthor() {
-        return authors;
+    public int getPageCount() {
+        return pageCount;
     }
 
-    public void setAuthors(TreeSet<Author> authors) {
-        this.authors = authors;
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public GregorianCalendar getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(GregorianCalendar releaseYear) {
+        this.releaseYear = releaseYear;
     }
 
     public String getDescription() {
@@ -105,71 +67,142 @@ public class BookEdition extends Entity implements Serializable, Comparable<Book
         this.isbn = isbn;
     }
 
-    public List<BookCategory> getCategories() {
-        return categories;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setCategories(List<BookCategory> categories) {
-        this.categories = categories;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
-    public BookLanguage getLanguage() {
+    public Bookbinding getBookbinding() {
+        return bookbinding;
+    }
+
+    public void setBookbinding(Bookbinding bookbinding) {
+        this.bookbinding = bookbinding;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
+    public Language getLanguage() {
         return language;
     }
 
-    public void setLanguage(BookLanguage language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
 
-    public int getPageCount() {
-        return pageCount;
+    public Language getOriginalLanguage() {
+        return originalLanguage;
     }
 
-    //TODO change exception
-    public void setPageCount(int pageCount) throws Exception {
-        if (pageCount < 0)
-            throw new Exception();
-        this.pageCount = pageCount;
+    public void setOriginalLanguage(Language originalLanguage) {
+        this.originalLanguage = originalLanguage;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         BookEdition that = (BookEdition) o;
 
-        if (id != that.id) return false;
         if (pageCount != that.pageCount) return false;
-        if (books != null ? !books.equals(that.books) : that.books != null) return false;
-        if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
-        if (!title.equals(that.title)) return false;
-        if (authors != null ? !authors.equals(that.authors) : that.authors != null) return false;
+        if (weight != that.weight) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (releaseYear != null ? !releaseYear.equals(that.releaseYear) : that.releaseYear != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (isbn != null ? !isbn.equals(that.isbn) : that.isbn != null) return false;
+        if (bookbinding != that.bookbinding) return false;
+        if (image != null ? !image.equals(that.image) : that.image != null) return false;
+        if (publisher != null ? !publisher.equals(that.publisher) : that.publisher != null) return false;
+        if (authors != null ? !authors.equals(that.authors) : that.authors != null) return false;
+        if (language != null ? !language.equals(that.language) : that.language != null) return false;
+        if (originalLanguage != null ? !originalLanguage.equals(that.originalLanguage) : that.originalLanguage != null)
+            return false;
         if (categories != null ? !categories.equals(that.categories) : that.categories != null) return false;
-        return language == that.language;
+        return books != null ? books.equals(that.books) : that.books == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = (id ^ (id >>> 32));
-        result = 31 * result + (books != null ? books.hashCode() : 0);
-        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
-        result = 31 * result + title.hashCode();
-        result = 31 * result + (authors != null ? authors.hashCode() : 0);
+        int result = super.hashCode();
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + pageCount;
+        result = 31 * result + (releaseYear != null ? releaseYear.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
-        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + weight;
+        result = 31 * result + (bookbinding != null ? bookbinding.hashCode() : 0);
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
+        result = 31 * result + (authors != null ? authors.hashCode() : 0);
         result = 31 * result + (language != null ? language.hashCode() : 0);
-        result = 31 * result + pageCount;
+        result = 31 * result + (originalLanguage != null ? originalLanguage.hashCode() : 0);
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + (books != null ? books.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "BookEdition{id=" + id + '}';
+        return "BookEdition{" +
+                "title='" + title + '\'' +
+                ", pageCount=" + pageCount +
+                ", releaseYear=" + releaseYear +
+                ", description='" + description + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", weight=" + weight +
+                ", bookbinding=" + bookbinding +
+                ", image='" + image + '\'' +
+                ", publisher=" + publisher +
+                ", authors=" + authors +
+                ", language=" + language +
+                ", originalLanguage=" + originalLanguage +
+                ", categories=" + categories +
+                ", books=" + books +
+                "} " + super.toString();
     }
 
     /**
