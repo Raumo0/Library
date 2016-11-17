@@ -1,8 +1,9 @@
 package com.netcracker.library.dao.database;
 
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
+import com.netcracker.library.dao.AuthorDAO;
 import com.netcracker.library.dao.DAOFactory;
-import com.netcracker.library.dao.ReaderDAO;
+import com.netcracker.library.dao.PersonDAO;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -53,13 +54,23 @@ public class DAOManager extends DAOFactory {
     }
 
     @Override
-    public ReaderDAO getReaderDAO() throws SQLException {
+    public PersonDAO getPersonDAO() {
         try {
             open();
         } catch (SQLException e) {
-            throw e;
+            e.printStackTrace();
         }
-        return new DatabaseReaderDAO(this.connection);
+        return new DatabasePersonDAO(this.connection);
+    }
+
+    @Override
+    public AuthorDAO getAuthorDAO() {
+        try {
+            open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new DatabaseAuthorDAO(this.connection);
     }
 
     @Override
