@@ -2,7 +2,6 @@ package com.netcracker.library.beans.books;
 
 import com.netcracker.library.beans.Person;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,16 +13,6 @@ public class Author extends Person implements Comparable<Author> {
     private List<BookEdition> bookEditions;
 
     public Author(){}
-
-    public Author(String firstName, String lastName, int id) {
-        super(firstName, lastName, id);
-        bookEditions = new ArrayList<BookEdition>();
-    }
-
-    public Author(Person person){
-        super(person.getFirstName(), person.getLastName(), person.getId());
-        bookEditions = new ArrayList<BookEdition>();
-    }
 
     public String getBiography() {
         return biography;
