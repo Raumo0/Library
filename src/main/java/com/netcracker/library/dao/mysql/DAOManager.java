@@ -5,10 +5,8 @@ import com.netcracker.library.dao.AuthorDAO;
 import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.dao.PersonDAO;
 
-import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 /**
  * Created by raumo0 on 04.11.16.
@@ -16,11 +14,6 @@ import java.sql.SQLException;
  * When you call close(), you close every single connection the DAOs are using
  */
 public class DAOManager extends DAOFactory {
-    private static final String URL = "jdbc:mysql://localhost:3306/library";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "mysql";
-    private Connection connection;
-
     private DAOManager() throws Exception {
         try {
             Driver driver = new FabricMySQLDriver();
@@ -34,52 +27,14 @@ public class DAOManager extends DAOFactory {
         return DAOManagerSingleton.INSTANCE.get();
     }
 
-    public void open() throws SQLException {
-        try{
-            if(this.connection ==null || this.connection.isClosed())
-                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        }
-        catch(SQLException e) {
-            throw e;
-        }
-    }
-
-    public void close() throws SQLException {
-        try{
-            if(this.connection !=null && !this.connection.isClosed())
-                this.connection.close();
-        } catch(SQLException e) {
-            throw e;
-        }
-    }
-
     @Override
     public PersonDAO getPersonDAO() {
-        try {
-            open();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new DatabasePersonDAO(this.connection);
+        return new DatabasePersonDAO();
     }
 
     @Override
     public AuthorDAO getAuthorDAO() {
-        try {
-            open();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return new DatabaseAuthorDAO(this.connection);
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        try{
-            this.close();
-        } finally{
-            super.finalize();
-        }
+        return new DatabaseAuthorDAO();
     }
 
     private static class DAOManagerSingleton {
