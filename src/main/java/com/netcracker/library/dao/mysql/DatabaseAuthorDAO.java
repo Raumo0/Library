@@ -69,17 +69,17 @@ public class DatabaseAuthorDAO implements AuthorDAO {
     }
 
     @Override
-    public boolean update(Author author) {
-        return false;
+    public boolean update(Author author) throws DAOException {
+        throw new DAOException();
     }
 
     @Override
-    public boolean deleteById(int id) {
-        return false;
+    public boolean deleteById(int id) throws DAOException {
+        throw new DAOException();
     }
 
     @Override
-    public Collection<Author> getAll() {
-        return null;
+    public Collection<Author> getAll() throws DAOException {
+        throw new DAOException();
     }
 }

@@ -43,22 +43,23 @@ public class DatabasePersonDAO implements PersonDAO {
     }
 
     @Override
-    public Person getById(int id) {
-        return null;
+    public Person getById(int id) throws DAOException {
+        //TODO how do i can return abstract class? XD
+        throw new DAOException();
     }
 
     @Override
-    public boolean update(Person person) {
-        return false;
+    public boolean update(Person person) throws DAOException {
+        throw new DAOException();
     }
 
     @Override
-    public boolean deleteById(int id) {
-        return false;
+    public boolean deleteById(int id) throws DAOException {
+        throw new DAOException();
     }
 
     @Override
-    public Collection<Person> getAll() {
-        return null;
+    public Collection<Person> getAll() throws DAOException {
+        throw new DAOException();
     }
 }

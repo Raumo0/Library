@@ -13,9 +13,9 @@ public interface AbstractDAO <T extends Entity> {
 
     T getById(int id) throws DAOException;
 
-    boolean update(T reader);
+    boolean update(T reader) throws DAOException;
 
-    boolean deleteById(int id);
+    boolean deleteById(int id) throws DAOException;
 
-    Collection<T> getAll();
+    Collection<T> getAll() throws DAOException;
 }
