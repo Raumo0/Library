@@ -19,7 +19,12 @@ public class User extends Person {
     private List<Rental> rentals;
     private List<UserRole> userRoles;
 
-    public User() {}
+    public User() {
+    }
+
+    public User(Person person) {
+        super(person);
+    }
 
     public String getUsername() {
         return username;

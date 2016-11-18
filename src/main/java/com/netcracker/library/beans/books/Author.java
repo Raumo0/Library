@@ -12,7 +12,12 @@ public class Author extends Person implements Comparable<Author> {
     private String biography;
     private List<BookEdition> bookEditions;
 
-    public Author(){}
+    public Author() {
+    }
+
+    public Author(Person person) {
+        super(person);
+    }
 
     public String getBiography() {
         return biography;
