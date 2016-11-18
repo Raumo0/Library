@@ -12,7 +12,7 @@ public abstract class DAOFactory {
     // There will be a method for each DAO that can be
     // created. The concrete factories will have to
     // implement these methods.
-    public abstract PersonDAO getPersonDAO();
+//    public abstract PersonDAO getPersonDAO();
     public abstract AuthorDAO getAuthorDAO();
 
     public static DAOFactory getDAOFactory(int whichFactory) {

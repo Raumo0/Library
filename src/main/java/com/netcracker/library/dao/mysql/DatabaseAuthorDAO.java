@@ -10,13 +10,14 @@ import java.util.Collection;
 /**
  * Created by raumo0 on 14.11.16.
  */
-public class DatabaseAuthorDAO implements AuthorDAO {
+public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
     private static final String INSERT_NEW = "INSERT INTO reader VALUES(?,?,?,?,?,?)";
     private static final String GET_ALL = "SELECT * FROM reader";
     private static final String GET_BY_ID = "SELECT * FROM author WHERE id=?";
+    private static final String GET_PERSON_ID_BY_AUTHOR_ID = "SELECT person_id FROM author WHERE id=?";
     private static final String INSERT = "INSERT INTO author (biography, person_id) VALUES(?,?)";
-    private static final String DELETE = "DELETE FROM reader WHERE id=?";
-    private static final String UPDATE = "UPDATE reader set FIRST_NAME=?,LAST_NAME=?,EMAIL=?,LOGIN=?,PASSWORD=? WHERE id=?";
+    private static final String DELETE = "DELETE FROM author WHERE id=?";
+    private static final String UPDATE = "UPDATE author SET biography=? WHERE id=?";
 
     private final static String TABLE_NAME = "author";
 
@@ -29,6 +30,8 @@ public class DatabaseAuthorDAO implements AuthorDAO {
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
+            if (author.getPersonId() == 0)
+                author.setPersonId(insertPerson(author, connection));
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, author.getBiography());
             statement.setInt(2, author.getPersonId());
@@ -59,7 +62,7 @@ public class DatabaseAuthorDAO implements AuthorDAO {
                 author.setBiography(result.getString("biography"));
                 author.setPersonId(result.getInt("person_id"));
             }
-
+            getPersonById(author.getPersonId(), author, connection);
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -70,12 +73,44 @@ public class DatabaseAuthorDAO implements AuthorDAO {
 
     @Override
     public boolean update(Author author) throws DAOException {
-        throw new DAOException();
+        Connection connection = null;
+        PreparedStatement statement;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(UPDATE);
+            statement.setString(1, author.getBiography());
+            statement.setInt(2, author.getId());
+            statement.executeUpdate();
+            return updatePerson(author, connection);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
     }
 
     @Override
     public boolean deleteById(int id) throws DAOException {
-        throw new DAOException();
+        Connection connection = null;
+        PreparedStatement statement;
+        int personId = 0;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_PERSON_ID_BY_AUTHOR_ID);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                personId = result.getInt("person_id");
+            }
+            statement = connection.prepareStatement(DELETE);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            return deletePersonById(personId, connection);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
     }
 
     @Override

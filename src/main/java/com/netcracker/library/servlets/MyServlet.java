@@ -3,7 +3,6 @@ package com.netcracker.library.servlets;
 import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.service.impl.AuthorServiceImpl;
-import com.netcracker.library.service.impl.PersonServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,13 +24,15 @@ public class MyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Author author = null;
+        String firstName = request.getParameter("fName");
+        String lastName = request.getParameter("lName");
+        String biography = request.getParameter("bio");
+
+        Author author = new Author();
+        author.setFirstName(firstName);
+        author.setLastName(lastName);
+        author.setBiography(biography);
         try {
-            author = new Author();
-            author.setFirstName("firstName");
-            author.setLastName("lastName");
-            author.setBiography("The bio.");
-            author.setPersonId(PersonServiceImpl.getInstance().insert(author));
             author.setId(AuthorServiceImpl.getInstance().insert(author));
             author = AuthorServiceImpl.getInstance().getById(author.getId());
         } catch (DAOException e) {
