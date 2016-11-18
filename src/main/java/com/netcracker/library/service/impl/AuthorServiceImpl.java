@@ -1,75 +1,55 @@
 package com.netcracker.library.service.impl;
 
-import com.netcracker.library.entities.Author;
-import com.netcracker.library.entities.Person;
-import com.netcracker.library.enums.BookCategory;
-import com.netcracker.library.enums.Country;
+import com.netcracker.library.beans.books.Author;
+import com.netcracker.library.dao.AuthorDAO;
+import com.netcracker.library.dao.DAOFactory;
+import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.service.AuthorService;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 
 /**
- * Created by raumo0 on 21.10.16.
+ * Created by raumo0 on 18.11.16.
  */
 public class AuthorServiceImpl implements AuthorService {
-    private static ArrayList<Author> authors = new ArrayList<>();
+    private DAOFactory factory;
+    private AuthorDAO authorDAO;
 
-    @Override
-    public Author getById(long id) {
-        for (Author author : authors) {
-            if (author.getId() == id){
-                return  author;
-            }
-        }
-        return null;
+    private AuthorServiceImpl() {
+        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+        authorDAO = factory.getAuthorDAO();
+    }
+
+    public static AuthorServiceImpl getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 
     @Override
-    public Person getByEmail(String email) {
-        return null;
+    public int insert(Author author) throws DAOException {
+        return authorDAO.insert(author);
     }
 
     @Override
-    public ArrayList<Person> getByFirstName(String firstName) {
-        return null;
+    public Author getById(int id) throws DAOException {
+        return authorDAO.getById(id);
     }
 
     @Override
-    public ArrayList<Person> getByLastName(String lastName) {
-        return null;
+    public boolean update(Author author) throws DAOException {
+        throw new DAOException();
     }
 
     @Override
-    public ArrayList<Person> getByCountry(Country country) {
-        return null;
+    public boolean deleteById(int id) throws DAOException {
+        throw new DAOException();
     }
 
     @Override
-    public ArrayList<Person> getByBirthday(GregorianCalendar birthday) {
-        return null;
+    public Collection<Author> getAll() throws DAOException {
+        throw new DAOException();
     }
 
-    @Override
-    public long insertAuthor(Author author) {
-        if (authors.size() == 0) {
-            author.setId(1);
-        }
-        else {
-            author.setId(authors.get(authors.size() - 1).getId() + 1);
-        }
-        authors.add(author);
-        return author.getId();
-    }
-
-    @Override
-    public Collection<Author> getAuthors() {
-        return authors;
-    }
-
-    @Override
-    public ArrayList<Author> getByBookCategory(BookCategory bookCategory) {
-        return null;
+    private static class SingletonHolder {
+        private static final AuthorServiceImpl INSTANCE = new AuthorServiceImpl();
     }
 }
