@@ -11,8 +11,7 @@ public class Role extends Entity {
     private static final long serialVersionUID = 1L;
     private String name;
     private String description;
-    private List<User> users;
-    private List<RoleHistory> roleHistories;
+    private List<UserRole> userRoles;
 
     public Role() {}
 
@@ -32,20 +31,12 @@ public class Role extends Entity {
         this.description = description;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<RoleHistory> getRoleHistories() {
-        return roleHistories;
-    }
-
-    public void setRoleHistories(List<RoleHistory> roleHistories) {
-        this.roleHistories = roleHistories;
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Override
@@ -58,9 +49,7 @@ public class Role extends Entity {
 
         if (name != null ? !name.equals(role.name) : role.name != null) return false;
         if (description != null ? !description.equals(role.description) : role.description != null) return false;
-        if (users != null ? !users.equals(role.users) : role.users != null) return false;
-        return roleHistories != null ? roleHistories.equals(role.roleHistories) : role.roleHistories == null;
-
+        return userRoles != null ? userRoles.equals(role.userRoles) : role.userRoles == null;
     }
 
     @Override
@@ -68,8 +57,7 @@ public class Role extends Entity {
         int result = super.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (users != null ? users.hashCode() : 0);
-        result = 31 * result + (roleHistories != null ? roleHistories.hashCode() : 0);
+        result = 31 * result + (userRoles != null ? userRoles.hashCode() : 0);
         return result;
     }
 
@@ -78,8 +66,7 @@ public class Role extends Entity {
         return "Role{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", users=" + users +
-                ", roleHistories=" + roleHistories +
+                ", userRoles=" + userRoles +
                 "} " + super.toString();
     }
 }

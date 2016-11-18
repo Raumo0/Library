@@ -11,8 +11,7 @@ public class RoleHistory extends Entity {
     private static final long serialVersionUID = 1L;
     private GregorianCalendar activationDate;
     private GregorianCalendar deactivationDate;
-    private User user;
-    private Role role;
+    private UserRole userRole;
 
     public RoleHistory() {}
 
@@ -32,20 +31,12 @@ public class RoleHistory extends Entity {
         this.deactivationDate = deactivationDate;
     }
 
-    public User getUser() {
-        return user;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     @Override
@@ -60,8 +51,7 @@ public class RoleHistory extends Entity {
             return false;
         if (deactivationDate != null ? !deactivationDate.equals(that.deactivationDate) : that.deactivationDate != null)
             return false;
-        if (user != null ? !user.equals(that.user) : that.user != null) return false;
-        return role != null ? role.equals(that.role) : that.role == null;
+        return userRole != null ? userRole.equals(that.userRole) : that.userRole == null;
 
     }
 
@@ -70,8 +60,7 @@ public class RoleHistory extends Entity {
         int result = super.hashCode();
         result = 31 * result + (activationDate != null ? activationDate.hashCode() : 0);
         result = 31 * result + (deactivationDate != null ? deactivationDate.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         return result;
     }
 
@@ -80,8 +69,7 @@ public class RoleHistory extends Entity {
         return "RoleHistory{" +
                 "activationDate=" + activationDate +
                 ", deactivationDate=" + deactivationDate +
-                ", user=" + user +
-                ", role=" + role +
+                ", userRole=" + userRole +
                 "} " + super.toString();
     }
 }

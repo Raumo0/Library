@@ -9,7 +9,6 @@ public abstract class Person extends Entity {
     private static final long serialVersionUID = 1L;
     private String firstName;
     private String lastName;
-
     private GregorianCalendar birthday;
     private int personId;
     private String image;

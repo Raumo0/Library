@@ -17,8 +17,7 @@ public class User extends Person {
     private String email;
     private Address address;
     private List<Rental> rentals;
-    private List<Role> roles;
-    private List<RoleHistory> roleHistories;
+    private List<UserRole> userRoles;
 
     public User() {}
 
@@ -78,20 +77,12 @@ public class User extends Person {
         this.rentals = rentals;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public List<UserRole> getUserRoles() {
+        return userRoles;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<RoleHistory> getRoleHistories() {
-        return roleHistories;
-    }
-
-    public void setRoleHistories(List<RoleHistory> roleHistories) {
-        this.roleHistories = roleHistories;
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Override
@@ -109,8 +100,7 @@ public class User extends Person {
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (address != null ? !address.equals(user.address) : user.address != null) return false;
         if (rentals != null ? !rentals.equals(user.rentals) : user.rentals != null) return false;
-        if (roles != null ? !roles.equals(user.roles) : user.roles != null) return false;
-        return roleHistories != null ? roleHistories.equals(user.roleHistories) : user.roleHistories == null;
+        return userRoles != null ? userRoles.equals(user.userRoles) : user.userRoles == null;
 
     }
 
@@ -124,8 +114,7 @@ public class User extends Person {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (rentals != null ? rentals.hashCode() : 0);
-        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-        result = 31 * result + (roleHistories != null ? roleHistories.hashCode() : 0);
+        result = 31 * result + (userRoles != null ? userRoles.hashCode() : 0);
         return result;
     }
 
@@ -139,8 +128,7 @@ public class User extends Person {
                 ", email='" + email + '\'' +
                 ", address=" + address +
                 ", rentals=" + rentals +
-                ", roles=" + roles +
-                ", roleHistories=" + roleHistories +
+                ", userRoles=" + userRoles +
                 "} " + super.toString();
     }
 }
