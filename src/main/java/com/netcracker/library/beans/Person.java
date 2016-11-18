@@ -9,7 +9,7 @@ public abstract class Person extends Entity {
     private static final long serialVersionUID = 1L;
     private String firstName;
     private String lastName;
-    private String email;
+
     private GregorianCalendar birthday;
     private int personId;
     private String image;
@@ -40,14 +40,6 @@ public abstract class Person extends Entity {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public GregorianCalendar getBirthday() {
         return birthday;
     }
@@ -75,7 +67,6 @@ public abstract class Person extends Entity {
         if (personId != person.personId) return false;
         if (firstName != null ? !firstName.equals(person.firstName) : person.firstName != null) return false;
         if (lastName != null ? !lastName.equals(person.lastName) : person.lastName != null) return false;
-        if (email != null ? !email.equals(person.email) : person.email != null) return false;
         if (birthday != null ? !birthday.equals(person.birthday) : person.birthday != null) return false;
         return image != null ? image.equals(person.image) : person.image == null;
 
@@ -86,7 +77,6 @@ public abstract class Person extends Entity {
         int result = super.hashCode();
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + personId;
         result = 31 * result + (image != null ? image.hashCode() : 0);
@@ -98,7 +88,6 @@ public abstract class Person extends Entity {
         return "Person{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
                 ", birthday=" + birthday +
                 ", personId=" + personId +
                 ", image='" + image + '\'' +

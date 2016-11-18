@@ -14,6 +14,7 @@ public class User extends Person {
     private String password;
     private String salt;
     private String mobile_phone;
+    private String email;
     private Address address;
     private List<Rental> rentals;
     private List<Role> roles;
@@ -51,6 +52,14 @@ public class User extends Person {
 
     public void setMobile_phone(String mobile_phone) {
         this.mobile_phone = mobile_phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Address getAddress() {
@@ -97,6 +106,7 @@ public class User extends Person {
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (salt != null ? !salt.equals(user.salt) : user.salt != null) return false;
         if (mobile_phone != null ? !mobile_phone.equals(user.mobile_phone) : user.mobile_phone != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (address != null ? !address.equals(user.address) : user.address != null) return false;
         if (rentals != null ? !rentals.equals(user.rentals) : user.rentals != null) return false;
         if (roles != null ? !roles.equals(user.roles) : user.roles != null) return false;
@@ -111,6 +121,7 @@ public class User extends Person {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (salt != null ? salt.hashCode() : 0);
         result = 31 * result + (mobile_phone != null ? mobile_phone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (rentals != null ? rentals.hashCode() : 0);
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
@@ -125,6 +136,7 @@ public class User extends Person {
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
                 ", mobile_phone='" + mobile_phone + '\'' +
+                ", email='" + email + '\'' +
                 ", address=" + address +
                 ", rentals=" + rentals +
                 ", roles=" + roles +
