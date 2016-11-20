@@ -15,6 +15,13 @@ public class RoleHistory extends Entity {
 
     public RoleHistory() {}
 
+    public RoleHistory(RoleHistory roleHistory){
+        super(roleHistory);
+        this.activationDate = roleHistory.getActivationDate();
+        this.deactivationDate = roleHistory.getDeactivationDate();
+        this.userRole = roleHistory.getUserRole();
+    }
+
     public GregorianCalendar getActivationDate() {
         return activationDate;
     }

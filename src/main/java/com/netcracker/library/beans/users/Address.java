@@ -16,6 +16,15 @@ public class Address extends Entity {
     public Address() {
     }
 
+    public Address(Address address){
+        super(address);
+        this.name = address.getName();
+        this.district = address.getDistrict();
+        this.postalCode = address.getPostalCode();
+        this.phone = address.getPhone();
+        this.city = address.getCity();
+    }
+
     public String getName() {
         return name;
     }

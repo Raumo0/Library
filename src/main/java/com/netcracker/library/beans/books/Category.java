@@ -14,6 +14,12 @@ public class Category extends Entity {
 
     public Category() {}
 
+    public Category(Category category) {
+        super(category);
+        this.category = category.getCategory();
+        this.bookEditions = category.getBookEditions();
+    }
+
     public String getCategory() {
         return category;
     }

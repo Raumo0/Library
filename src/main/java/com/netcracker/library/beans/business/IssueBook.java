@@ -15,6 +15,13 @@ public class IssueBook extends Entity {
 
     public IssueBook() {}
 
+    public IssueBook(IssueBook issueBook) {
+        super(issueBook);
+        this.issue = issueBook.getIssue();
+        this.requestDate = issueBook.getRequestDate();
+        this.rental = issueBook.getRental();
+    }
+
     public IssueBook getIssue() {
         return issue;
     }

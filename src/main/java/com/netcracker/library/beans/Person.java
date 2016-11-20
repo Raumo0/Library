@@ -16,6 +16,7 @@ public abstract class Person extends Entity {
     public Person(){}
 
     public Person(Person person){
+        super(person);
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
         this.birthday = person.getBirthday();

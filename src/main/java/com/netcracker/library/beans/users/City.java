@@ -15,6 +15,13 @@ public class City extends Entity {
 
     public City() {}
 
+    public City(City city){
+        super(city);
+        this.name = city.getName();
+        this.country = city.getCountry();
+        this.addresses = city.getAddresses();
+    }
+
     public String getName() {
         return name;
     }

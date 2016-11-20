@@ -8,12 +8,21 @@ import java.util.List;
  * Created by raumo0 on 18.11.16.
  */
 public class UserRole extends Entity{
+    private static final long serialVersionUID = 1L;
     private boolean isActive;
     private User user;
     private Role role;
     private List<RoleHistory> roleHistories;
 
     public UserRole() {}
+
+    public UserRole(UserRole userRole){
+        super(userRole);
+        this.isActive = userRole.isActive();
+        this.user = userRole.getUser();
+        this.role = userRole.getRole();
+        this.roleHistories = userRole.getRoleHistories();
+    }
 
     public boolean isActive() {
         return isActive;

@@ -15,6 +15,12 @@ public class Author extends Person implements Comparable<Author> {
     public Author() {
     }
 
+    public Author(Author author) {
+        super(author);
+        this.biography = author.getBiography();
+        this.bookEditions = author.getBookEditions();
+    }
+
     public Author(Person person) {
         super(person);
     }

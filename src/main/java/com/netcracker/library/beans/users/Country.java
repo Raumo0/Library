@@ -14,6 +14,12 @@ public class Country extends Entity {
 
     public Country() {}
 
+    public Country(Country country){
+        super(country);
+        this.name = country.getName();
+        this.cities = country.getCities();
+    }
+
     public String getName() {
         return name;
     }

@@ -22,6 +22,18 @@ public class User extends Person {
     public User() {
     }
 
+    public User(User user){
+        super(user);
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.salt = user.getSalt();
+        this.mobile_phone = user.getMobile_phone();
+        this.email = user.getEmail();
+        this.address = user.getAddress();
+        this.rentals = user.getRentals();
+        this.userRoles = user.getUserRoles();
+    }
+
     public User(Person person) {
         super(person);
     }

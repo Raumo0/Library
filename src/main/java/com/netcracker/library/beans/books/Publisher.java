@@ -19,6 +19,16 @@ public class Publisher extends Entity {
 
     public Publisher() {}
 
+    public Publisher(Publisher publisher) {
+        super(publisher);
+        this.name = publisher.getName();
+        this.description = publisher.getDescription();
+        this.image = publisher.getImage();
+        this.address = publisher.getAddress();
+        this.email = publisher.getEmail();
+        this.bookEditions = publisher.getBookEditions();
+    }
+
     public String getName() {
         return name;
     }

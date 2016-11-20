@@ -19,6 +19,14 @@ public class Book extends Entity {
 
     public Book() {}
 
+    public Book(Book book) {
+        super(book);
+        this.bookPosition = book.getBookPosition();
+        this.bookEdition = book.getBookEdition();
+        this.bookState = book.getBookState();
+        this.rentals = book.getRentals();
+    }
+
     public BookPosition getBookPosition() {
         return bookPosition;
     }

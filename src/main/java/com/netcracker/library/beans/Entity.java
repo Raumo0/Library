@@ -13,6 +13,11 @@ public abstract class Entity implements Serializable {
 
     public Entity() {}
 
+    public Entity(Entity entity) {
+        this.id = entity.getId();
+        this.lastUpdate = entity.getLastUpdate();
+    }
+
     public int getId() {
         return id;
     }

@@ -15,6 +15,13 @@ public class Role extends Entity {
 
     public Role() {}
 
+    public Role(Role role){
+        super(role);
+        this.name = role.getName();
+        this.description = role.getDescription();
+        this.userRoles = role.getUserRoles();
+    }
+
     public String getName() {
         return name;
     }

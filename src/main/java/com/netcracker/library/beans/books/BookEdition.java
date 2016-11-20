@@ -27,6 +27,24 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
 
     public BookEdition() {}
 
+    public BookEdition(BookEdition bookEdition) {
+        super(bookEdition);
+        this.title = bookEdition.getTitle();
+        this.pageCount = bookEdition.getPageCount();
+        this.releaseYear = bookEdition.getReleaseYear();
+        this.description = bookEdition.getDescription();
+        this.isbn = bookEdition.getIsbn();
+        this.weight = bookEdition.getWeight();
+        this.bookbinding = bookEdition.getBookbinding();
+        this.image = bookEdition.getImage();
+        this.publisher = bookEdition.getPublisher();
+        this.authors = bookEdition.getAuthors();
+        this.language = bookEdition.getLanguage();
+        this.originalLanguage = bookEdition.getOriginalLanguage();
+        this.categories = bookEdition.getCategories();
+        this.books = bookEdition.getBooks();
+    }
+
     public String getTitle() {
         return title;
     }

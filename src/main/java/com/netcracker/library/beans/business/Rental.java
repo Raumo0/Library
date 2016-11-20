@@ -26,6 +26,19 @@ public class Rental extends Entity {
     public Rental() {
     }
 
+    public Rental(Rental rental){
+        super(rental);
+        this.comment = rental.getComment();
+        this.rentalDate = rental.getRentalDate();
+        this.returnDate = rental.getReturnDate();
+        this.before = rental.getBefore();
+        this.after = rental.getAfter();
+        this.staff_user = rental.getStaff_user();
+        this.user = rental.getUser();
+        this.bookIssue = rental.getBookIssue();
+        this.book = rental.getBook();
+    }
+
     public String getComment() {
         return comment;
     }

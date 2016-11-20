@@ -14,6 +14,12 @@ public class Language extends Entity {
 
     public Language() {}
 
+    public Language(Language language) {
+        super(language);
+        this.language = language.getLanguage();
+        this.bookEditions = language.getBookEditions();
+    }
+
     public String getLanguage() {
         return language;
     }
