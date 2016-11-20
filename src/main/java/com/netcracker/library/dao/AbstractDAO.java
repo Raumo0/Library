@@ -18,4 +18,6 @@ public interface AbstractDAO <T extends Entity> {
     boolean deleteById(int id) throws DAOException;
 
     Collection<T> getAll() throws DAOException;
+
+    boolean deleteAll() throws DAOException;
 }

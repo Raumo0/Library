@@ -10,14 +10,10 @@ import java.util.Collection;
  * Created by raumo0 on 14.11.16.
  */
 public abstract class DatabasePersonDAO {
-    private static final String INSERT_NEW = "INSERT INTO reader VALUES(?,?,?,?,?,?)";
-    private static final String GET_ALL = "SELECT * FROM reader";
     private static final String GET_BY_ID = "SELECT * FROM person WHERE id=?";
     private static final String INSERT = "INSERT INTO person (first_name,last_name) VALUES(?,?)";
     private static final String DELETE = "DELETE FROM person WHERE id=?";
     private static final String UPDATE = "UPDATE person SET first_name=?,last_name=? WHERE id=?";
-
-    private final static String TABLE_NAME = "person";
 
     protected DatabasePersonDAO() { }
 
@@ -71,7 +67,12 @@ public abstract class DatabasePersonDAO {
 
     protected boolean deletePersonById(int id, Connection connection) throws DAOException {
         PreparedStatement statement;
+        DAOManager daoManager = DAOManager.getInstance();
         try {
+            if (daoManager.getUserDAO().getUserByPersonId(id) != null ||
+                    daoManager.getAuthorDAO().getAuthorByPersonId(id) != null)
+                throw new DAOException();
+
             statement = connection.prepareStatement(DELETE);
             statement.setInt(1, id);
             return statement.executeUpdate() != 0;

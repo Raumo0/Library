@@ -1,14 +1,13 @@
 package com.netcracker.library.dao.mysql;
 
-import org.apache.logging.log4j.core.Logger;
-
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-//import org.apache.log4j.Logger;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by raumo0 on 17.11.16.
@@ -16,21 +15,18 @@ import java.sql.SQLException;
 public class  ConnectionPool {
     private DataSource dataSource;
     private Connection connection;
-    private Logger logger;
-    {
+
+    private ConnectionPool() {
         try{
-            InitialContext initContext = new InitialContext();
-            dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/library");
+            Context initContext = new InitialContext();
+            Context webContext = (Context)initContext.lookup("java:/comp/env");
+            dataSource = (DataSource) webContext.lookup("jdbc/library");
         }
         catch(NamingException e){
             e.printStackTrace();
-//            logger.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n\n\n\n" +
-//                    e.getMessage());
-//            PaymentSystemLogger.INSTANCE.logError(getClass(), e.getMessage());
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
-
-    private ConnectionPool() {}
 
     public static ConnectionPool getInstance() {
         return SingletonHolder.INSTANCE;
@@ -47,7 +43,7 @@ public class  ConnectionPool {
                 connection.close();
             }
             catch (SQLException e) {
-//                PaymentSystemLogger.INSTANCE.logError(getClass(), e.getMessage());
+                java.util.logging.Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
             }
         }
     }

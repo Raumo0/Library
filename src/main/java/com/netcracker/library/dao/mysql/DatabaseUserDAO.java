@@ -1,7 +1,7 @@
 package com.netcracker.library.dao.mysql;
 
-import com.netcracker.library.dao.AuthorDAO;
-import com.netcracker.library.beans.books.Author;
+import com.netcracker.library.beans.users.User;
+import com.netcracker.library.dao.UserDAO;
 import com.netcracker.library.exceptions.DAOException;
 
 import java.sql.*;
@@ -10,33 +10,36 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by raumo0 on 14.11.16.
+ * Created by raumo0 on 19.11.16.
  */
-public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
-    private static final String GET_ALL = "SELECT * FROM author";
-    private static final String GET_BY_ID = "SELECT * FROM author WHERE id=?";
-    private static final String GET_PERSON_ID_BY_AUTHOR_ID = "SELECT person_id FROM author WHERE id=?";
-    private static final String INSERT = "INSERT INTO author (biography, person_id) VALUES(?,?)";
-    private static final String DELETE = "DELETE FROM author WHERE id=?";
-    private static final String UPDATE = "UPDATE author SET biography=? WHERE id=?";
-    private static final String GET_AUTHOR_BY_PERSON_ID = "SELECT * FROM user WHERE person_id=?";
-    private static final String GET_PERSONS_ID_BY_AUTHORS = "SELECT person_id FROM author";
-    private static final String DELETE_ALL = "DELETE FROM author";
+public class DatabaseUserDAO extends DatabasePersonDAO implements UserDAO {
+    private static final String INSERT = "INSERT INTO user (person_id, username, password, salt) VALUES(?,?,?,?)";
+    private static final String GET_BY_ID = "SELECT * FROM user WHERE id=?";
+    private static final String UPDATE = "UPDATE user SET username=?,password=?,salt=? WHERE id=?";
+    private static final String DELETE = "DELETE FROM user WHERE id=?";
+    private static final String GET_ALL = "SELECT * FROM user";
+    private static final String DELETE_ALL = "DELETE FROM user";
+    private static final String GET_PERSON_ID_BY_USER_ID = "SELECT person_id FROM user WHERE id=?";
+    private static final String GET_PERSONS_ID_BY_USERS = "SELECT person_id FROM user";
+    private static final String GET_USER_BY_PERSON_ID = "SELECT * FROM user WHERE person_id=?";
 
-    public DatabaseAuthorDAO() {}
+    public DatabaseUserDAO() {
+    }
 
     @Override
-    public int insert(Author author) throws DAOException {
+    public int insert(User user) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            if (author.getPersonId() == 0)
-                author.setPersonId(insertPerson(author, connection));
+            if (user.getPersonId() == 0)
+                user.setPersonId(insertPerson(user, connection));
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, author.getBiography());
-            statement.setInt(2, author.getPersonId());
+            statement.setInt(1, user.getPersonId());
+            statement.setString(2, user.getUsername());
+            statement.setString(3, user.getPassword());
+            statement.setString(4, user.getSalt());
             statement.executeUpdate();
             result = statement.getGeneratedKeys();
             result.first();
@@ -49,10 +52,10 @@ public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
     }
 
     @Override
-    public Author getById(int id) throws DAOException {
+    public User getById(int id) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
-        Author author = null;
+        User user = null;
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -60,31 +63,35 @@ public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
             statement.setString(1, String.valueOf(id));
             result = statement.executeQuery();
             while (result.next()) {
-                author = new Author();
-                author.setId(result.getInt("id"));
-                author.setPersonId(result.getInt("person_id"));
-                author.setBiography(result.getString("biography"));
-                getPersonById(author.getPersonId(), author, connection);
+                user = new User();
+                user.setId(result.getInt("id"));
+                user.setPersonId(result.getInt("person_id"));
+                user.setUsername(result.getString("username"));
+                user.setPassword(result.getString("password"));
+                user.setSalt(result.getString("salt"));
+                getPersonById(user.getPersonId(), user, connection);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return author;
+        return user;
     }
 
     @Override
-    public boolean update(Author author) throws DAOException {
+    public boolean update(User user) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
-            statement.setString(1, author.getBiography());
-            statement.setInt(2, author.getId());
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getSalt());
+            statement.setInt(4, user.getId());
             statement.executeUpdate();
-            return updatePerson(author, connection);
+            return updatePerson(user, connection);
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -96,10 +103,10 @@ public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
     public boolean deleteById(int id) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
-        int personId = 0;
+        int personId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(GET_PERSON_ID_BY_AUTHOR_ID);
+            statement = connection.prepareStatement(GET_PERSON_ID_BY_USER_ID);
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
@@ -117,56 +124,59 @@ public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
         return false;
     }
 
-    @Override
-    public Author getAuthorByPersonId(int personId) throws DAOException {
+    public User getUserByPersonId(int personId) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
-        Author author = null;
+        User user = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(GET_AUTHOR_BY_PERSON_ID);
+            statement = connection.prepareStatement(GET_USER_BY_PERSON_ID);
             statement.setInt(1, personId);
             result = statement.executeQuery();
             while (result.next()) {
-                author = new Author();
-                author.setId(result.getInt("id"));
-                author.setPersonId(result.getInt("person_id"));
-                author.setBiography(result.getString("biography"));
-                getPersonById(author.getPersonId(), author, connection);
+                user = new User();
+                user.setId(result.getInt("id"));
+                user.setPersonId(result.getInt("person_id"));
+                user.setPersonId(result.getInt("username"));
+                user.setPersonId(result.getInt("password"));
+                user.setPersonId(result.getInt("salt"));
+                getPersonById(user.getPersonId(), user, connection);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return author;
+        return user;
     }
 
     @Override
-    public Collection<Author> getAll() throws DAOException {
+    public Collection<User> getAll() throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
-        List<Author> authors = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_ALL);
             result = statement.executeQuery();
             while (result.next()) {
-                Author author = new Author();
-                author.setId(result.getInt("id"));
-                author.setPersonId(result.getInt("person_id"));
-                author.setBiography(result.getString("biography"));
-                getPersonById(author.getPersonId(), author, connection);
-                authors.add(author);
+                User user = new User();
+                user.setId(result.getInt("id"));
+                user.setPersonId(result.getInt("person_id"));
+                user.setUsername(result.getString("username"));
+                user.setPassword(result.getString("password"));
+                user.setSalt(result.getString("salt"));
+                getPersonById(user.getPersonId(), user, connection);
+                users.add(user);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return authors;
+        return users;
     }
 
     @Override
@@ -177,7 +187,7 @@ public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
         boolean isPersonDelete = true;
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(GET_PERSONS_ID_BY_AUTHORS);
+            statement = connection.prepareStatement(GET_PERSONS_ID_BY_USERS);
             ResultSet result = statement.executeQuery();
             statement = connection.prepareStatement(DELETE_ALL);
             statement.executeUpdate();
