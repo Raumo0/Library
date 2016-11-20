@@ -14,7 +14,7 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
     private int pageCount;
     private GregorianCalendar releaseYear;
     private String description;
-    private String isbn;
+    private int isbn;
     private int weight;
     private Bookbinding bookbinding;
     private String image;
@@ -77,11 +77,11 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         this.description = description;
     }
 
-    public String getIsbn() {
+    public int getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public void setIsbn(int isbn) {
         this.isbn = isbn;
     }
 
@@ -170,7 +170,7 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (releaseYear != null ? !releaseYear.equals(that.releaseYear) : that.releaseYear != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (isbn != null ? !isbn.equals(that.isbn) : that.isbn != null) return false;
+        if (isbn != that.isbn) return false;
         if (bookbinding != that.bookbinding) return false;
         if (image != null ? !image.equals(that.image) : that.image != null) return false;
         if (publisher != null ? !publisher.equals(that.publisher) : that.publisher != null) return false;
@@ -190,7 +190,7 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         result = 31 * result + pageCount;
         result = 31 * result + (releaseYear != null ? releaseYear.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
+        result = 31 * result + isbn;
         result = 31 * result + weight;
         result = 31 * result + (bookbinding != null ? bookbinding.hashCode() : 0);
         result = 31 * result + (image != null ? image.hashCode() : 0);
