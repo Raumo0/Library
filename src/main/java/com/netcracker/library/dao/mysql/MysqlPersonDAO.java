@@ -9,13 +9,13 @@ import java.util.Collection;
 /**
  * Created by raumo0 on 14.11.16.
  */
-public abstract class DatabasePersonDAO {
+public abstract class MysqlPersonDAO {
     private static final String GET_BY_ID = "SELECT * FROM person WHERE id=?";
     private static final String INSERT = "INSERT INTO person (first_name,last_name) VALUES(?,?)";
     private static final String DELETE = "DELETE FROM person WHERE id=?";
     private static final String UPDATE = "UPDATE person SET first_name=?,last_name=? WHERE id=?";
 
-    protected DatabasePersonDAO() { }
+    protected MysqlPersonDAO() { }
 
     protected int insertPerson(Person person, Connection connection) throws DAOException {
         PreparedStatement statement;

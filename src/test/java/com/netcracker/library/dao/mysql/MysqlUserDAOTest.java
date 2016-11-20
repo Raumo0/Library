@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by raumo0 on 20.11.16.
  */
-public class DatabaseUserDAOTest {
+public class MysqlUserDAOTest {
     private DAOFactory factory;
     private UserDAO userDAO;
     private User user;

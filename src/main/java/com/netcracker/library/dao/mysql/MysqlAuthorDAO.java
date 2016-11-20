@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by raumo0 on 14.11.16.
  */
-public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
+public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     private static final String GET_ALL = "SELECT * FROM author";
     private static final String GET_BY_ID = "SELECT * FROM author WHERE id=?";
     private static final String GET_PERSON_ID_BY_AUTHOR_ID = "SELECT person_id FROM author WHERE id=?";
@@ -23,7 +23,7 @@ public class DatabaseAuthorDAO extends DatabasePersonDAO implements AuthorDAO {
     private static final String GET_PERSONS_ID_BY_AUTHORS = "SELECT person_id FROM author";
     private static final String DELETE_ALL = "DELETE FROM author";
 
-    public DatabaseAuthorDAO() {}
+    public MysqlAuthorDAO() {}
 
     @Override
     public int insert(Author author) throws DAOException {

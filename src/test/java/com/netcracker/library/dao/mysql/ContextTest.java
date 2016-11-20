@@ -32,7 +32,7 @@ public class ContextTest {
             ds.setPassword("mysql");
             ic.bind("java:/comp/env/jdbc/library", ds);
         } catch (NamingException e) {
-            Logger.getLogger(DatabaseAuthorDAOTest.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            Logger.getLogger(MysqlAuthorDAOTest.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by raumo0 on 19.11.16.
  */
-public class DatabaseUserDAO extends DatabasePersonDAO implements UserDAO {
+public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     private static final String INSERT = "INSERT INTO user (person_id, username, password, salt) VALUES(?,?,?,?)";
     private static final String GET_BY_ID = "SELECT * FROM user WHERE id=?";
     private static final String UPDATE = "UPDATE user SET username=?,password=?,salt=? WHERE id=?";
@@ -23,7 +23,7 @@ public class DatabaseUserDAO extends DatabasePersonDAO implements UserDAO {
     private static final String GET_PERSONS_ID_BY_USERS = "SELECT person_id FROM user";
     private static final String GET_USER_BY_PERSON_ID = "SELECT * FROM user WHERE person_id=?";
 
-    public DatabaseUserDAO() {
+    public MysqlUserDAO() {
     }
 
     @Override

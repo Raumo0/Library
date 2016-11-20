@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by raumo0 on 17.11.16.
  */
-public class DatabaseAuthorDAOTest {
+public class MysqlAuthorDAOTest {
     private DAOFactory factory;
     private AuthorDAO authorDAO;
     private Author author;

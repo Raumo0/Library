@@ -18,12 +18,12 @@ public class DAOManager extends DAOFactory {
 
     @Override
     public AuthorDAO getAuthorDAO() {
-        return new DatabaseAuthorDAO();
+        return new MysqlAuthorDAO();
     }
 
     @Override
     public UserDAO getUserDAO() {
-        return new DatabaseUserDAO();
+        return new MysqlUserDAO();
     }
 
     private static class SingletonHolder {
