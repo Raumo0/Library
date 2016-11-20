@@ -1,6 +1,7 @@
 package com.netcracker.library.dao.mysql;
 
 import com.netcracker.library.dao.AuthorDAO;
+import com.netcracker.library.dao.BookEditionDAO;
 import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.dao.UserDAO;
 
@@ -24,6 +25,11 @@ public class DAOManager extends DAOFactory {
     @Override
     public UserDAO getUserDAO() {
         return new MysqlUserDAO();
+    }
+
+    @Override
+    public BookEditionDAO getBookEditionDAO() {
+        return new MysqlBookEditionDAO();
     }
 
     private static class SingletonHolder {
