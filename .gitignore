@@ -10,6 +10,5 @@ db_bump.sql
 *.mwb.*
 classes.png
 entities.png
-library_db_diagram.png
-most_important_library_db_diagram.png
 target
+database
