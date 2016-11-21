@@ -17,7 +17,7 @@ public class User extends Person {
     private String email;
     private Address address;
     private List<Rental> rentals;
-    private List<UserRole> userRoles;
+    private Role role;
 
     public User() {
     }
@@ -31,7 +31,7 @@ public class User extends Person {
         this.email = user.getEmail();
         this.address = user.getAddress();
         this.rentals = user.getRentals();
-        this.userRoles = user.getUserRoles();
+        this.role = user.getRole();
     }
 
     public User(Person person) {
@@ -94,12 +94,12 @@ public class User extends Person {
         this.rentals = rentals;
     }
 
-    public List<UserRole> getUserRoles() {
-        return userRoles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setUserRoles(List<UserRole> userRoles) {
-        this.userRoles = userRoles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class User extends Person {
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (address != null ? !address.equals(user.address) : user.address != null) return false;
         if (rentals != null ? !rentals.equals(user.rentals) : user.rentals != null) return false;
-        return userRoles != null ? userRoles.equals(user.userRoles) : user.userRoles == null;
+        return role != null ? role.equals(user.role) : user.role == null;
 
     }
 
@@ -131,7 +131,7 @@ public class User extends Person {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (rentals != null ? rentals.hashCode() : 0);
-        result = 31 * result + (userRoles != null ? userRoles.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
 
@@ -145,7 +145,7 @@ public class User extends Person {
                 ", email='" + email + '\'' +
                 ", address=" + address +
                 ", rentals=" + rentals +
-                ", userRoles=" + userRoles +
+                ", userRoles=" + role +
                 "} " + super.toString();
     }
 }

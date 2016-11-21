@@ -11,7 +11,7 @@ public class Role extends Entity {
     private static final long serialVersionUID = 1L;
     private String name;
     private String description;
-    private List<UserRole> userRoles;
+    private List<User> users;
 
     public Role() {}
 
@@ -19,7 +19,7 @@ public class Role extends Entity {
         super(role);
         this.name = role.getName();
         this.description = role.getDescription();
-        this.userRoles = role.getUserRoles();
+        this.users = role.getUsers();
     }
 
     public String getName() {
@@ -38,12 +38,12 @@ public class Role extends Entity {
         this.description = description;
     }
 
-    public List<UserRole> getUserRoles() {
-        return userRoles;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUserRoles(List<UserRole> userRoles) {
-        this.userRoles = userRoles;
+    public void setUsers(List<User> userRoles) {
+        this.users = userRoles;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Role extends Entity {
 
         if (name != null ? !name.equals(role.name) : role.name != null) return false;
         if (description != null ? !description.equals(role.description) : role.description != null) return false;
-        return userRoles != null ? userRoles.equals(role.userRoles) : role.userRoles == null;
+        return users != null ? users.equals(role.users) : role.users == null;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Role extends Entity {
         int result = super.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (userRoles != null ? userRoles.hashCode() : 0);
+        result = 31 * result + (users != null ? users.hashCode() : 0);
         return result;
     }
 
@@ -73,7 +73,7 @@ public class Role extends Entity {
         return "Role{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", userRoles=" + userRoles +
+                ", userRoles=" + users +
                 "} " + super.toString();
     }
 }
