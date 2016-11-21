@@ -55,16 +55,21 @@ public class MysqlBookEditionDAOTest {
     @Test
     public void update() throws Exception {
         BookEdition bookEdition2;
-        bookEdition2 = new BookEdition(bookEdition);
-        boolean a = bookEdition.equals(bookEdition2);
-        Assert.assertTrue(a);
+        bookEdition2 = bookEditionDAO.getById(bookEdition.getId());
+        Assert.assertTrue(bookEdition.equals(bookEdition2));
+        Assert.assertNotSame(bookEdition, bookEdition2);
         bookEdition2.setTitle("newTitle");
+        bookEdition.setTitle("newTitle");
         bookEdition2.setPageCount(192);
+        bookEdition.setPageCount(192);
         bookEdition2.setDescription("newDescription");
+        bookEdition.setDescription("newDescription");
         bookEdition2.setWeight(935);
+        bookEdition.setWeight(935);
         bookEdition2.setBookbinding(Bookbinding.SOFT);
+        bookEdition.setBookbinding(Bookbinding.SOFT);
         bookEditionDAO.update(bookEdition2);
-        Assert.assertFalse(bookEdition.equals(bookEdition2));
+        Assert.assertEquals(bookEdition, bookEditionDAO.getById(bookEdition2.getId()));
     }
 
     @Test

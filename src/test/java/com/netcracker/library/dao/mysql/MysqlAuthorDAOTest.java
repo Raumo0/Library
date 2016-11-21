@@ -48,12 +48,13 @@ public class MysqlAuthorDAOTest {
     @Test
     public void update() throws Exception {
         Author author2;
-        author2 = new Author(author);
-        boolean a = author.equals(author2);
-        Assert.assertTrue(a);
+        author2 = authorDAO.getById(author.getId());
+        Assert.assertTrue(author.equals(author2));
+        Assert.assertNotSame(author, author2);
         author2.setBiography("This is new biography");
+        author.setBiography("This is new biography");
         authorDAO.update(author2);
-        Assert.assertFalse(author.equals(author2));
+        Assert.assertEquals(author, authorDAO.getById(author2.getId()));
     }
 
     @Test

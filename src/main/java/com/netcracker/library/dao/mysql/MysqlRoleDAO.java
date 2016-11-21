@@ -1,43 +1,37 @@
 package com.netcracker.library.dao.mysql;
 
-import com.netcracker.library.beans.books.BookEdition;
-import com.netcracker.library.dao.BookEditionDAO;
-import com.netcracker.library.enums.Bookbinding;
+import com.netcracker.library.beans.users.Role;
+import com.netcracker.library.dao.RoleDAO;
 import com.netcracker.library.exceptions.DAOException;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
- * Created by raumo0 on 20.11.16.
+ * Created by raumo0 on 21.11.16.
  */
-public class MysqlBookEditionDAO implements BookEditionDAO {
-    private static final String GET_ALL = "SELECT * FROM book_eition";
-    private static final String GET_BY_ID = "SELECT * FROM book_eition WHERE id=?";
-    private static final String INSERT = "INSERT INTO book_eition (title, page_count, description, " +
-            "isbn, weight, bookbinding) VALUES(?,?,?,?,?,?)";
-    private static final String DELETE = "DELETE FROM book_eition WHERE id=?";
-    private static final String UPDATE = "UPDATE book_eition SET title=?, page_count=?, description=?," +
-            "weight=?,bookbinding=? WHERE id=?";
-    private static final String DELETE_ALL = "DELETE FROM book_eition";
+public class MysqlRoleDAO implements RoleDAO {
+    private static final String GET_ALL = "SELECT * FROM role";
+    private static final String GET_BY_ID = "SELECT * FROM role WHERE id=?";
+    private static final String INSERT = "INSERT INTO role (name, description) VALUES(?,?)";
+    private static final String DELETE = "DELETE FROM role WHERE id=?";
+    private static final String UPDATE = "UPDATE role SET description=? WHERE id=?";
+    private static final String DELETE_ALL = "DELETE FROM role";
 
-    public MysqlBookEditionDAO() {}
+    public MysqlRoleDAO() {}
 
     @Override
-    public int insert(BookEdition bookEdition) throws DAOException {
+    public int insert(Role role) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, bookEdition.getTitle());
-            statement.setInt(2, bookEdition.getPageCount());
-//            statement.setInt(3, bookEdition.getReleaseYear().get(Calendar.YEAR));
-            statement.setString(3, bookEdition.getDescription());
-            statement.setInt(4, bookEdition.getIsbn());
-            statement.setInt(5, bookEdition.getWeight());
-            statement.setString(6, bookEdition.getBookbinding().toString());
+            statement.setString(1, role.getName());
+            statement.setString(2, role.getDescription());
             statement.executeUpdate();
             result = statement.getGeneratedKeys();
             result.first();
@@ -50,10 +44,10 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     }
 
     @Override
-    public BookEdition getById(int id) throws DAOException {
+    public Role getById(int id) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
-        BookEdition bookEdition = null;
+        Role role = null;
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -61,36 +55,28 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             statement.setString(1, String.valueOf(id));
             result = statement.executeQuery();
             while (result.next()) {
-                bookEdition = new BookEdition();
-                bookEdition.setId(result.getInt("id"));
-                bookEdition.setTitle(result.getString("title"));
-                bookEdition.setPageCount(result.getInt("page_count"));
-                bookEdition.setDescription(result.getString("description"));
-                bookEdition.setIsbn(result.getInt("isbn"));
-                bookEdition.setWeight(result.getInt("weight"));
-                bookEdition.setBookbinding(Bookbinding.valueOf(result.getString("bookbinding").toUpperCase()));
+                role = new Role();
+                role.setId(result.getInt("id"));
+                role.setName(result.getString("name"));
+                role.setDescription(result.getString("description"));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return bookEdition;
+        return role;
     }
 
     @Override
-    public boolean update(BookEdition bookEdition) throws DAOException {
+    public boolean update(Role role) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
-            statement.setString(1, bookEdition.getTitle());
-            statement.setInt(2, bookEdition.getPageCount());
-            statement.setString(3, bookEdition.getDescription());
-            statement.setInt(4, bookEdition.getWeight());
-            statement.setString(5, bookEdition.getBookbinding().toString());
-            statement.setInt(6, bookEdition.getId());
+            statement.setString(1, role.getDescription());
+            statement.setInt(2, role.getId());
             if (statement.executeUpdate() == 0)
                 return false;
         } catch (SQLException e) {
@@ -118,25 +104,21 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     }
 
     @Override
-    public Collection<BookEdition> getAll() throws DAOException {
+    public Collection<Role> getAll() throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
-        BookEdition bookEdition;
-        List<BookEdition> users = new ArrayList<>();
+        Role bookEdition;
+        List<Role> users = new ArrayList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_ALL);
             result = statement.executeQuery();
             while (result.next()) {
-                bookEdition = new BookEdition();
+                bookEdition = new Role();
                 bookEdition.setId(result.getInt("id"));
-                bookEdition.setTitle(result.getString("title"));
-                bookEdition.setPageCount(result.getInt("page_count"));
+                bookEdition.setName(result.getString("name"));
                 bookEdition.setDescription(result.getString("description"));
-                bookEdition.setIsbn(result.getInt("isbn"));
-                bookEdition.setWeight(result.getInt("weight"));
-                bookEdition.setBookbinding(Bookbinding.valueOf(result.getString("bookbinding").toUpperCase()));
                 users.add(bookEdition);
             }
         } catch (SQLException e) {

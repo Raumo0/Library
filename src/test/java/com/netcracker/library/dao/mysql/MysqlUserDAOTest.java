@@ -55,12 +55,13 @@ public class MysqlUserDAOTest {
     @Test
     public void update() throws Exception {
         User user2;
-        user2 = new User(user);
-        boolean a = user.equals(user2);
-        Assert.assertTrue(a);
+        user2 = userDAO.getById(user.getId());
+        Assert.assertTrue(user.equals(user2));
+        Assert.assertNotSame(user, user2);
         user2.setPassword("newPassword");
+        user.setPassword("newPassword");
         userDAO.update(user2);
-        Assert.assertFalse(user.equals(user2));
+        Assert.assertEquals(user, userDAO.getById(user2.getId()));
     }
 
     @Test

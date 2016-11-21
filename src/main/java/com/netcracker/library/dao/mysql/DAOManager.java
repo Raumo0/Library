@@ -1,9 +1,6 @@
 package com.netcracker.library.dao.mysql;
 
-import com.netcracker.library.dao.AuthorDAO;
-import com.netcracker.library.dao.BookEditionDAO;
-import com.netcracker.library.dao.DAOFactory;
-import com.netcracker.library.dao.UserDAO;
+import com.netcracker.library.dao.*;
 
 /**
  * Created by raumo0 on 04.11.16.
@@ -30,6 +27,11 @@ public class DAOManager extends DAOFactory {
     @Override
     public BookEditionDAO getBookEditionDAO() {
         return new MysqlBookEditionDAO();
+    }
+
+    @Override
+    public RoleDAO getRoleDAO() {
+        return new MysqlRoleDAO();
     }
 
     private static class SingletonHolder {

@@ -19,6 +19,8 @@ public abstract class DAOFactory {
 
     public abstract BookEditionDAO getBookEditionDAO();
 
+    public abstract RoleDAO getRoleDAO();
+
     public static DAOFactory getDAOFactory(int whichFactory) {
         switch (whichFactory) {
             case MYSQL:
