@@ -1,7 +1,11 @@
 package com.netcracker.library.dao.mysql;
 
-import com.netcracker.library.beans.users.Role;
-import com.netcracker.library.dao.RoleDAO;
+import com.netcracker.library.beans.books.Book;
+import com.netcracker.library.beans.business.Rental;
+import com.netcracker.library.beans.users.User;
+import com.netcracker.library.dao.RentalDAO;
+import com.netcracker.library.enums.BookIssue;
+import com.netcracker.library.enums.BookState;
 import com.netcracker.library.exceptions.DAOException;
 
 import java.sql.*;
@@ -12,26 +16,30 @@ import java.util.List;
 /**
  * Created by raumo0 on 21.11.16.
  */
-public class MysqlRoleDAO implements RoleDAO {
-    private static final String GET_ALL = "SELECT * FROM role";
-    private static final String GET_BY_ID = "SELECT * FROM role WHERE id=?";
-    private static final String INSERT = "INSERT INTO role (name, description) VALUES(?,?)";
-    private static final String DELETE = "DELETE FROM role WHERE id=?";
-    private static final String UPDATE = "UPDATE role SET description=? WHERE id=?";
-    private static final String DELETE_ALL = "DELETE FROM role";
+public class MysqlRentalDAO implements RentalDAO {
+    private static final String GET_ALL = "SELECT * FROM rental";
+    private static final String GET_BY_ID = "SELECT * FROM rental WHERE id=?";
+    private static final String INSERT = "INSERT INTO rental (comment, user_id, book_id, book_state_before," +
+            "issue) VALUES(?,?,?,?,?)";
+    private static final String DELETE = "DELETE FROM rental WHERE id=?";
+    private static final String UPDATE = "UPDATE rental SET book_state_after=? WHERE id=?";
+    private static final String DELETE_ALL = "DELETE FROM rental";
 
-    public MysqlRoleDAO() {}
+    public MysqlRentalDAO() {}
 
     @Override
-    public int insert(Role role) throws DAOException {
+    public int insert(Rental rental) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, role.getName());
-            statement.setString(2, role.getDescription());
+            statement.setString(1, rental.getComment());
+            statement.setInt(2, rental.getUser().getId());
+            statement.setInt(3, rental.getBook().getId());
+            statement.setString(4, rental.getStateBefore().toString());
+            statement.setString(5, rental.getBookIssue().toString());
             statement.executeUpdate();
             result = statement.getGeneratedKeys();
             result.first();
@@ -44,10 +52,10 @@ public class MysqlRoleDAO implements RoleDAO {
     }
 
     @Override
-    public Role getById(int id) throws DAOException {
+    public Rental getById(int id) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
-        Role role = null;
+        Rental rental = null;
         ResultSet result;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -55,28 +63,36 @@ public class MysqlRoleDAO implements RoleDAO {
             statement.setString(1, String.valueOf(id));
             result = statement.executeQuery();
             while (result.next()) {
-                role = new Role();
-                role.setId(result.getInt("id"));
-                role.setName(result.getString("name"));
-                role.setDescription(result.getString("description"));
+                rental = new Rental();
+                rental.setId(result.getInt("id"));
+                rental.setComment(result.getString("comment"));
+                User user = DAOManager.getInstance().getUserDAO().getById(result.getInt("user_id"));
+                rental.setUser(user);
+                Book book = DAOManager.getInstance().getBookDAO().getById(result.getInt("book_id"));
+                rental.setBook(book);
+                rental.setStateBefore(BookState.valueOf(result.getString("book_state_before").toUpperCase()));
+                rental.setBookIssue(BookIssue.valueOf(result.getString("issue").toUpperCase()));
+                String stateAfter = result.getString("book_state_after");
+                if (stateAfter != null)
+                    rental.setStateAfter(BookState.valueOf(stateAfter.toUpperCase()));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return role;
+        return rental;
     }
 
     @Override
-    public boolean update(Role role) throws DAOException {
+    public boolean update(Rental rental) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
-            statement.setString(1, role.getDescription());
-            statement.setInt(2, role.getId());
+            statement.setString(1, rental.getStateAfter().toString());
+            statement.setInt(2, rental.getId());
             if (statement.executeUpdate() == 0)
                 return false;
         } catch (SQLException e) {
@@ -104,29 +120,37 @@ public class MysqlRoleDAO implements RoleDAO {
     }
 
     @Override
-    public Collection<Role> getAll() throws DAOException {
+    public Collection<Rental> getAll() throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
-        Role role;
-        List<Role> roles = new ArrayList<>();
+        Rental rental;
+        List<Rental> rentals = new ArrayList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_ALL);
             result = statement.executeQuery();
             while (result.next()) {
-                role = new Role();
-                role.setId(result.getInt("id"));
-                role.setName(result.getString("name"));
-                role.setDescription(result.getString("description"));
-                roles.add(role);
+                rental = new Rental();
+                rental.setId(result.getInt("id"));
+                rental.setComment(result.getString("comment"));
+                User user = DAOManager.getInstance().getUserDAO().getById(result.getInt("user_id"));
+                rental.setUser(user);
+                Book book = DAOManager.getInstance().getBookDAO().getById(result.getInt("book_id"));
+                rental.setBook(book);
+                rental.setStateBefore(BookState.valueOf(result.getString("book_state_before").toUpperCase()));
+                rental.setBookIssue(BookIssue.valueOf(result.getString("issue").toUpperCase()));
+                String stateAfter = result.getString("book_state_after");
+                if (stateAfter != null)
+                    rental.setStateAfter(BookState.valueOf(stateAfter.toUpperCase()));
+                rentals.add(rental);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return roles;
+        return rentals;
     }
 
     @Override

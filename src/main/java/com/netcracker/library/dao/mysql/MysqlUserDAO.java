@@ -157,12 +157,13 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         PreparedStatement statement;
         List<User> users = new ArrayList<>();
         ResultSet result;
+        User user;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_ALL);
             result = statement.executeQuery();
             while (result.next()) {
-                User user = new User();
+                user = new User();
                 user.setId(result.getInt("id"));
                 user.setPersonId(result.getInt("person_id"));
                 user.setUsername(result.getString("username"));

@@ -34,6 +34,16 @@ public class DAOManager extends DAOFactory {
         return new MysqlRoleDAO();
     }
 
+    @Override
+    public RentalDAO getRentalDAO() {
+        return new MysqlRentalDAO();
+    }
+
+    @Override
+    public BookDAO getBookDAO() {
+        return new MysqlBookDAO();
+    }
+
     private static class SingletonHolder {
         private static final DAOManager INSTANCE = new DAOManager();
     }
