@@ -43,7 +43,6 @@ public abstract class Entity implements Serializable {
 
         if (id != entity.id) return false;
         return lastUpdate != null ? lastUpdate.equals(entity.lastUpdate) : entity.lastUpdate == null;
-
     }
 
     @Override

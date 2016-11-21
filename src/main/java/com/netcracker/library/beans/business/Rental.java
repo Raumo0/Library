@@ -16,8 +16,8 @@ public class Rental extends Entity {
     private String comment;
     private Date rentalDate;
     private Date returnDate;
-    private BookState before;
-    private BookState after;
+    private BookState stateBefore;
+    private BookState stateAfter;
     private User staff_user;
     private User user;
     private BookIssue bookIssue;
@@ -31,8 +31,8 @@ public class Rental extends Entity {
         this.comment = rental.getComment();
         this.rentalDate = rental.getRentalDate();
         this.returnDate = rental.getReturnDate();
-        this.before = rental.getBefore();
-        this.after = rental.getAfter();
+        this.stateBefore = rental.getStateBefore();
+        this.stateAfter = rental.getStateAfter();
         this.staff_user = rental.getStaff_user();
         this.user = rental.getUser();
         this.bookIssue = rental.getBookIssue();
@@ -63,20 +63,20 @@ public class Rental extends Entity {
         this.returnDate = returnDate;
     }
 
-    public BookState getBefore() {
-        return before;
+    public BookState getStateBefore() {
+        return stateBefore;
     }
 
-    public void setBefore(BookState before) {
-        this.before = before;
+    public void setStateBefore(BookState stateBefore) {
+        this.stateBefore = stateBefore;
     }
 
-    public BookState getAfter() {
-        return after;
+    public BookState getStateAfter() {
+        return stateAfter;
     }
 
-    public void setAfter(BookState after) {
-        this.after = after;
+    public void setStateAfter(BookState stateAfter) {
+        this.stateAfter = stateAfter;
     }
 
     public User getStaff_user() {
@@ -122,8 +122,8 @@ public class Rental extends Entity {
         if (comment != null ? !comment.equals(rental.comment) : rental.comment != null) return false;
         if (rentalDate != null ? !rentalDate.equals(rental.rentalDate) : rental.rentalDate != null) return false;
         if (returnDate != null ? !returnDate.equals(rental.returnDate) : rental.returnDate != null) return false;
-        if (before != rental.before) return false;
-        if (after != rental.after) return false;
+        if (stateBefore != rental.stateBefore) return false;
+        if (stateAfter != rental.stateAfter) return false;
         if (staff_user != null ? !staff_user.equals(rental.staff_user) : rental.staff_user != null) return false;
         if (user != null ? !user.equals(rental.user) : rental.user != null) return false;
         if (bookIssue != rental.bookIssue) return false;
@@ -137,8 +137,8 @@ public class Rental extends Entity {
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (rentalDate != null ? rentalDate.hashCode() : 0);
         result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
-        result = 31 * result + (before != null ? before.hashCode() : 0);
-        result = 31 * result + (after != null ? after.hashCode() : 0);
+        result = 31 * result + (stateBefore != null ? stateBefore.hashCode() : 0);
+        result = 31 * result + (stateAfter != null ? stateAfter.hashCode() : 0);
         result = 31 * result + (staff_user != null ? staff_user.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (bookIssue != null ? bookIssue.hashCode() : 0);
@@ -152,8 +152,8 @@ public class Rental extends Entity {
                 "comment='" + comment + '\'' +
                 ", rentalDate=" + rentalDate +
                 ", returnDate=" + returnDate +
-                ", before=" + before +
-                ", after=" + after +
+                ", stateBefore=" + stateBefore +
+                ", stateAfter=" + stateAfter +
                 ", staff_user=" + staff_user +
                 ", user=" + user +
                 ", bookIssue=" + bookIssue +
