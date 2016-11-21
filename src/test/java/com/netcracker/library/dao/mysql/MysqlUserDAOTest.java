@@ -13,8 +13,8 @@ import java.util.List;
  * Created by raumo0 on 20.11.16.
  */
 public class MysqlUserDAOTest {
-    private DAOFactory factory;
-    private UserDAO userDAO;
+    private static DAOFactory factory;
+    private static UserDAO userDAO;
     private User user;
     private Date date = new Date();
     private int counter = 1;
@@ -22,12 +22,12 @@ public class MysqlUserDAOTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         ContextTest.initializeContext();
+        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+        userDAO = factory.getUserDAO();
     }
 
     @Before
     public void setUp() throws Exception {
-        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-        userDAO = factory.getUserDAO();
         user = new User();
         user.setFirstName("Mike");
         user.setLastName("Mickelson");
@@ -40,8 +40,6 @@ public class MysqlUserDAOTest {
 
     @After
     public void tearDown() throws Exception {
-        factory = null;
-        userDAO = null;
         user = null;
     }
 
@@ -77,16 +75,17 @@ public class MysqlUserDAOTest {
     public void deleteAll() throws Exception {
         Assert.assertTrue(userDAO.deleteAll());
         Assert.assertTrue(userDAO.getAll().size() == 0);
-        List<User> authors = new LinkedList<>();
+        List<User> users = new LinkedList<>();
+        User newUser;
         for (int i = 0; i < 10; i++){
-            User newAuthor = new User(user);
-            newAuthor.setPersonId(0);
-            user.setUsername("username" + counter + date.getTime());
+            newUser = new User(user);
+            newUser.setPersonId(0);
+            newUser.setUsername("username" + counter + date.getTime());
             counter += 1;
-            newAuthor.setId(userDAO.insert(newAuthor));
-            authors.add(newAuthor);
+            newUser.setId(userDAO.insert(newUser));
+            users.add(newUser);
         }
-        Assert.assertTrue(userDAO.getAll().size() == authors.size());
+        Assert.assertTrue(userDAO.getAll().size() == users.size());
         Assert.assertTrue(userDAO.deleteAll());
         Assert.assertTrue(userDAO.getAll().size() == 0);
     }

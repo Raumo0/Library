@@ -12,8 +12,8 @@ import java.util.*;
  * Created by raumo0 on 20.11.16.
  */
 public class MysqlBookEditionDAOTest {
-    private DAOFactory factory;
-    private BookEditionDAO bookEditionDAO;
+    private static DAOFactory factory;
+    private static BookEditionDAO bookEditionDAO;
     private BookEdition bookEdition;
     private Date date = new Date();
     private int counter = 1;
@@ -21,12 +21,12 @@ public class MysqlBookEditionDAOTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         ContextTest.initializeContext();
+        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+        bookEditionDAO = factory.getBookEditionDAO();
     }
 
     @Before
     public void setUp() throws Exception {
-        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-        bookEditionDAO = factory.getBookEditionDAO();
         bookEdition = new BookEdition();
         bookEdition.setTitle("title");
         bookEdition.setPageCount(543);
@@ -40,8 +40,6 @@ public class MysqlBookEditionDAOTest {
 
     @After
     public void tearDown() throws Exception {
-        factory = null;
-        bookEditionDAO = null;
         bookEdition = null;
     }
 
@@ -74,11 +72,11 @@ public class MysqlBookEditionDAOTest {
 
     @Test
     public void deleteById() throws Exception {
-        BookEdition author2;
+        BookEdition bookEdition2;
         boolean deleted = bookEditionDAO.deleteById(bookEdition.getId());
         Assert.assertTrue(deleted);
-        author2 = bookEditionDAO.getById(bookEdition.getId());
-        Assert.assertTrue(!bookEdition.equals(author2));
+        bookEdition2 = bookEditionDAO.getById(bookEdition.getId());
+        Assert.assertTrue(!bookEdition.equals(bookEdition2));
     }
 
     @Test
@@ -86,9 +84,10 @@ public class MysqlBookEditionDAOTest {
         Assert.assertTrue(bookEditionDAO.deleteAll());
         Assert.assertTrue(bookEditionDAO.getAll().size() == 0);
         List<BookEdition> bookEditions = new LinkedList<>();
+        BookEdition newBookEdition;
         for (int i = 0; i < 10; i++){
-            BookEdition newBookEdition = new BookEdition(bookEdition);
-            bookEdition.setIsbn((int)(counter + date.getTime()));
+            newBookEdition = new BookEdition(bookEdition);
+            newBookEdition.setIsbn((int)(counter + date.getTime()));
             counter += 1;
             newBookEdition.setId(bookEditionDAO.insert(newBookEdition));
             bookEditions.add(newBookEdition);

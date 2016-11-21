@@ -12,18 +12,18 @@ import java.util.List;
  * Created by raumo0 on 17.11.16.
  */
 public class MysqlAuthorDAOTest {
-    private DAOFactory factory;
-    private AuthorDAO authorDAO;
+    private static DAOFactory factory;
+    private static AuthorDAO authorDAO;
     private Author author;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         ContextTest.initializeContext();
+        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+        authorDAO = factory.getAuthorDAO();
     }
     @Before
     public void setUp() throws Exception {
-        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-        authorDAO = factory.getAuthorDAO();
         author = new Author();
         author.setFirstName("Mike");
         author.setLastName("Mickelson");
@@ -33,8 +33,6 @@ public class MysqlAuthorDAOTest {
 
     @After
     public void tearDown() throws Exception {
-        factory = null;
-        authorDAO = null;
         author = null;
     }
 

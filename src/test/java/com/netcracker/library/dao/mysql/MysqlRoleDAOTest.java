@@ -13,8 +13,8 @@ import java.util.List;
  * Created by raumo0 on 21.11.16.
  */
 public class MysqlRoleDAOTest {
-    private DAOFactory factory;
-    private RoleDAO roleDAO;
+    private static DAOFactory factory;
+    private static RoleDAO roleDAO;
     private Role role;
     private Date date = new Date();
     private int counter = 1;
@@ -22,12 +22,12 @@ public class MysqlRoleDAOTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         ContextTest.initializeContext();
+        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
+        roleDAO = factory.getRoleDAO();
     }
 
     @Before
     public void setUp() throws Exception {
-        factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
-        roleDAO = factory.getRoleDAO();
         role = new Role();
         role.setName("role_name" + counter + date.getTime());
         counter += 1;
@@ -37,8 +37,6 @@ public class MysqlRoleDAOTest {
 
     @After
     public void tearDown() throws Exception {
-        factory = null;
-        roleDAO = null;
         role = null;
     }
 
@@ -63,26 +61,27 @@ public class MysqlRoleDAOTest {
 
     @Test
     public void deleteById() throws Exception {
-        Role author2;
+        Role role2;
         boolean deleted = roleDAO.deleteById(role.getId());
         Assert.assertTrue(deleted);
-        author2 = roleDAO.getById(role.getId());
-        Assert.assertTrue(!role.equals(author2));
+        role2 = roleDAO.getById(role.getId());
+        Assert.assertTrue(!role.equals(role2));
     }
 
     @Test
     public void deleteAll() throws Exception {
         Assert.assertTrue(roleDAO.deleteAll());
         Assert.assertTrue(roleDAO.getAll().size() == 0);
-        List<Role> bookEditions = new LinkedList<>();
+        List<Role> roles = new LinkedList<>();
+        Role newRole;
         for (int i = 0; i < 10; i++){
-            Role newBookEdition = new Role(role);
-            role.setName("role_name" + counter + date.getTime());
+            newRole = new Role(role);
+            newRole.setName("role_name" + counter + date.getTime());
             counter += 1;
-            newBookEdition.setId(roleDAO.insert(newBookEdition));
-            bookEditions.add(newBookEdition);
+            newRole.setId(roleDAO.insert(newRole));
+            roles.add(newRole);
         }
-        Assert.assertTrue(roleDAO.getAll().size() == bookEditions.size());
+        Assert.assertTrue(roleDAO.getAll().size() == roles.size());
         Assert.assertTrue(roleDAO.deleteAll());
         Assert.assertTrue(roleDAO.getAll().size() == 0);
     }
