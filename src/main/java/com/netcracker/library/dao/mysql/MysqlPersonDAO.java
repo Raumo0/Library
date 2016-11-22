@@ -80,8 +80,4 @@ public abstract class MysqlPersonDAO {
             throw new DAOException(e);
         }
     }
-
-    protected Collection<Person> getPersonAll() throws DAOException {
-        throw new DAOException();
-    }
 }

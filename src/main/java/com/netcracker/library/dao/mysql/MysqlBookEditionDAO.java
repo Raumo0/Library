@@ -161,4 +161,16 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
+
+    @Override
+    public Collection<BookEdition> getBookEditionsByAuthorId(int authorId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
+
+    @Override
+    public BookEdition getBookEditionByBookId(int bookId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
 }

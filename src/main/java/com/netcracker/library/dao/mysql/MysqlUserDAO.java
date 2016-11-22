@@ -152,6 +152,24 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     }
 
     @Override
+    public User getUserByRentalId(int rentalId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
+
+    @Override
+    public User getStaffUserByRentalId(int rentalId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
+
+    @Override
+    public Collection<User> getUsersByRoleId(int roleId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
+
+    @Override
     public Collection<User> getAll() throws DAOException {
         Connection connection = null;
         PreparedStatement statement;

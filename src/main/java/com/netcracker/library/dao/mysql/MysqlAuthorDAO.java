@@ -144,6 +144,12 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     }
 
     @Override
+    public Collection<Author> getAuthorsByBookEditionId(int bookEditionId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
+
+    @Override
     public Collection<Author> getAll() throws DAOException {
         Connection connection = null;
         PreparedStatement statement;

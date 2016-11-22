@@ -2,7 +2,7 @@ package com.netcracker.library.servlets;
 
 import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.exceptions.DAOException;
-import com.netcracker.library.service.impl.AuthorServiceImpl;
+import com.netcracker.library.service.impl.BookServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,8 +33,8 @@ public class MyServlet extends HttpServlet {
         author.setLastName(lastName);
         author.setBiography(biography);
         try {
-            author.setId(AuthorServiceImpl.getInstance().insert(author));
-            author = AuthorServiceImpl.getInstance().getById(author.getId());
+            author.setId(BookServiceImpl.getInstance().addAuthor(author));
+            author = BookServiceImpl.getInstance().getAuthorById(author.getId());
         } catch (DAOException e) {
             e.printStackTrace();
         }

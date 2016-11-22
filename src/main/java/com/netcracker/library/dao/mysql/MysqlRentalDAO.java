@@ -167,4 +167,16 @@ public class MysqlRentalDAO implements RentalDAO {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
+
+    @Override
+    public Collection<Rental> getRentalsByUserId(int userId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
+
+    @Override
+    public Collection<Rental> getRentalsByBookId(int bookId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
 }

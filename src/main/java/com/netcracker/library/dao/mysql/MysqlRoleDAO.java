@@ -143,4 +143,10 @@ public class MysqlRoleDAO implements RoleDAO {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
+
+    @Override
+    public Role getRoleByUserId(int userId) throws DAOException {
+        //TODO
+        throw new DAOException();
+    }
 }
