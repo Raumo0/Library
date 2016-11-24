@@ -48,7 +48,7 @@ public class MyServlet extends HttpServlet {
             varTextB = author.toString();
         request.setAttribute("textB", varTextB);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/index.jsp");
         dispatcher.forward(request, response);
     }
 }
