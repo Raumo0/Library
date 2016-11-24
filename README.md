@@ -16,6 +16,8 @@ The source code can be found [here](https://github.com/Raumo0/Library)
 ### Before develop
 
 * For run tests **uncomment** the dependencies in pom.xml  (**tomcat-catalina** and **tomcat-juli**)
+* Run script database/library.sql for generate database.
+* Class ContextTest in test module ned to customize.
 
 
 
