@@ -2,6 +2,7 @@ package com.netcracker.library.beans.users;
 
 import com.netcracker.library.beans.Person;
 import com.netcracker.library.beans.business.Rental;
+import com.netcracker.library.enums.UserRole;
 
 import java.util.LinkedList;
 
@@ -17,7 +18,7 @@ public class User extends Person {
     private String email;
     private Address address;
     private LinkedList<Rental> rentals;
-    private Role role;
+    private UserRole role;
 
     public User() {
     }
@@ -94,11 +95,11 @@ public class User extends Person {
         this.rentals = rentals;
     }
 
-    public Role getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 

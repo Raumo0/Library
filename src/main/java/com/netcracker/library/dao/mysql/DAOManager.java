@@ -30,11 +30,6 @@ public class DAOManager extends DAOFactory {
     }
 
     @Override
-    public RoleDAO getRoleDAO() {
-        return new MysqlRoleDAO();
-    }
-
-    @Override
     public RentalDAO getRentalDAO() {
         return new MysqlRentalDAO();
     }

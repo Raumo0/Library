@@ -6,10 +6,7 @@ import com.netcracker.library.beans.business.Rental;
 import com.netcracker.library.beans.users.User;
 import com.netcracker.library.dao.BookDAO;
 import com.netcracker.library.dao.DAOFactory;
-import com.netcracker.library.enums.BookIssue;
-import com.netcracker.library.enums.BookPosition;
-import com.netcracker.library.enums.BookState;
-import com.netcracker.library.enums.Bookbinding;
+import com.netcracker.library.enums.*;
 import org.junit.*;
 
 import java.util.*;
@@ -106,6 +103,7 @@ public class MysqlBookDAOTest {
         user.setUsername("1ty" + new Date().getTime());
         user.setPassword("password");
         user.setSalt("salt");
+        user.setRole(UserRole.READER);
         user.setId(factory.getUserDAO().insert(user));
 
         User user2 = new User();
@@ -114,6 +112,7 @@ public class MysqlBookDAOTest {
         user2.setUsername("2rty" + new Date().getTime());
         user2.setPassword("password");
         user2.setSalt("salt");
+        user2.setRole(UserRole.READER);
         user2.setId(factory.getUserDAO().insert(user2));
 
         Rental rental = new Rental();

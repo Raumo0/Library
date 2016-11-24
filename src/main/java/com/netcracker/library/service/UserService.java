@@ -1,7 +1,7 @@
 package com.netcracker.library.service;
 
-import com.netcracker.library.beans.users.Role;
 import com.netcracker.library.beans.users.User;
+import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
 
 import java.util.Collection;
@@ -28,19 +28,5 @@ public interface UserService {
 
     User getStaffUserByRentalId(int rentalId) throws DAOException;
 
-    Collection<User> getUsersByRoleId(int roleId) throws DAOException;
-
-    int addRole(Role role) throws DAOException;
-
-    Role getRoleById(int id) throws DAOException;
-
-    boolean updateRole(Role role) throws DAOException;
-
-    boolean deleteRoleById(int id) throws DAOException;
-
-    Collection<Role> getRoleAll() throws DAOException;
-
-    boolean deleteRoleAll() throws DAOException;
-
-    Role getRoleByUserId(int userId) throws DAOException;
+    Collection<User> getUsersByRole(UserRole role) throws DAOException;
 }

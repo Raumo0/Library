@@ -1,6 +1,7 @@
 package com.netcracker.library.dao;
 
 import com.netcracker.library.beans.users.User;
+import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
 
 import java.util.LinkedList;
@@ -15,5 +16,5 @@ public interface UserDAO extends AbstractDAO<User> {
 
     User getStaffUserByRentalId(int rentalId) throws DAOException;
 
-    LinkedList<User> getUsersByRoleId(int roleId) throws DAOException;
+    LinkedList<User> getUsersByRole(UserRole role) throws DAOException;
 }
