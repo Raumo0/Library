@@ -19,11 +19,11 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
     private Bookbinding bookbinding;
     private String image;
     private Publisher publisher;
-    private List<Author> authors;
+    private LinkedList<Author> authors;
     private Language language;
     private Language originalLanguage;
-    private List<Category> categories;
-    private List<Book> books;
+    private LinkedList<Category> categories;
+    private LinkedList<Book> books;
 
     public BookEdition() {}
 
@@ -117,11 +117,11 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         this.publisher = publisher;
     }
 
-    public List<Author> getAuthors() {
+    public LinkedList<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(LinkedList<Author> authors) {
         this.authors = authors;
     }
 
@@ -141,19 +141,19 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         this.originalLanguage = originalLanguage;
     }
 
-    public List<Category> getCategories() {
+    public LinkedList<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(LinkedList<Category> categories) {
         this.categories = categories;
     }
 
-    public List<Book> getBooks() {
+    public LinkedList<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(LinkedList<Book> books) {
         this.books = books;
     }
 

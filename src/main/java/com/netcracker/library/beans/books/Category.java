@@ -2,7 +2,7 @@ package com.netcracker.library.beans.books;
 
 import com.netcracker.library.beans.Entity;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 15.11.16.
@@ -10,7 +10,7 @@ import java.util.List;
 public class Category extends Entity {
     private static final long serialVersionUID = 1L;
     private String category;
-    private List<BookEdition> bookEditions;
+    private LinkedList<BookEdition> bookEditions;
 
     public Category() {}
 
@@ -28,11 +28,11 @@ public class Category extends Entity {
         this.category = category;
     }
 
-    public List<BookEdition> getBookEditions() {
+    public LinkedList<BookEdition> getBookEditions() {
         return bookEditions;
     }
 
-    public void setBookEditions(List<BookEdition> bookEditions) {
+    public void setBookEditions(LinkedList<BookEdition> bookEditions) {
         this.bookEditions = bookEditions;
     }
 

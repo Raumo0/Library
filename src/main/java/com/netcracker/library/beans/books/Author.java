@@ -2,7 +2,7 @@ package com.netcracker.library.beans.books;
 
 import com.netcracker.library.beans.Person;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 14.10.16.
@@ -10,10 +10,9 @@ import java.util.List;
 public class Author extends Person implements Comparable<Author> {
     private static final long serialVersionUID = 1L;
     private String biography;
-    private List<BookEdition> bookEditions;
+    private LinkedList<BookEdition> bookEditions;
 
-    public Author() {
-    }
+    public Author() {}
 
     public Author(Author author) {
         super(author);
@@ -33,11 +32,11 @@ public class Author extends Person implements Comparable<Author> {
         this.biography = biography;
     }
 
-    public List<BookEdition> getBookEditions() {
+    public LinkedList<BookEdition> getBookEditions() {
         return bookEditions;
     }
 
-    public void setBookEditions(List<BookEdition> bookEditions) {
+    public void setBookEditions(LinkedList<BookEdition> bookEditions) {
         this.bookEditions = bookEditions;
     }
 

@@ -2,7 +2,7 @@ package com.netcracker.library.beans.users;
 
 import com.netcracker.library.beans.Entity;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 15.11.16.
@@ -11,7 +11,7 @@ public class Role extends Entity {
     private static final long serialVersionUID = 1L;
     private String name;
     private String description;
-    private List<User> users;
+    private LinkedList<User> users;
 
     public Role() {}
 
@@ -38,11 +38,11 @@ public class Role extends Entity {
         this.description = description;
     }
 
-    public List<User> getUsers() {
+    public LinkedList<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> userRoles) {
+    public void setUsers(LinkedList<User> userRoles) {
         this.users = userRoles;
     }
 

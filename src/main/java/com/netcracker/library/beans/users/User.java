@@ -3,7 +3,7 @@ package com.netcracker.library.beans.users;
 import com.netcracker.library.beans.Person;
 import com.netcracker.library.beans.business.Rental;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 15.11.16.
@@ -16,7 +16,7 @@ public class User extends Person {
     private String mobile_phone;
     private String email;
     private Address address;
-    private List<Rental> rentals;
+    private LinkedList<Rental> rentals;
     private Role role;
 
     public User() {
@@ -86,11 +86,11 @@ public class User extends Person {
         this.address = address;
     }
 
-    public List<Rental> getRentals() {
+    public LinkedList<Rental> getRentals() {
         return rentals;
     }
 
-    public void setRentals(List<Rental> rentals) {
+    public void setRentals(LinkedList<Rental> rentals) {
         this.rentals = rentals;
     }
 

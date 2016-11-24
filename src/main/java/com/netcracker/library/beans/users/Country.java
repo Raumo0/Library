@@ -2,7 +2,7 @@ package com.netcracker.library.beans.users;
 
 import com.netcracker.library.beans.Entity;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 15.11.16.
@@ -10,7 +10,7 @@ import java.util.List;
 public class Country extends Entity {
     private static final long serialVersionUID = 1L;
     private String name;
-    private List<City> cities;
+    private LinkedList<City> cities;
 
     public Country() {}
 
@@ -28,11 +28,11 @@ public class Country extends Entity {
         this.name = name;
     }
 
-    public List<City> getCities() {
+    public LinkedList<City> getCities() {
         return cities;
     }
 
-    public void setCities(List<City> cities) {
+    public void setCities(LinkedList<City> cities) {
         this.cities = cities;
     }
 

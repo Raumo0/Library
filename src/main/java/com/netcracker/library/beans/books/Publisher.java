@@ -3,7 +3,7 @@ package com.netcracker.library.beans.books;
 import com.netcracker.library.beans.Entity;
 import com.netcracker.library.beans.users.Address;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 15.11.16.
@@ -15,7 +15,7 @@ public class Publisher extends Entity {
     private String image;
     private Address address;
     private String email;
-    private List<BookEdition> bookEditions;
+    private LinkedList<BookEdition> bookEditions;
 
     public Publisher() {}
 
@@ -69,11 +69,11 @@ public class Publisher extends Entity {
         this.email = email;
     }
 
-    public List<BookEdition> getBookEditions() {
+    public LinkedList<BookEdition> getBookEditions() {
         return bookEditions;
     }
 
-    public void setBookEditions(List<BookEdition> bookEditions) {
+    public void setBookEditions(LinkedList<BookEdition> bookEditions) {
         this.bookEditions = bookEditions;
     }
 

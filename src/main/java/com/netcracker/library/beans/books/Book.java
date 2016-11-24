@@ -5,7 +5,7 @@ import com.netcracker.library.beans.business.Rental;
 import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.enums.BookState;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 14.10.16.
@@ -15,7 +15,7 @@ public class Book extends Entity {
     private BookPosition bookPosition;
     private BookEdition bookEdition;
     private BookState bookState;
-    private List<Rental> rentals;
+    private LinkedList<Rental> rentals;
 
     public Book() {}
 
@@ -51,11 +51,11 @@ public class Book extends Entity {
         this.bookState = bookState;
     }
 
-    public List<Rental> getRentals() {
+    public LinkedList<Rental> getRentals() {
         return rentals;
     }
 
-    public void setRentals(List<Rental> rentals) {
+    public void setRentals(LinkedList<Rental> rentals) {
         this.rentals = rentals;
     }
 
