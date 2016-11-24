@@ -22,6 +22,8 @@ public interface UserService {
 
     boolean deleteUserAll() throws DAOException;
 
+    User getUserByPersonId(int personId) throws DAOException;
+
     User getUserByRentalId(int rentalId) throws DAOException;
 
     User getStaffUserByRentalId(int rentalId) throws DAOException;

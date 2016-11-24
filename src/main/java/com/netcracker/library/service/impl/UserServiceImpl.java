@@ -59,6 +59,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByPersonId(int personId) throws DAOException {
+        return userDAO.getUserByPersonId(personId);
+    }
+
+    @Override
     public User getUserByRentalId(int rentalId) throws DAOException {
         return userDAO.getUserByRentalId(rentalId);
     }

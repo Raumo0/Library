@@ -143,6 +143,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Author getAuthorByPersonId(int personId) throws DAOException {
+        return authorDAO.getAuthorByPersonId(personId);
+    }
+
+    @Override
     public Collection<Author> getAuthorsByBookEditionId(int bookEditionId) throws DAOException {
         return authorDAO.getAuthorsByBookEditionId(bookEditionId);
     }

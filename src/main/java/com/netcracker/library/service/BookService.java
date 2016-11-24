@@ -55,5 +55,7 @@ public interface BookService {
 
     boolean deleteAuthorAll() throws DAOException;
 
+    Author getAuthorByPersonId(int personId) throws DAOException;
+
     Collection<Author> getAuthorsByBookEditionId(int bookEditionId) throws DAOException;
 }
