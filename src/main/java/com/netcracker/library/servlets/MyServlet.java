@@ -2,6 +2,7 @@ package com.netcracker.library.servlets;
 
 import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.exceptions.DAOException;
+import com.netcracker.library.resource.ConfigurationManager;
 import com.netcracker.library.service.impl.BookServiceImpl;
 
 import javax.servlet.RequestDispatcher;
@@ -48,7 +49,11 @@ public class MyServlet extends HttpServlet {
             varTextB = author.toString();
         request.setAttribute("textB", varTextB);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/index.jsp");
+
+
+
+        String page = ConfigurationManager.getProperty("path.page.index");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }
 }
