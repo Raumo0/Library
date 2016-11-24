@@ -1,10 +1,13 @@
 package com.netcracker.library.dao.mysql;
 
 import com.netcracker.library.beans.books.Author;
+import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.dao.AuthorDAO;
 import com.netcracker.library.dao.DAOFactory;
+import com.netcracker.library.enums.Bookbinding;
 import org.junit.*;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,5 +81,30 @@ public class MysqlAuthorDAOTest {
         Assert.assertTrue(authorDAO.getAll().size() == authors.size());
         Assert.assertTrue(authorDAO.deleteAll());
         Assert.assertTrue(authorDAO.getAll().size() == 0);
+    }
+
+    @Test
+    public void getAuthorByPersonId() throws Exception {
+        Assert.assertEquals(author, authorDAO.getAuthorByPersonId(author.getPersonId()));
+    }
+
+    @Test
+    public void getAuthorsByBookEditionId() throws Exception {
+        BookEdition bookEdition = new BookEdition();
+        bookEdition.setTitle("title");
+        bookEdition.setPageCount(543);
+        bookEdition.setDescription("description");
+        bookEdition.setIsbn((int)(new Date().getTime()));
+        bookEdition.setWeight(1520);
+        bookEdition.setBookbinding(Bookbinding.HARD);
+        bookEdition.setId(factory.getBookEditionDAO().insert(bookEdition));
+
+        author.setBookEditions(new LinkedList<BookEdition>());
+        author.getBookEditions().add(bookEdition);
+        authorDAO.update(author);
+        Author author2 = authorDAO.getAuthorsByBookEditionId(author.getBookEditions().get(0).getId()).getFirst();
+        author2.setBookEditions(new LinkedList<BookEdition>());
+        author2.getBookEditions().add(factory.getBookEditionDAO().getById(bookEdition.getId()));
+        Assert.assertEquals(author, author2);
     }
 }

@@ -1,6 +1,7 @@
 package com.netcracker.library.dao.mysql;
 
 import com.netcracker.library.beans.users.Role;
+import com.netcracker.library.beans.users.User;
 import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.dao.RoleDAO;
 import org.junit.*;
@@ -86,4 +87,17 @@ public class MysqlRoleDAOTest {
         Assert.assertTrue(roleDAO.getAll().size() == 0);
     }
 
+    @Test
+    public void getRoleByUserId() throws Exception {
+        User user = new User();
+        user.setFirstName("Mike");
+        user.setLastName("Mickelson");
+        user.setUsername("username" + counter + date.getTime());
+        user.setPassword("password");
+        user.setSalt("salt");
+        user.setRole(role);
+        user.setId(factory.getUserDAO().insert(user));
+        counter += 1;
+        Assert.assertEquals(role, roleDAO.getRoleByUserId(user.getId()));
+    }
 }

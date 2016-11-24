@@ -19,6 +19,8 @@ public class MysqlRoleDAO implements RoleDAO {
     private static final String DELETE = "DELETE FROM role WHERE id=?";
     private static final String UPDATE = "UPDATE role SET description=? WHERE id=?";
     private static final String DELETE_ALL = "DELETE FROM role";
+    private static final String GET_ROLE_BY_USER_ID = "SELECT r.id, r.name, r.description, r.last_update  FROM role r " +
+            "INNER JOIN user u ON u.role_id = r.id WHERE u.id=?";
 
     public MysqlRoleDAO() {}
 
@@ -146,7 +148,26 @@ public class MysqlRoleDAO implements RoleDAO {
 
     @Override
     public Role getRoleByUserId(int userId) throws DAOException {
-        //TODO
-        throw new DAOException();
+        Connection connection = null;
+        PreparedStatement statement;
+        Role role = null;
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_ROLE_BY_USER_ID);
+            statement.setString(1, String.valueOf(userId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                role = new Role();
+                role.setId(result.getInt("id"));
+                role.setName(result.getString("name"));
+                role.setDescription(result.getString("description"));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return role;
     }
 }

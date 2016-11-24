@@ -1,13 +1,12 @@
 package com.netcracker.library.dao.mysql;
 
+import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.dao.AuthorDAO;
 import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.exceptions.DAOException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by raumo0 on 14.11.16.
@@ -19,9 +18,15 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     private static final String INSERT = "INSERT INTO author (biography, person_id) VALUES(?,?)";
     private static final String DELETE = "DELETE FROM author WHERE id=?";
     private static final String UPDATE = "UPDATE author SET biography=? WHERE id=?";
-    private static final String GET_AUTHOR_BY_PERSON_ID = "SELECT * FROM user WHERE person_id=?";
+    private static final String GET_AUTHOR_BY_PERSON_ID = "SELECT * FROM author WHERE person_id=?";
     private static final String GET_PERSONS_ID_BY_AUTHORS = "SELECT person_id FROM author";
     private static final String DELETE_ALL = "DELETE FROM author";
+    private static final String INSERT_AUTHOR_BOOK_EDITION = "INSERT INTO author_has_book_edition " +
+            "(author_id, book_edition_id) VALUES(?,?)";
+    private static final String DELETE_AUTHOR_BOOK_EDITION = "DELETE FROM author_has_book_edition WHERE author_id=?";
+    private static final String GET_AUTHORS_BY_BOOK_EDITION_ID = "SELECT a.id, a.biography, a.person_id, a.last_update " +
+            "FROM author a INNER JOIN author_has_book_edition be ON be.author_id = a.id " +
+            "WHERE be.book_edition_id = ?";
 
     public MysqlAuthorDAO() {}
 
@@ -30,6 +35,7 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
+        int authorId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             if (author.getPersonId() == 0)
@@ -40,7 +46,16 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
             statement.executeUpdate();
             result = statement.getGeneratedKeys();
             result.first();
-            return result.getInt(1);
+            authorId = result.getInt(1);
+            if (author.getBookEditions() != null) {
+                for (BookEdition bookEdition : author.getBookEditions()) {
+                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
+                    statement.setInt(1, authorId);
+                    statement.setInt(2, bookEdition.getId());
+                    statement.executeUpdate();
+                }
+            }
+            return authorId;
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -84,6 +99,20 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
             statement.setString(1, author.getBiography());
             statement.setInt(2, author.getId());
             statement.executeUpdate();
+
+            statement = connection.prepareStatement(DELETE_AUTHOR_BOOK_EDITION);
+            statement.setInt(1, author.getId());
+            statement.executeUpdate();
+
+            if (author.getBookEditions() != null) {
+                for (BookEdition bookEdition : author.getBookEditions()) {
+                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
+                    statement.setInt(1, author.getId());
+                    statement.setInt(2, bookEdition.getId());
+                    statement.executeUpdate();
+                }
+            }
+
             return updatePerson(author, connection);
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -96,7 +125,7 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     public boolean deleteById(int id) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
-        int personId = 0;
+        int personId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_PERSON_ID_BY_AUTHOR_ID);
@@ -144,9 +173,31 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     }
 
     @Override
-    public Collection<Author> getAuthorsByBookEditionId(int bookEditionId) throws DAOException {
-        //TODO
-        throw new DAOException();
+    public LinkedList<Author> getAuthorsByBookEditionId(int bookEditionId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        LinkedList<Author> authors = new LinkedList<>();
+        Author author;
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_AUTHORS_BY_BOOK_EDITION_ID);
+            statement.setString(1, String.valueOf(bookEditionId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                author = new Author();
+                author.setId(result.getInt("id"));
+                author.setPersonId(result.getInt("person_id"));
+                author.setBiography(result.getString("biography"));
+                getPersonById(author.getPersonId(), author, connection);
+                authors.add(author);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return authors;
     }
 
     @Override
@@ -155,12 +206,13 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         PreparedStatement statement;
         List<Author> authors = new ArrayList<>();
         ResultSet result;
+        Author author;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_ALL);
             result = statement.executeQuery();
             while (result.next()) {
-                Author author = new Author();
+                author = new Author();
                 author.setId(result.getInt("id"));
                 author.setPersonId(result.getInt("person_id"));
                 author.setBiography(result.getString("biography"));

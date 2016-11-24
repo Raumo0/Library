@@ -34,6 +34,10 @@ public class MysqlRentalDAOTest {
         ContextTest.initializeContext();
         factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
         rentalDAO = factory.getRentalDAO();
+    }
+
+    @Before
+    public void setUp() throws Exception {
         BookEdition bookEdition = new BookEdition();
         bookEdition.setTitle("title");
         bookEdition.setPageCount(543);
@@ -56,10 +60,7 @@ public class MysqlRentalDAOTest {
         user.setPassword("password");
         user.setSalt("salt");
         user.setId(factory.getUserDAO().insert(user));
-    }
 
-    @Before
-    public void setUp() throws Exception {
         rental = new Rental();
         rental.setComment("commentary");
         rental.setUser(user);
@@ -118,4 +119,17 @@ public class MysqlRentalDAOTest {
         Assert.assertTrue(rentalDAO.getAll().size() == 0);
     }
 
+    @Test
+    public void getRentalsByUserId() throws Exception {
+        LinkedList<Rental> rentals = new LinkedList<>();
+        rentals.add(rental);
+        Assert.assertEquals(rentals, rentalDAO.getRentalsByUserId(rental.getUser().getId()));
+    }
+
+    @Test
+    public void getRentalsByBookId() throws Exception {
+        LinkedList<Rental> rentals = new LinkedList<>();
+        rentals.add(rental);
+        Assert.assertEquals(rentals, rentalDAO.getRentalsByBookId(rental.getBook().getId()));
+    }
 }

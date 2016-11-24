@@ -1,8 +1,12 @@
 package com.netcracker.library.dao.mysql;
 
+import com.netcracker.library.beans.books.Author;
+import com.netcracker.library.beans.books.Book;
 import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.dao.BookEditionDAO;
 import com.netcracker.library.dao.DAOFactory;
+import com.netcracker.library.enums.BookPosition;
+import com.netcracker.library.enums.BookState;
 import com.netcracker.library.enums.Bookbinding;
 import org.junit.*;
 
@@ -97,4 +101,32 @@ public class MysqlBookEditionDAOTest {
         Assert.assertTrue(bookEditionDAO.getAll().size() == 0);
     }
 
+    @Test
+    public void getBookEditionsByAuthorId() throws Exception {
+        Author author = new Author();
+        author.setFirstName("Mike");
+        author.setLastName("Mickelson");
+        author.setBiography("I am a man!");
+        author.setId(factory.getAuthorDAO().insert(author));
+
+        bookEdition.setAuthors(new LinkedList<Author>());
+        bookEdition.getAuthors().add(author);
+        bookEditionDAO.update(bookEdition);
+        BookEdition bookEdition2 = bookEditionDAO.getBookEditionsByAuthorId(
+                bookEdition.getAuthors().getFirst().getId()).getFirst();
+        bookEdition2.setAuthors(new LinkedList<Author>());
+        bookEdition2.getAuthors().add(factory.getAuthorDAO().getById(author.getId()));
+        Assert.assertEquals(bookEdition, bookEdition2);
+    }
+
+    @Test
+    public void getBookEditionByBookId() throws Exception {
+        Book book = new Book();
+        book.setBookEdition(bookEdition);
+        book.setBookPosition(BookPosition.STORE);
+        book.setBookState(BookState.EXCELLENT);
+        book.setId(factory.getBookDAO().insert(book));
+
+        Assert.assertEquals(bookEdition, bookEditionDAO.getBookEditionByBookId(book.getId()));
+    }
 }

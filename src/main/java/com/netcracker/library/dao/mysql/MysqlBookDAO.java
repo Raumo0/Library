@@ -10,6 +10,7 @@ import com.netcracker.library.exceptions.DAOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,6 +23,9 @@ public class MysqlBookDAO implements BookDAO {
     private static final String DELETE = "DELETE FROM book WHERE id=?";
     private static final String UPDATE = "UPDATE book SET position=?,state=? WHERE id=?";
     private static final String DELETE_ALL = "DELETE FROM book";
+    private static final String GET_BOOKS_BY_BOOK_EDITION_ID = "SELECT * FROM book WHERE book_edition_id=?";
+    private static final String GET_BOOK_BY_RENTAL_ID = "SELECT b.id, b.book_edition_id, b.position, " +
+            "b.state, b.last_update FROM book b INNER JOIN rental r ON r.book_id = b.id WHERE r.id = ?";
 
     public MysqlBookDAO() {}
 
@@ -157,13 +161,59 @@ public class MysqlBookDAO implements BookDAO {
 
     @Override
     public Book getBookByRentalId(int rentalId) throws DAOException {
-        //TODO
-        throw new DAOException();
+        Connection connection = null;
+        PreparedStatement statement;
+        Book book = null;
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_BOOK_BY_RENTAL_ID);
+            statement.setString(1, String.valueOf(rentalId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                book = new Book();
+                book.setId(result.getInt("id"));
+                book.setBookState(BookState.valueOf(result.getString("state").toUpperCase()));
+                book.setBookPosition(BookPosition.valueOf(result.getString("position").toUpperCase()));
+                book.setBookEdition(
+                        DAOManager.getInstance().getBookEditionDAO().getById(result.getInt(
+                                "book_edition_id")));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return book;
     }
 
     @Override
-    public Collection<Book> getBooksByBookEditionId(int bookEditionId) throws DAOException {
-        //TODO
-        throw new DAOException();
+    public LinkedList<Book> getBooksByBookEditionId(int bookEditionId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        Book book;
+        LinkedList<Book> books = new LinkedList<>();
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_BOOKS_BY_BOOK_EDITION_ID);
+            statement.setString(1, String.valueOf(bookEditionId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                book = new Book();
+                book.setId(result.getInt("id"));
+                book.setBookState(BookState.valueOf(result.getString("state").toUpperCase()));
+                book.setBookPosition(BookPosition.valueOf(result.getString("position").toUpperCase()));
+                book.setBookEdition(
+                        DAOManager.getInstance().getBookEditionDAO().getById(result.getInt(
+                                "book_edition_id")));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return books;
     }
 }

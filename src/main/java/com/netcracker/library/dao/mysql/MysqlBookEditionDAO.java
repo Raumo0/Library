@@ -1,5 +1,6 @@
 package com.netcracker.library.dao.mysql;
 
+import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.dao.BookEditionDAO;
 import com.netcracker.library.enums.Bookbinding;
@@ -20,6 +21,16 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     private static final String UPDATE = "UPDATE book_edition SET title=?, page_count=?, description=?," +
             "weight=?,bookbinding=? WHERE id=?";
     private static final String DELETE_ALL = "DELETE FROM book_edition";
+    private static final String GET_BOOK_EDITION_BY_BOOK_ID = "SELECT be.id, be.title, be.page_count, be.release_year, " +
+            "be.description, be.isbn, be.language_id, be.original_language_id, be.weight, be.bookbinding, be.image, " +
+            "be.publisher_id, be.last_update FROM book_edition be INNER JOIN book b ON be.id = b.book_edition_id\n" +
+            "WHERE b.id = ?";
+    private static final String GET_BOOK_EDITIONS_BY_AUTHOR_ID = "SELECT be.id, be.title, be.page_count, " +
+            "be.release_year, be.description, be.isbn, be.language_id, be.original_language_id, be.weight, " +
+            "be.bookbinding, be.image, be.publisher_id, be.last_update FROM book_edition be " +
+            "INNER JOIN author_has_book_edition a ON be.id = a.book_edition_id WHERE a.author_id = ?";
+    private static final String INSERT_AUTHOR_BOOK_EDITION = "INSERT INTO author_has_book_edition " +
+            "(author_id, book_edition_id) VALUES(?,?)";
 
     public MysqlBookEditionDAO() {}
 
@@ -41,7 +52,16 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             statement.executeUpdate();
             result = statement.getGeneratedKeys();
             result.first();
-            return result.getInt(1);
+            int bookEditionId = result.getInt(1);
+            if (bookEdition.getAuthors() != null) {
+                for (Author author: bookEdition.getAuthors()) {
+                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
+                    statement.setInt(1, author.getId());
+                    statement.setInt(2, bookEditionId);
+                    statement.executeUpdate();
+                }
+            }
+            return bookEditionId;
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
@@ -82,6 +102,7 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     public boolean update(BookEdition bookEdition) throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
+        boolean result = false;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
@@ -91,14 +112,23 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             statement.setInt(4, bookEdition.getWeight());
             statement.setString(5, bookEdition.getBookbinding().toString());
             statement.setInt(6, bookEdition.getId());
-            if (statement.executeUpdate() == 0)
-                return false;
+            if (statement.executeUpdate() != 0)
+                result = true;
+            if (bookEdition.getAuthors() != null) {
+                for (Author author: bookEdition.getAuthors()) {
+                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
+                    statement.setInt(1, author.getId());
+                    statement.setInt(2, bookEdition.getId());
+                    statement.executeUpdate();
+                    result = true;
+                }
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return true;
+        return result;
     }
 
     @Override
@@ -163,14 +193,62 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     }
 
     @Override
-    public Collection<BookEdition> getBookEditionsByAuthorId(int authorId) throws DAOException {
-        //TODO
-        throw new DAOException();
+    public LinkedList<BookEdition> getBookEditionsByAuthorId(int authorId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        LinkedList<BookEdition> bookEditions = new LinkedList<>();
+        BookEdition bookEdition;
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_BOOK_EDITIONS_BY_AUTHOR_ID);
+            statement.setString(1, String.valueOf(authorId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                bookEdition = new BookEdition();
+                bookEdition.setId(result.getInt("id"));
+                bookEdition.setTitle(result.getString("title"));
+                bookEdition.setPageCount(result.getInt("page_count"));
+                bookEdition.setDescription(result.getString("description"));
+                bookEdition.setIsbn(result.getInt("isbn"));
+                bookEdition.setWeight(result.getInt("weight"));
+                bookEdition.setBookbinding(Bookbinding.valueOf(result.getString("bookbinding").toUpperCase()));
+                bookEditions.add(bookEdition);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return bookEditions;
     }
 
     @Override
     public BookEdition getBookEditionByBookId(int bookId) throws DAOException {
-        //TODO
-        throw new DAOException();
+        Connection connection = null;
+        PreparedStatement statement;
+        BookEdition bookEdition = null;
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_BOOK_EDITION_BY_BOOK_ID);
+            statement.setString(1, String.valueOf(bookId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                bookEdition = new BookEdition();
+                bookEdition.setId(result.getInt("id"));
+                bookEdition.setTitle(result.getString("title"));
+                bookEdition.setPageCount(result.getInt("page_count"));
+                bookEdition.setDescription(result.getString("description"));
+                bookEdition.setIsbn(result.getInt("isbn"));
+                bookEdition.setWeight(result.getInt("weight"));
+                bookEdition.setBookbinding(Bookbinding.valueOf(result.getString("bookbinding").toUpperCase()));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return bookEdition;
     }
 }

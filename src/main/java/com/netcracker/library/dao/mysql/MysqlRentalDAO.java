@@ -11,6 +11,7 @@ import com.netcracker.library.exceptions.DAOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,10 +21,12 @@ public class MysqlRentalDAO implements RentalDAO {
     private static final String GET_ALL = "SELECT * FROM rental";
     private static final String GET_BY_ID = "SELECT * FROM rental WHERE id=?";
     private static final String INSERT = "INSERT INTO rental (comment, user_id, book_id, book_state_before," +
-            "issue) VALUES(?,?,?,?,?)";
+            "issue, staff_user_id) VALUES(?,?,?,?,?,?)";
     private static final String DELETE = "DELETE FROM rental WHERE id=?";
-    private static final String UPDATE = "UPDATE rental SET book_state_after=? WHERE id=?";
+    private static final String UPDATE = "UPDATE rental SET book_state_after=?,staff_user_id=? WHERE id=?";
     private static final String DELETE_ALL = "DELETE FROM rental";
+    private static final String GET_RENTAL_BY_USER_ID = "SELECT * FROM rental WHERE user_id=?";
+    private static final String GET_RENTAL_BY_BOOK_ID = "SELECT * FROM rental WHERE book_id=?";
 
     public MysqlRentalDAO() {}
 
@@ -40,6 +43,10 @@ public class MysqlRentalDAO implements RentalDAO {
             statement.setInt(3, rental.getBook().getId());
             statement.setString(4, rental.getStateBefore().toString());
             statement.setString(5, rental.getBookIssue().toString());
+            if (rental.getStaff_user() != null)
+                statement.setInt(6, rental.getStaff_user().getId());
+            else
+                statement.setNull(6, Types.INTEGER);
             statement.executeUpdate();
             result = statement.getGeneratedKeys();
             result.first();
@@ -92,7 +99,11 @@ public class MysqlRentalDAO implements RentalDAO {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
             statement.setString(1, rental.getStateAfter().toString());
-            statement.setInt(2, rental.getId());
+            if (rental.getStaff_user() != null)
+                statement.setInt(2, rental.getStaff_user().getId());
+            else
+                statement.setNull(2, Types.INTEGER);
+            statement.setInt(3, rental.getId());
             if (statement.executeUpdate() == 0)
                 return false;
         } catch (SQLException e) {
@@ -120,12 +131,12 @@ public class MysqlRentalDAO implements RentalDAO {
     }
 
     @Override
-    public Collection<Rental> getAll() throws DAOException {
+    public LinkedList<Rental> getAll() throws DAOException {
         Connection connection = null;
         PreparedStatement statement;
         ResultSet result;
         Rental rental;
-        List<Rental> rentals = new ArrayList<>();
+        LinkedList<Rental> rentals = new LinkedList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_ALL);
@@ -169,14 +180,72 @@ public class MysqlRentalDAO implements RentalDAO {
     }
 
     @Override
-    public Collection<Rental> getRentalsByUserId(int userId) throws DAOException {
-        //TODO
-        throw new DAOException();
+    public LinkedList<Rental> getRentalsByUserId(int userId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        Rental rental;
+        ResultSet result;
+        LinkedList<Rental> rentals = new LinkedList<>();
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_RENTAL_BY_USER_ID);
+            statement.setString(1, String.valueOf(userId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                rental = new Rental();
+                rental.setId(result.getInt("id"));
+                rental.setComment(result.getString("comment"));
+                User user = DAOManager.getInstance().getUserDAO().getById(result.getInt("user_id"));
+                rental.setUser(user);
+                Book book = DAOManager.getInstance().getBookDAO().getById(result.getInt("book_id"));
+                rental.setBook(book);
+                rental.setStateBefore(BookState.valueOf(result.getString("book_state_before").toUpperCase()));
+                rental.setBookIssue(BookIssue.valueOf(result.getString("issue").toUpperCase()));
+                String stateAfter = result.getString("book_state_after");
+                if (stateAfter != null)
+                    rental.setStateAfter(BookState.valueOf(stateAfter.toUpperCase()));
+                rentals.add(rental);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return rentals;
     }
 
     @Override
-    public Collection<Rental> getRentalsByBookId(int bookId) throws DAOException {
-        //TODO
-        throw new DAOException();
+    public LinkedList<Rental> getRentalsByBookId(int bookId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        Rental rental;
+        ResultSet result;
+        LinkedList<Rental> rentals = new LinkedList<>();
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_RENTAL_BY_BOOK_ID);
+            statement.setString(1, String.valueOf(bookId));
+            result = statement.executeQuery();
+            while (result.next()) {
+                rental = new Rental();
+                rental.setId(result.getInt("id"));
+                rental.setComment(result.getString("comment"));
+                User user = DAOManager.getInstance().getUserDAO().getById(result.getInt("user_id"));
+                rental.setUser(user);
+                Book book = DAOManager.getInstance().getBookDAO().getById(result.getInt("book_id"));
+                rental.setBook(book);
+                rental.setStateBefore(BookState.valueOf(result.getString("book_state_before").toUpperCase()));
+                rental.setBookIssue(BookIssue.valueOf(result.getString("issue").toUpperCase()));
+                String stateAfter = result.getString("book_state_after");
+                if (stateAfter != null)
+                    rental.setStateAfter(BookState.valueOf(stateAfter.toUpperCase()));
+                rentals.add(rental);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return rentals;
     }
 }
