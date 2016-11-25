@@ -1,12 +1,11 @@
 package com.netcracker.library.dao.mysql;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.netcracker.library.logger.SystemLogger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by raumo0 on 20.11.16.
@@ -32,7 +31,7 @@ public class ContextTest {
             ds.setPassword("mysql");
             ic.bind("java:/comp/env/jdbc/library", ds);
         } catch (NamingException e) {
-            Logger.getLogger(MysqlAuthorDAOTest.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
     }
 

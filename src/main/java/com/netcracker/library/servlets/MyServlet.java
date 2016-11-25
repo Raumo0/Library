@@ -1,9 +1,8 @@
 package com.netcracker.library.servlets;
 
-import com.netcracker.library.beans.books.Author;
-import com.netcracker.library.exceptions.DAOException;
+import com.netcracker.library.commands.Command;
+import com.netcracker.library.commands.CommandFactory;
 import com.netcracker.library.resource.ConfigurationManager;
-import com.netcracker.library.service.impl.BookServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by raumo0 on 18.11.16.
  */
-@WebServlet("/s")
+@WebServlet("/MyServlet")
 public class MyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,35 +24,16 @@ public class MyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String firstName = request.getParameter("fName");
-        String lastName = request.getParameter("lName");
-        String biography = request.getParameter("bio");
-
-        Author author = new Author();
-        author.setFirstName(firstName);
-        author.setLastName(lastName);
-        author.setBiography(biography);
-        try {
-            author.setId(BookServiceImpl.getInstance().addAuthor(author));
-            author = BookServiceImpl.getInstance().getAuthorById(author.getId());
-        } catch (DAOException e) {
-            e.printStackTrace();
+        String page = null;
+        CommandFactory client = CommandFactory.getInstance();
+        Command command = client.defineCommand(request);
+        page = command.execute(request);
+        if (page != null) {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+            dispatcher.forward(request, response);
+        } else {
+            page = ConfigurationManager.getProperty("path.page.index");
+            response.sendRedirect(request.getContextPath() + page);
         }
-
-        response.setContentType("text/html");
-
-        String varTextA = "Hello World!";
-        request.setAttribute("textA", varTextA);
-        String varTextB = "not working =(";
-        if (author != null)
-            varTextB = author.toString();
-        request.setAttribute("textB", varTextB);
-
-
-
-
-        String page = ConfigurationManager.getProperty("path.page.index");
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-        dispatcher.forward(request, response);
     }
 }
