@@ -5,4 +5,5 @@ INDEX
 ${textA}
 ${textB}
 <br>
+<a href="logout">Выйти из системы</a> <br/>
 <%@include file="/WEB-INF/jspf/footer.jspf" %>

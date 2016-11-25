@@ -1,5 +1,7 @@
 package com.netcracker.library.commands;
 
+import com.netcracker.library.constants.Parameters;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -14,7 +16,7 @@ public class CommandFactory {
 
     public Command defineCommand(HttpServletRequest request){
         Command current = null;
-        String commandName = request.getParameter("command");
+        String commandName = request.getParameter(Parameters.ACTION);
         try{
             CommandType type = CommandType.valueOf(commandName.toUpperCase());
             current = type.getCurrentCommand();

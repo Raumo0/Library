@@ -1,6 +1,8 @@
 package com.netcracker.library.commands.user;
 
 import com.netcracker.library.commands.Command;
+import com.netcracker.library.constants.PageConstants;
+import com.netcracker.library.resource.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 public class LogoutReaderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
-        //todo
-        return null;
+        String page = ConfigurationManager.getProperty(PageConstants.INDEX);
+        request.getSession().invalidate();
+        return page;
     }
 }

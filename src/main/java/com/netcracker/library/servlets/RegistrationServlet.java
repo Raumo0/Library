@@ -1,6 +1,9 @@
 package com.netcracker.library.servlets;
 
 import com.netcracker.library.beans.users.User;
+import com.netcracker.library.constants.PageConstants;
+import com.netcracker.library.constants.Parameters;
+import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.service.impl.UserServiceImpl;
@@ -25,7 +28,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        String page = ConfigurationManager.getProperty("path.page.registration");
+        String page = ConfigurationManager.getProperty(PageConstants.REGISTRATION);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
         dispatcher.forward(req, resp);
     }
@@ -33,11 +36,11 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User();
-        user.setFirstName(req.getParameter("firstname"));
-        user.setLastName(req.getParameter("lastname"));
-        user.setUsername(req.getParameter("username"));
-        user.setPassword(req.getParameter("password"));
-        user.setSalt("salt");
+        user.setFirstName(req.getParameter(Parameters.FIRST_NAME));
+        user.setLastName(req.getParameter(Parameters.LAST_NAME));
+        user.setUsername(req.getParameter(Parameters.USERNAME));
+        user.setPassword(req.getParameter(Parameters.PASSWORD));
+        user.setSalt(Parameters.SALT);
         user.setRole(UserRole.READER);
         try {
             if (!inspection(user))//todo
@@ -50,22 +53,22 @@ public class RegistrationServlet extends HttpServlet {
             user.setPassword(PasswordGenerator.getInstance().generatePassword(user.getPassword(), user.getSalt()));
             user.setId(UserServiceImpl.getInstance().addUser(user));
 
-            req.getSession().setAttribute("role", user.getRole());
-            req.getSession().setAttribute("username", user.getUsername());
+            req.getSession().setAttribute(Parameters.ROLE, user.getRole());
+            req.getSession().setAttribute(Parameters.USERNAME, user.getUsername());
 //            String page = ConfigurationManager.getProperty("path.page.index");
 //            RequestDispatcher dispatcher = req.getRequestDispatcher(page);
 //            dispatcher.forward(req, resp);
-            resp.sendRedirect("/");
+            resp.sendRedirect(RedirectConstants.INDEX);
             return;
         } catch (DAOException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
-        String page = ConfigurationManager.getProperty("path.page.registration");
+        String page = ConfigurationManager.getProperty(PageConstants.REGISTRATION);
 //        RequestDispatcher dispatcher = req.getRequestDispatcher(page);
 //        dispatcher.forward(req, resp);
-        resp.sendRedirect("/registration");
+        resp.sendRedirect(RedirectConstants.REGISTRATION);
     }
 
     private boolean inspection(User user) throws NoSuchAlgorithmException {

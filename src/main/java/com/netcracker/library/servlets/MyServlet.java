@@ -2,6 +2,7 @@ package com.netcracker.library.servlets;
 
 import com.netcracker.library.commands.Command;
 import com.netcracker.library.commands.CommandFactory;
+import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.resource.ConfigurationManager;
 
 import javax.servlet.RequestDispatcher;
@@ -15,7 +16,7 @@ import java.io.IOException;
 /**
  * Created by raumo0 on 18.11.16.
  */
-//@WebServlet("/")
+@WebServlet("/panel")
 public class MyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,13 +28,16 @@ public class MyServlet extends HttpServlet {
         String page = null;
         CommandFactory client = CommandFactory.getInstance();
         Command command = client.defineCommand(request);
-        page = command.execute(request);
+        if (command != null)
+            page = command.execute(request);
         if (page != null) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             dispatcher.forward(request, response);
         } else {
-//            page = ConfigurationManager.getProperty("path.page.index");
-            response.sendRedirect("/");
+            page = ConfigurationManager.getProperty(PageConstants.INDEX);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+            dispatcher.forward(request, response);
+//            response.sendRedirect("/");
         }
     }
 }

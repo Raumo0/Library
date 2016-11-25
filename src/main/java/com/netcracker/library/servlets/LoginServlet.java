@@ -1,6 +1,9 @@
 package com.netcracker.library.servlets;
 
 import com.netcracker.library.beans.users.User;
+import com.netcracker.library.constants.PageConstants;
+import com.netcracker.library.constants.Parameters;
+import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.resource.ConfigurationManager;
 import com.netcracker.library.service.impl.UserServiceImpl;
@@ -24,15 +27,15 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        String page = ConfigurationManager.getProperty("path.page.login");
+        String page = ConfigurationManager.getProperty(PageConstants.LOGIN);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
         dispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String username = req.getParameter(Parameters.USERNAME);
+        String password = req.getParameter(Parameters.PASSWORD);
         String salt;
         User user;
         if (!(username.isEmpty() || password.isEmpty() ||
@@ -42,13 +45,9 @@ public class LoginServlet extends HttpServlet {
                 password = PasswordGenerator.getInstance().generatePassword(password, salt);
                 user = UserServiceImpl.getInstance().isAuthorized(username, password, salt);
                 if (user != null) {
-                    req.getSession().setAttribute("role", user.getRole());
-                    req.getSession().setAttribute("username", user.getUsername());
-                    String page = ConfigurationManager.getProperty("path.page.index");
-//                    RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-//                    dispatcher.forward(req, resp);
-//                    return;
-                    resp.sendRedirect("/");
+                    req.getSession().setAttribute(Parameters.ROLE, user.getRole());
+                    req.getSession().setAttribute(Parameters.USERNAME, user.getUsername());
+                    resp.sendRedirect(RedirectConstants.INDEX);
                     return;
                 }
             } catch (DAOException e) {
@@ -57,7 +56,7 @@ public class LoginServlet extends HttpServlet {
                 SystemLogger.getInstance().logError(getClass(), e.getMessage());
             }
         }
-        String page = ConfigurationManager.getProperty("path.page.login");
+        String page = ConfigurationManager.getProperty(PageConstants.LOGIN);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
         dispatcher.forward(req, resp);
     }

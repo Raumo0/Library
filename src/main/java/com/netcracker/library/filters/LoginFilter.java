@@ -1,5 +1,7 @@
 package com.netcracker.library.filters;
 
+import com.netcracker.library.constants.Parameters;
+import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.enums.UserRole;
 
 import javax.servlet.*;
@@ -20,14 +22,15 @@ public class LoginFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-        UserRole type = (UserRole) session.getAttribute("role");
+        UserRole type = (UserRole) session.getAttribute(Parameters.ROLE);
         if (type != null) {
-            response.sendRedirect("/");
+            response.sendRedirect(RedirectConstants.INDEX);
             return;
         }
         // pass the request along the filter chain
