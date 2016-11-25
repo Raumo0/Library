@@ -1,9 +1,9 @@
 package com.netcracker.library.servlets;
 
 import com.netcracker.library.beans.users.User;
-import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
+import com.netcracker.library.service.impl.UserServiceImpl;
 import com.netcracker.library.tools.SystemLogger;
 import com.netcracker.library.resource.ConfigurationManager;
 import com.netcracker.library.tools.PasswordGenerator;
@@ -48,11 +48,10 @@ public class RegistrationServlet extends HttpServlet {
         try {
             user.setSalt(PasswordGenerator.getInstance().generateSalt(user.getPassword()));
             user.setPassword(PasswordGenerator.getInstance().generatePassword(user.getPassword(), user.getSalt()));
+            user.setId(UserServiceImpl.getInstance().addUser(user));
 
-            user.setId(DAOFactory.getDAOFactory(DAOFactory.MYSQL).getUserDAO().insert(user));
             req.getSession().setAttribute("role", user.getRole());
             req.getSession().setAttribute("username", user.getUsername());
-
             String page = ConfigurationManager.getProperty("path.page.index");
             RequestDispatcher dispatcher = req.getRequestDispatcher(page);
             dispatcher.forward(req, resp);
