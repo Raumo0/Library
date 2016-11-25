@@ -1,7 +1,6 @@
 package com.netcracker.library.filters;
 
 import com.netcracker.library.enums.UserRole;
-import com.netcracker.library.resource.ConfigurationManager;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -28,7 +27,6 @@ public class LoginFilter implements Filter {
 
         UserRole type = (UserRole) session.getAttribute("role");
         if (type != null) {
-            String page = ConfigurationManager.getProperty("path.page.index");
             response.sendRedirect("/");
             return;
         }
@@ -38,6 +36,5 @@ public class LoginFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }
