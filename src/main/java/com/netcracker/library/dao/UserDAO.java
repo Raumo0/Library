@@ -18,5 +18,5 @@ public interface UserDAO extends AbstractDAO<User> {
 
     LinkedList<User> getUsersByRole(UserRole role) throws DAOException;
 
-    boolean isAuthorized(String username, String password) throws DAOException;
+    User isAuthorized(String username, String password, String salt) throws DAOException;
 }

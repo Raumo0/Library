@@ -230,8 +230,8 @@ public class MysqlUserDAOTest {
 
     @Test
     public void isAuthorized() throws Exception {
-        Assert.assertTrue(userDAO.isAuthorized(user.getUsername(), user.getPassword()));
+        Assert.assertEquals(user, userDAO.isAuthorized(user.getUsername(), user.getPassword(), user.getSalt()));
         Assert.assertTrue(userDAO.deleteById(user.getId()));
-        Assert.assertFalse(userDAO.isAuthorized(user.getUsername(), user.getPassword()));
+        Assert.assertFalse(user.equals(userDAO.isAuthorized(user.getUsername(), user.getPassword(), user.getSalt())));
     }
 }

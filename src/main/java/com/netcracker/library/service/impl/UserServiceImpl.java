@@ -76,8 +76,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isAuthorized(String username, String password) throws DAOException {
-        return userDAO.isAuthorized(username, password);
+    public User isAuthorized(String username, String password, String salt) throws DAOException {
+        return userDAO.isAuthorized(username, password, salt);
     }
 
     private static class SingletonHolder{

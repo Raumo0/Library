@@ -31,7 +31,7 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
             "u.password, u.salt, u.address_id, u.mobile_phone, u.email, u.role, u.last_update " +
             "FROM user u INNER JOIN rental r ON u.id = r.staff_user_id WHERE r.id=?";
     private static final String GET_USERS_BY_ROLE_ID = "SELECT * FROM user WHERE role=?";
-    public static final String CHECK_AUTHORIZATION = "SELECT username,password FROM user WHERE username=? AND password=?";
+    public static final String CHECK_AUTHORIZATION = "SELECT * FROM user WHERE username=? AND password=? AND salt=?";
 
     public MysqlUserDAO() {
     }
@@ -255,8 +255,8 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     }
 
     @Override
-    public boolean isAuthorized(String username, String password) throws DAOException {
-        boolean isLogIn = false;
+    public User isAuthorized(String username, String password, String salt) throws DAOException {
+        User user = null;
         PreparedStatement statement;
         Connection connection = null;
         try {
@@ -264,16 +264,24 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
             statement = connection.prepareStatement(CHECK_AUTHORIZATION);
             statement.setString(1, username);
             statement.setString(2, password);
+            statement.setString(3, salt);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                isLogIn = true;
+                user = new User();
+                user.setId(result.getInt("id"));
+                user.setPersonId(result.getInt("person_id"));
+                user.setUsername(result.getString("username"));
+                user.setPassword(result.getString("password"));
+                user.setSalt(result.getString("salt"));
+                user.setRole(UserRole.valueOf(result.getString("role").toUpperCase()));
+                getPersonById(user.getPersonId(), user, connection);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
-        return isLogIn;
+        return user;
     }
 
     @Override

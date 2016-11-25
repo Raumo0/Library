@@ -30,5 +30,5 @@ public interface UserService {
 
     Collection<User> getUsersByRole(UserRole role) throws DAOException;
 
-    boolean isAuthorized(String username, String password) throws DAOException;
+    User isAuthorized(String username, String password, String salt) throws DAOException;
 }
