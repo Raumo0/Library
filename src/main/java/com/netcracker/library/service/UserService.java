@@ -29,4 +29,6 @@ public interface UserService {
     User getStaffUserByRentalId(int rentalId) throws DAOException;
 
     Collection<User> getUsersByRole(UserRole role) throws DAOException;
+
+    boolean isAuthorized(String username, String password) throws DAOException;
 }

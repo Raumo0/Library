@@ -31,6 +31,7 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
             "u.password, u.salt, u.address_id, u.mobile_phone, u.email, u.role, u.last_update " +
             "FROM user u INNER JOIN rental r ON u.id = r.staff_user_id WHERE r.id=?";
     private static final String GET_USERS_BY_ROLE_ID = "SELECT * FROM user WHERE role=?";
+    public static final String CHECK_AUTHORIZATION = "SELECT username,password FROM user WHERE username=? AND password=?";
 
     public MysqlUserDAO() {
     }
@@ -251,6 +252,28 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
         return users;
+    }
+
+    @Override
+    public boolean isAuthorized(String username, String password) throws DAOException {
+        boolean isLogIn = false;
+        PreparedStatement statement;
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(CHECK_AUTHORIZATION);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                isLogIn = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return isLogIn;
     }
 
     @Override

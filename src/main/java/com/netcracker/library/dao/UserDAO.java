@@ -17,4 +17,6 @@ public interface UserDAO extends AbstractDAO<User> {
     User getStaffUserByRentalId(int rentalId) throws DAOException;
 
     LinkedList<User> getUsersByRole(UserRole role) throws DAOException;
+
+    boolean isAuthorized(String username, String password) throws DAOException;
 }
