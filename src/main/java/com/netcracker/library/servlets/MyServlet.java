@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by raumo0 on 18.11.16.
  */
-@WebServlet("/MyServlet")
+//@WebServlet("/")
 public class MyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,8 +32,8 @@ public class MyServlet extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             dispatcher.forward(request, response);
         } else {
-            page = ConfigurationManager.getProperty("path.page.index");
-            response.sendRedirect(request.getContextPath() + page);
+//            page = ConfigurationManager.getProperty("path.page.index");
+            response.sendRedirect("/");
         }
     }
 }

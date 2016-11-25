@@ -52,9 +52,10 @@ public class RegistrationServlet extends HttpServlet {
 
             req.getSession().setAttribute("role", user.getRole());
             req.getSession().setAttribute("username", user.getUsername());
-            String page = ConfigurationManager.getProperty("path.page.index");
-            RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-            dispatcher.forward(req, resp);
+//            String page = ConfigurationManager.getProperty("path.page.index");
+//            RequestDispatcher dispatcher = req.getRequestDispatcher(page);
+//            dispatcher.forward(req, resp);
+            resp.sendRedirect("/");
             return;
         } catch (DAOException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
@@ -62,8 +63,9 @@ public class RegistrationServlet extends HttpServlet {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
         String page = ConfigurationManager.getProperty("path.page.registration");
-        RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-        dispatcher.forward(req, resp);
+//        RequestDispatcher dispatcher = req.getRequestDispatcher(page);
+//        dispatcher.forward(req, resp);
+        resp.sendRedirect("/registration");
     }
 
     private boolean inspection(User user) throws NoSuchAlgorithmException {

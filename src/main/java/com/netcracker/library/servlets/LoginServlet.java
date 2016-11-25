@@ -45,8 +45,10 @@ public class LoginServlet extends HttpServlet {
                     req.getSession().setAttribute("role", user.getRole());
                     req.getSession().setAttribute("username", user.getUsername());
                     String page = ConfigurationManager.getProperty("path.page.index");
-                    RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-                    dispatcher.forward(req, resp);
+//                    RequestDispatcher dispatcher = req.getRequestDispatcher(page);
+//                    dispatcher.forward(req, resp);
+//                    return;
+                    resp.sendRedirect("/");
                     return;
                 }
             } catch (DAOException e) {
