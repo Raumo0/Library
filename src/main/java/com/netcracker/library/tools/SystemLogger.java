@@ -1,4 +1,4 @@
-package com.netcracker.library.logger;
+package com.netcracker.library.tools;
 
 
 import org.apache.logging.log4j.LogManager;

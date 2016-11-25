@@ -4,7 +4,7 @@ import com.netcracker.library.beans.users.User;
 import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
-import com.netcracker.library.logger.SystemLogger;
+import com.netcracker.library.tools.SystemLogger;
 import com.netcracker.library.resource.ConfigurationManager;
 import com.netcracker.library.tools.PasswordGenerator;
 

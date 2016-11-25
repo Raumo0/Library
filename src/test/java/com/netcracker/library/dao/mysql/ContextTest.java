@@ -1,7 +1,7 @@
 package com.netcracker.library.dao.mysql;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
-import com.netcracker.library.logger.SystemLogger;
+import com.netcracker.library.tools.SystemLogger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
