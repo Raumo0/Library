@@ -6,6 +6,7 @@ import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.exceptions.ServiceException;
+import com.netcracker.library.exceptions.ToolException;
 import com.netcracker.library.tools.ConfigurationManager;
 import com.netcracker.library.service.impl.UserServiceImpl;
 import com.netcracker.library.tools.MessageManager;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by raumo0 on 24.11.16.
@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
                     resp.sendRedirect(RedirectConstants.INDEX);
                     return;
                 }
-            } catch (ServiceException | NoSuchAlgorithmException e) {
+            } catch (ServiceException | ToolException e) {
                 SystemLogger.getInstance().logError(getClass(), e.getMessage());
             }
         }
