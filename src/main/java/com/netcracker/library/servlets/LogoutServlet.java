@@ -1,6 +1,10 @@
 package com.netcracker.library.servlets;
 
+import com.netcracker.library.commands.Command;
+import com.netcracker.library.commands.CommandFactory;
+import com.netcracker.library.commands.CommandType;
 import com.netcracker.library.constants.RedirectConstants;
+import com.netcracker.library.exceptions.CommandException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +20,14 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().invalidate();
+        try {
+            Command command = CommandFactory.getInstance().defineCommand(CommandType.LOGOUT);
+            //todo
+        } catch (CommandException e) {
+            //todo
+            e.printStackTrace();
+            return;
+        }
         resp.sendRedirect(RedirectConstants.INDEX);
     }
 

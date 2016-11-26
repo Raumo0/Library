@@ -3,6 +3,7 @@ package com.netcracker.library.servlets;
 import com.netcracker.library.commands.Command;
 import com.netcracker.library.commands.CommandFactory;
 import com.netcracker.library.constants.PageConstants;
+import com.netcracker.library.exceptions.CommandException;
 import com.netcracker.library.tools.ConfigurationManager;
 
 import javax.servlet.RequestDispatcher;
@@ -25,19 +26,19 @@ public class MyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = null;
+        String page;
+        Command command;
+        RequestDispatcher dispatcher;
         CommandFactory client = CommandFactory.getInstance();
-        Command command = client.defineCommand(request);
-        if (command != null)
+        try {
+            command = client.defineCommand(request);
             page = command.execute(request);
-        if (page != null) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-            dispatcher.forward(request, response);
-        } else {
+            dispatcher = getServletContext().getRequestDispatcher(page);
+        } catch (CommandException | NullPointerException e) {
+            e.printStackTrace();
             page = ConfigurationManager.getProperty(PageConstants.INDEX);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-            dispatcher.forward(request, response);
-//            response.sendRedirect("/");
+            dispatcher = getServletContext().getRequestDispatcher(page);
         }
+        dispatcher.forward(request, response);
     }
 }
