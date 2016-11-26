@@ -2,7 +2,7 @@ package com.netcracker.library.commands.user;
 
 import com.netcracker.library.commands.Command;
 import com.netcracker.library.constants.PageConstants;
-import com.netcracker.library.resource.ConfigurationManager;
+import com.netcracker.library.tools.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 

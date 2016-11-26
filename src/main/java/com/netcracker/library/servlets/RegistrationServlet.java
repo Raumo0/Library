@@ -8,7 +8,7 @@ import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.service.impl.UserServiceImpl;
 import com.netcracker.library.tools.SystemLogger;
-import com.netcracker.library.resource.ConfigurationManager;
+import com.netcracker.library.tools.ConfigurationManager;
 import com.netcracker.library.tools.PasswordGenerator;
 
 import javax.servlet.RequestDispatcher;
@@ -40,11 +40,14 @@ public class RegistrationServlet extends HttpServlet {
         user.setLastName(req.getParameter(Parameters.LAST_NAME));
         user.setUsername(req.getParameter(Parameters.USERNAME));
         user.setPassword(req.getParameter(Parameters.PASSWORD));
-        user.setSalt(Parameters.SALT);
         user.setRole(UserRole.READER);
         try {
-            if (!inspection(user))//todo
+            if (!inspection(user)) {
+                String page = ConfigurationManager.getProperty(PageConstants.REGISTRATION);
+                RequestDispatcher dispatcher = req.getRequestDispatcher(page);
+                dispatcher.forward(req, resp);
                 return;
+            }
         } catch (NoSuchAlgorithmException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
@@ -55,19 +58,11 @@ public class RegistrationServlet extends HttpServlet {
 
             req.getSession().setAttribute(Parameters.ROLE, user.getRole());
             req.getSession().setAttribute(Parameters.USERNAME, user.getUsername());
-//            String page = ConfigurationManager.getProperty("path.page.index");
-//            RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-//            dispatcher.forward(req, resp);
             resp.sendRedirect(RedirectConstants.INDEX);
             return;
-        } catch (DAOException e) {
-            SystemLogger.getInstance().logError(getClass(), e.getMessage());
-        } catch (NoSuchAlgorithmException e) {
+        } catch (DAOException | NoSuchAlgorithmException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
-        String page = ConfigurationManager.getProperty(PageConstants.REGISTRATION);
-//        RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-//        dispatcher.forward(req, resp);
         resp.sendRedirect(RedirectConstants.REGISTRATION);
     }
 

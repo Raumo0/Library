@@ -1,12 +1,14 @@
 package com.netcracker.library.servlets;
 
 import com.netcracker.library.beans.users.User;
+import com.netcracker.library.constants.MessageConstants;
 import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.exceptions.DAOException;
-import com.netcracker.library.resource.ConfigurationManager;
+import com.netcracker.library.tools.ConfigurationManager;
 import com.netcracker.library.service.impl.UserServiceImpl;
+import com.netcracker.library.tools.MessageManager;
 import com.netcracker.library.tools.PasswordGenerator;
 import com.netcracker.library.tools.SystemLogger;
 
@@ -50,12 +52,11 @@ public class LoginServlet extends HttpServlet {
                     resp.sendRedirect(RedirectConstants.INDEX);
                     return;
                 }
-            } catch (DAOException e) {
-                SystemLogger.getInstance().logError(getClass(), e.getMessage());
-            } catch (NoSuchAlgorithmException e) {
+            } catch (DAOException | NoSuchAlgorithmException e) {
                 SystemLogger.getInstance().logError(getClass(), e.getMessage());
             }
         }
+        req.setAttribute(Parameters.ERROR_LOGIN, MessageManager.getInstance().getProperty(MessageConstants.WRONG_LOGIN));
         String page = ConfigurationManager.getProperty(PageConstants.LOGIN);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
         dispatcher.forward(req, resp);

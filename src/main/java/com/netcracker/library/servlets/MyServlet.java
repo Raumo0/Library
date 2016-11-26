@@ -3,7 +3,7 @@ package com.netcracker.library.servlets;
 import com.netcracker.library.commands.Command;
 import com.netcracker.library.commands.CommandFactory;
 import com.netcracker.library.constants.PageConstants;
-import com.netcracker.library.resource.ConfigurationManager;
+import com.netcracker.library.tools.ConfigurationManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

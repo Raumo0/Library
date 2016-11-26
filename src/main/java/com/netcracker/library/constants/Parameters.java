@@ -11,4 +11,5 @@ public class Parameters {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String SALT = "salt";
+    public static final String ERROR_LOGIN = "errorLogin";
 }
