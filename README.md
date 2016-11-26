@@ -12,12 +12,15 @@ The source code can be found [here](https://github.com/Raumo0/Library)
 ### Before assembly
 
 * **Comment** out the dependencies in pom.xml (**tomcat-catalina** and **tomcat-juli**)
+* Use maven command **clean**
+* Use maven command **install**
+* Run project with **Tomcat** server (version 7.0)
 
 ### Before develop
 
 * For run tests **uncomment** the dependencies in pom.xml  (**tomcat-catalina** and **tomcat-juli**)
-* Run script database/library.sql for generate database.
-* Class ContextTest in test module ned to customize.
+* Run script **database/library.sql** for generate database.
+* Class **ContextTest** in test module ned to customize.
 
 
 
