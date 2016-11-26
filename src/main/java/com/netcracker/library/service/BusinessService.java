@@ -1,7 +1,7 @@
 package com.netcracker.library.service;
 
 import com.netcracker.library.beans.business.Rental;
-import com.netcracker.library.exceptions.DAOException;
+import com.netcracker.library.exceptions.ServiceException;
 
 import java.util.Collection;
 
@@ -9,19 +9,19 @@ import java.util.Collection;
  * Created by raumo0 on 22.11.16.
  */
 public interface BusinessService {
-    int addRental(Rental rental) throws DAOException;
+    int addRental(Rental rental) throws ServiceException;
 
-    Rental getRentalById(int id) throws DAOException;
+    Rental getRentalById(int id) throws ServiceException;
 
-    boolean updateRental(Rental rental) throws DAOException;
+    boolean updateRental(Rental rental) throws ServiceException;
 
-    boolean deleteRentalById(int id) throws DAOException;
+    boolean deleteRentalById(int id) throws ServiceException;
 
-    Collection<Rental> getRentalAll() throws DAOException;
+    Collection<Rental> getRentalAll() throws ServiceException;
 
-    boolean deleteRentalAll() throws DAOException;
+    boolean deleteRentalAll() throws ServiceException;
 
-    Collection<Rental> getRentalsByUserId(int userId) throws DAOException;
+    Collection<Rental> getRentalsByUserId(int userId) throws ServiceException;
 
-    Collection<Rental> getRentalsByBookId(int bookId) throws DAOException;
+    Collection<Rental> getRentalsByBookId(int bookId) throws ServiceException;
 }

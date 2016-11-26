@@ -5,7 +5,7 @@ import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.enums.UserRole;
-import com.netcracker.library.exceptions.DAOException;
+import com.netcracker.library.exceptions.ServiceException;
 import com.netcracker.library.service.impl.UserServiceImpl;
 import com.netcracker.library.tools.SystemLogger;
 import com.netcracker.library.tools.ConfigurationManager;
@@ -60,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
             req.getSession().setAttribute(Parameters.USERNAME, user.getUsername());
             resp.sendRedirect(RedirectConstants.INDEX);
             return;
-        } catch (DAOException | NoSuchAlgorithmException e) {
+        } catch (ServiceException | NoSuchAlgorithmException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
         resp.sendRedirect(RedirectConstants.REGISTRATION);

@@ -3,15 +3,15 @@ package com.netcracker.library.exceptions;
 import java.security.PrivilegedActionException;
 
 /**
- * Created by raumo0 on 17.11.16.
+ * Created by raumo0 on 26.11.16.
  */
-public class DAOException extends Exception {
+public class ServiceException extends Exception{
     /**
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
      */
-    public DAOException() {
+    public ServiceException() {
         super();
     }
 
@@ -23,7 +23,7 @@ public class DAOException extends Exception {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public DAOException(String message) {
+    public ServiceException(String message) {
         super(message);
     }
 
@@ -41,7 +41,7 @@ public class DAOException extends Exception {
      *                unknown.)
      * @since 1.4
      */
-    public DAOException(String message, Throwable cause) {
+    public ServiceException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -59,7 +59,7 @@ public class DAOException extends Exception {
      *              unknown.)
      * @since 1.4
      */
-    public DAOException(Throwable cause) {
+    public ServiceException(Throwable cause) {
         super(cause);
     }
 
@@ -77,7 +77,7 @@ public class DAOException extends Exception {
      *                           be writable
      * @since 1.7
      */
-    public DAOException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

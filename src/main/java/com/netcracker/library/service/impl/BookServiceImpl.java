@@ -8,6 +8,7 @@ import com.netcracker.library.dao.BookDAO;
 import com.netcracker.library.dao.BookEditionDAO;
 import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.exceptions.DAOException;
+import com.netcracker.library.exceptions.ServiceException;
 import com.netcracker.library.service.BookService;
 
 import java.util.Collection;
@@ -33,123 +34,219 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int addBook(Book book) throws DAOException {
-        return bookDAO.insert(book);
+    public int addBook(Book book) throws ServiceException {
+        try {
+            return bookDAO.insert(book);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Book getBookById(int id) throws DAOException {
-        return bookDAO.getById(id);
+    public Book getBookById(int id) throws ServiceException {
+        try {
+            return bookDAO.getById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean updateBook(Book book) throws DAOException {
-        return bookDAO.update(book);
+    public boolean updateBook(Book book) throws ServiceException {
+        try {
+            return bookDAO.update(book);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteBookById(int id) throws DAOException {
-        return bookDAO.deleteById(id);
+    public boolean deleteBookById(int id) throws ServiceException {
+        try {
+            return bookDAO.deleteById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<Book> getBookAll() throws DAOException {
-        return bookDAO.getAll();
+    public Collection<Book> getBookAll() throws ServiceException {
+        try {
+            return bookDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteBookAll() throws DAOException {
-        return bookDAO.deleteAll();
+    public boolean deleteBookAll() throws ServiceException {
+        try {
+            return bookDAO.deleteAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Book getBookByRentalId(int rentalId) throws DAOException {
-        return bookDAO.getBookByRentalId(rentalId);
+    public Book getBookByRentalId(int rentalId) throws ServiceException {
+        try {
+            return bookDAO.getBookByRentalId(rentalId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<Book> getBooksByBookEditionId(int bookEditionId) throws DAOException {
-        return bookDAO.getBooksByBookEditionId(bookEditionId);
+    public Collection<Book> getBooksByBookEditionId(int bookEditionId) throws ServiceException {
+        try {
+            return bookDAO.getBooksByBookEditionId(bookEditionId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public int addBookEdition(BookEdition bookEdition) throws DAOException {
-        return bookEditionDAO.insert(bookEdition);
+    public int addBookEdition(BookEdition bookEdition) throws ServiceException {
+        try {
+            return bookEditionDAO.insert(bookEdition);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public BookEdition getBookEditionById(int id) throws DAOException {
-        return bookEditionDAO.getById(id);
+    public BookEdition getBookEditionById(int id) throws ServiceException {
+        try {
+            return bookEditionDAO.getById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean updateBookEdition(BookEdition bookEdition) throws DAOException {
-        return bookEditionDAO.update(bookEdition);
+    public boolean updateBookEdition(BookEdition bookEdition) throws ServiceException {
+        try {
+            return bookEditionDAO.update(bookEdition);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteBookEditionById(int id) throws DAOException {
-        return bookEditionDAO.deleteById(id);
+    public boolean deleteBookEditionById(int id) throws ServiceException {
+        try {
+            return bookEditionDAO.deleteById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<BookEdition> getBookEditionAll() throws DAOException {
-        return bookEditionDAO.getAll();
+    public Collection<BookEdition> getBookEditionAll() throws ServiceException {
+        try {
+            return bookEditionDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteBookEditionAll() throws DAOException {
-        return bookEditionDAO.deleteAll();
+    public boolean deleteBookEditionAll() throws ServiceException {
+        try {
+            return bookEditionDAO.deleteAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<BookEdition> getBookEditionsByAuthorId(int authorId) throws DAOException {
-        return bookEditionDAO.getBookEditionsByAuthorId(authorId);
+    public Collection<BookEdition> getBookEditionsByAuthorId(int authorId) throws ServiceException {
+        try {
+            return bookEditionDAO.getBookEditionsByAuthorId(authorId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public BookEdition getBookEditionByBookId(int bookId) throws DAOException {
-        return bookEditionDAO.getBookEditionByBookId(bookId);
+    public BookEdition getBookEditionByBookId(int bookId) throws ServiceException {
+        try {
+            return bookEditionDAO.getBookEditionByBookId(bookId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public int addAuthor(Author author) throws DAOException {
-        return authorDAO.insert(author);
+    public int addAuthor(Author author) throws ServiceException {
+        try {
+            return authorDAO.insert(author);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Author getAuthorById(int id) throws DAOException {
-        return authorDAO.getById(id);
+    public Author getAuthorById(int id) throws ServiceException {
+        try {
+            return authorDAO.getById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean updateAuthor(Author author) throws DAOException {
-        return authorDAO.update(author);
+    public boolean updateAuthor(Author author) throws ServiceException {
+        try {
+            return authorDAO.update(author);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteAuthorById(int id) throws DAOException {
-        return authorDAO.deleteById(id);
+    public boolean deleteAuthorById(int id) throws ServiceException {
+        try {
+            return authorDAO.deleteById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<Author> getAuthorAll() throws DAOException {
-        return authorDAO.getAll();
+    public Collection<Author> getAuthorAll() throws ServiceException {
+        try {
+            return authorDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteAuthorAll() throws DAOException {
-        return authorDAO.deleteAll();
+    public boolean deleteAuthorAll() throws ServiceException {
+        try {
+            return authorDAO.deleteAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Author getAuthorByPersonId(int personId) throws DAOException {
-        return authorDAO.getAuthorByPersonId(personId);
+    public Author getAuthorByPersonId(int personId) throws ServiceException {
+        try {
+            return authorDAO.getAuthorByPersonId(personId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<Author> getAuthorsByBookEditionId(int bookEditionId) throws DAOException {
-        return authorDAO.getAuthorsByBookEditionId(bookEditionId);
+    public Collection<Author> getAuthorsByBookEditionId(int bookEditionId) throws ServiceException {
+        try {
+            return authorDAO.getAuthorsByBookEditionId(bookEditionId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     private static class SingletonHolder{

@@ -5,6 +5,7 @@ import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.dao.UserDAO;
 import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
+import com.netcracker.library.exceptions.ServiceException;
 import com.netcracker.library.service.UserService;
 
 import java.util.Collection;
@@ -26,58 +27,102 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int addUser(User user) throws DAOException {
-        return userDAO.insert(user);
+    public int addUser(User user) throws ServiceException {
+        try {
+            return userDAO.insert(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public User getUserById(int id) throws DAOException {
-        return userDAO.getById(id);
+    public User getUserById(int id) throws ServiceException {
+        try {
+            return userDAO.getById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean updateUser(User user) throws DAOException {
-        return userDAO.update(user);
+    public boolean updateUser(User user) throws ServiceException {
+        try {
+            return userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteUserById(int id) throws DAOException {
-        return userDAO.deleteById(id);
+    public boolean deleteUserById(int id) throws ServiceException {
+        try {
+            return userDAO.deleteById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<User> getUserAll() throws DAOException {
-        return userDAO.getAll();
+    public Collection<User> getUserAll() throws ServiceException {
+        try {
+            return userDAO.getAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean deleteUserAll() throws DAOException {
-        return userDAO.deleteAll();
+    public boolean deleteUserAll() throws ServiceException {
+        try {
+            return userDAO.deleteAll();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public User getUserByPersonId(int personId) throws DAOException {
-        return userDAO.getUserByPersonId(personId);
+    public User getUserByPersonId(int personId) throws ServiceException {
+        try {
+            return userDAO.getUserByPersonId(personId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public User getUserByRentalId(int rentalId) throws DAOException {
-        return userDAO.getUserByRentalId(rentalId);
+    public User getUserByRentalId(int rentalId) throws ServiceException {
+        try {
+            return userDAO.getUserByRentalId(rentalId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public User getStaffUserByRentalId(int rentalId) throws DAOException {
-        return userDAO.getStaffUserByRentalId(rentalId);
+    public User getStaffUserByRentalId(int rentalId) throws ServiceException {
+        try {
+            return userDAO.getStaffUserByRentalId(rentalId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public Collection<User> getUsersByRole(UserRole role) throws DAOException {
-        return userDAO.getUsersByRole(role);
+    public Collection<User> getUsersByRole(UserRole role) throws ServiceException {
+        try {
+            return userDAO.getUsersByRole(role);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public User isAuthorized(String username, String password, String salt) throws DAOException {
-        return userDAO.isAuthorized(username, password, salt);
+    public User isAuthorized(String username, String password, String salt) throws ServiceException {
+        try {
+            return userDAO.isAuthorized(username, password, salt);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 
     private static class SingletonHolder{
