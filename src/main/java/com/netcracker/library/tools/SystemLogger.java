@@ -21,6 +21,11 @@ public class SystemLogger {
         logger.error(message);
     }
 
+    public void logError(Class sender, String message, Exception e){
+        logger = LogManager.getLogger(sender);
+        logger.error(message, e);
+    }
+
     private static class SingletonHolder{
         private static final SystemLogger INSTANCE = new SystemLogger();
     }
