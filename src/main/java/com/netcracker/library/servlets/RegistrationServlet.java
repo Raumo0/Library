@@ -7,6 +7,7 @@ import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.exceptions.CommandException;
 import com.netcracker.library.tools.ConfigurationManager;
+import com.netcracker.library.tools.SystemLogger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,9 +43,9 @@ public class RegistrationServlet extends HttpServlet {
                 return;
             }
         } catch (CommandException e) {
-            //todo
-            e.printStackTrace();
+            SystemLogger.getInstance().logError(getClass(), e.getMessage());
             resp.sendRedirect(RedirectConstants.REGISTRATION);
+            return;
         }
         resp.sendRedirect(RedirectConstants.INDEX);
     }

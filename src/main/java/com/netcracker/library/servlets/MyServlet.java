@@ -5,6 +5,7 @@ import com.netcracker.library.commands.CommandFactory;
 import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.exceptions.CommandException;
 import com.netcracker.library.tools.ConfigurationManager;
+import com.netcracker.library.tools.SystemLogger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,7 +36,7 @@ public class MyServlet extends HttpServlet {
             page = command.execute(request);
             dispatcher = getServletContext().getRequestDispatcher(page);
         } catch (CommandException | NullPointerException e) {
-            e.printStackTrace();
+            SystemLogger.getInstance().logError(getClass(), e.getMessage());
             page = ConfigurationManager.getProperty(PageConstants.INDEX);
             dispatcher = getServletContext().getRequestDispatcher(page);
         }

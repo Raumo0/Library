@@ -1,16 +1,12 @@
 package com.netcracker.library.servlets;
 
-import com.netcracker.library.beans.users.User;
-import com.netcracker.library.constants.MessageConstants;
+import com.netcracker.library.commands.Command;
+import com.netcracker.library.commands.CommandFactory;
+import com.netcracker.library.commands.CommandType;
 import com.netcracker.library.constants.PageConstants;
-import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.constants.RedirectConstants;
-import com.netcracker.library.exceptions.ServiceException;
-import com.netcracker.library.exceptions.ToolException;
+import com.netcracker.library.exceptions.CommandException;
 import com.netcracker.library.tools.ConfigurationManager;
-import com.netcracker.library.service.impl.UserServiceImpl;
-import com.netcracker.library.tools.MessageManager;
-import com.netcracker.library.tools.PasswordGenerator;
 import com.netcracker.library.tools.SystemLogger;
 
 import javax.servlet.RequestDispatcher;
@@ -36,28 +32,19 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter(Parameters.USERNAME);
-        String password = req.getParameter(Parameters.PASSWORD);
-        String salt;
-        User user;
-        if (!(username.isEmpty() || password.isEmpty() ||
-                username.length() > 45 || password.length() > 45)) {
-            try {
-                salt = PasswordGenerator.getInstance().generateSalt(password);
-                password = PasswordGenerator.getInstance().generatePassword(password, salt);
-                user = UserServiceImpl.getInstance().isAuthorized(username, password, salt);
-                if (user != null) {
-                    req.getSession().setAttribute(Parameters.ROLE, user.getRole());
-                    req.getSession().setAttribute(Parameters.USERNAME, user.getUsername());
-                    resp.sendRedirect(RedirectConstants.INDEX);
-                    return;
-                }
-            } catch (ServiceException | ToolException e) {
-                SystemLogger.getInstance().logError(getClass(), e.getMessage());
+        Command command;
+        String page;
+        try {
+            command = CommandFactory.getInstance().defineCommand(CommandType.LOGIN);
+            page = command.execute(req);
+            if (page == null){
+                resp.sendRedirect(RedirectConstants.INDEX);
+                return;
             }
+        } catch (CommandException e) {
+            SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
-        req.setAttribute(Parameters.ERROR_LOGIN, MessageManager.getInstance().getProperty(MessageConstants.WRONG_LOGIN));
-        String page = ConfigurationManager.getProperty(PageConstants.LOGIN);
+        page = ConfigurationManager.getProperty(PageConstants.LOGIN);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
         dispatcher.forward(req, resp);
     }
