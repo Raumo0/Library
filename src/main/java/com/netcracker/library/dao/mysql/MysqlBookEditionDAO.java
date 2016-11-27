@@ -31,6 +31,7 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             "INNER JOIN author_has_book_edition a ON be.id = a.book_edition_id WHERE a.author_id = ?";
     private static final String INSERT_AUTHOR_BOOK_EDITION = "INSERT INTO author_has_book_edition " +
             "(author_id, book_edition_id) VALUES(?,?)";
+    private static final String GET_BOOK_EDITIONS_BY_GAP = "SELECT SQL_CALC_FOUND_ROWS * FROM book_edition LIMIT ?, ?";
 
     public MysqlBookEditionDAO() {}
 
@@ -250,5 +251,37 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
         return bookEdition;
+    }
+
+    @Override
+    public Collection<BookEdition> getBookEditionsByGap(int offset, int quantity) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        Collection<BookEdition> bookEditions = new LinkedList<>();
+        BookEdition bookEdition;
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_BOOK_EDITIONS_BY_GAP);
+            statement.setInt(1, offset);
+            statement.setInt(2, quantity);
+            result = statement.executeQuery();
+            while (result.next()) {
+                bookEdition = new BookEdition();
+                bookEdition.setId(result.getInt("id"));
+                bookEdition.setTitle(result.getString("title"));
+                bookEdition.setPageCount(result.getInt("page_count"));
+                bookEdition.setDescription(result.getString("description"));
+                bookEdition.setIsbn(result.getInt("isbn"));
+                bookEdition.setWeight(result.getInt("weight"));
+                bookEdition.setBookbinding(Bookbinding.valueOf(result.getString("bookbinding").toUpperCase()));
+                bookEditions.add(bookEdition);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return bookEditions;
     }
 }

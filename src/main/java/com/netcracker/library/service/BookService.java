@@ -43,6 +43,8 @@ public interface BookService {
 
     BookEdition getBookEditionByBookId(int bookId) throws ServiceException;
 
+    Collection<BookEdition> getBookEditionsByGap(int offset, int quantity) throws ServiceException;
+
     int addAuthor(Author author) throws ServiceException;
 
     Author getAuthorById(int id) throws ServiceException;

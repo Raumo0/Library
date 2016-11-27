@@ -129,4 +129,23 @@ public class MysqlBookEditionDAOTest {
 
         Assert.assertEquals(bookEdition, bookEditionDAO.getBookEditionByBookId(book.getId()));
     }
+
+    @Test
+    public void getBookEditionsByGap() throws Exception {
+        Assert.assertTrue(bookEditionDAO.deleteAll());
+        Assert.assertTrue(bookEditionDAO.getAll().size() == 0);
+        List<BookEdition> bookEditions = new LinkedList<>();
+        BookEdition newBookEdition;
+        for (int i = 0; i < 10; i++){
+            newBookEdition = new BookEdition(bookEdition);
+            newBookEdition.setIsbn((int)(counter + date.getTime()));
+            counter += 1;
+            newBookEdition.setId(bookEditionDAO.insert(newBookEdition));
+            bookEditions.add(newBookEdition);
+        }
+        Assert.assertEquals(bookEditionDAO.getBookEditionsByGap(0, 3), bookEditions.subList(0, 0 + 3));
+        Assert.assertEquals(bookEditionDAO.getBookEditionsByGap(3, 5), bookEditions.subList(3, 3 + 5));
+        Assert.assertEquals(bookEditionDAO.getBookEditionsByGap(2, 8), bookEditions.subList(2, 2 + 8));
+        Assert.assertEquals(bookEditionDAO.getBookEditionsByGap(6, 7), bookEditions.subList(6, bookEditions.size()));
+    }
 }
