@@ -36,8 +36,7 @@ public class RegistrationCommand implements Command {
             user.setPassword(PasswordGenerator.getInstance().generatePassword(user.getPassword(), user.getSalt()));
             user.setId(UserServiceImpl.getInstance().addUser(user));
 
-            req.getSession().setAttribute(Parameters.ROLE, user.getRole());
-            req.getSession().setAttribute(Parameters.USERNAME, user.getUsername());
+            req.getSession().setAttribute(Parameters.USER_ID, user.getId());
         } catch (ServiceException | ToolException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
             page = ConfigurationManager.getProperty(PageConstants.REGISTRATION);

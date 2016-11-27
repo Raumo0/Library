@@ -33,8 +33,7 @@ public class LoginCommand implements Command {
                 password = PasswordGenerator.getInstance().generatePassword(password, salt);
                 user = UserServiceImpl.getInstance().isAuthorized(username, password, salt);
                 if (user != null) {
-                    req.getSession().setAttribute(Parameters.ROLE, user.getRole());
-                    req.getSession().setAttribute(Parameters.USERNAME, user.getUsername());
+                    req.getSession().setAttribute(Parameters.USER_ID, user.getId());
                     return null;
                 }
             } catch (ServiceException | ToolException e) {

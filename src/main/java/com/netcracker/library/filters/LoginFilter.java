@@ -1,8 +1,11 @@
 package com.netcracker.library.filters;
 
+import com.netcracker.library.beans.users.User;
 import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.constants.RedirectConstants;
-import com.netcracker.library.enums.UserRole;
+import com.netcracker.library.exceptions.ServiceException;
+import com.netcracker.library.service.impl.UserServiceImpl;
+import com.netcracker.library.tools.SystemLogger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -27,11 +30,18 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
+        User user;
 
-        UserRole type = (UserRole) session.getAttribute(Parameters.ROLE);
-        if (type != null) {
-            response.sendRedirect(RedirectConstants.INDEX);
-            return;
+        try {
+            int userId = (int) session.getAttribute(Parameters.USER_ID);
+            user = UserServiceImpl.getInstance().getUserById(userId);
+            if (user.getRole() != null) {
+                response.sendRedirect(RedirectConstants.INDEX);
+                return;
+            }
+        } catch (ServiceException e) {
+            SystemLogger.getInstance().logError(getClass(), e.getMessage());
+        } catch (NullPointerException e) {
         }
         // pass the request along the filter chain
         filterChain.doFilter(servletRequest, servletResponse);

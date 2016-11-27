@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Command command;
-        String page;
+        String page = ConfigurationManager.getProperty(PageConstants.LOGIN);
         try {
             command = CommandFactory.getInstance().defineCommand(CommandType.LOGIN);
             page = command.execute(req);
@@ -44,7 +44,6 @@ public class LoginServlet extends HttpServlet {
         } catch (CommandException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
-        page = ConfigurationManager.getProperty(PageConstants.LOGIN);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
         dispatcher.forward(req, resp);
     }
