@@ -4,6 +4,10 @@ import com.netcracker.library.commands.user.LoginCommand;
 import com.netcracker.library.commands.user.LogoutCommand;
 import com.netcracker.library.commands.user.RegistrationCommand;
 import com.netcracker.library.commands.user.UserPageCommand;
+import com.netcracker.library.exceptions.CommandException;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by raumo0 on 24.11.16.
@@ -11,18 +15,21 @@ import com.netcracker.library.commands.user.UserPageCommand;
 public enum CommandType {
     LOGOUT, REGISTRATION, LOGIN, USER_PAGE;
 
-    public Command getCurrentCommand() throws EnumConstantNotPresentException{
-        switch(this){
-            case LOGOUT:
-                return new LogoutCommand();
-            case REGISTRATION:
-                return new RegistrationCommand();
-            case LOGIN:
-                return new LoginCommand();
-            case USER_PAGE:
-                return new UserPageCommand();
-            default:
-                throw new EnumConstantNotPresentException(this.getDeclaringClass(), this.name());
+    private static Map<CommandType, Class> commands;
+    static {
+        commands = new TreeMap<>();
+        commands.put(CommandType.LOGOUT, LogoutCommand.class);
+        commands.put(CommandType.REGISTRATION, RegistrationCommand.class);
+        commands.put(CommandType.LOGIN, LoginCommand.class);
+        commands.put(CommandType.USER_PAGE, UserPageCommand.class);
+    }
+
+    public Command getCurrentCommand() throws CommandException {
+        Class commandClass = commands.get(this);
+        try {
+            return (Command) commandClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new CommandException(e);
         }
     }
 }

@@ -16,25 +16,15 @@ public class CommandFactory {
     }
 
     public Command defineCommand(CommandType type) throws CommandException {
-        Command command;
-        try {
-            command = type.getCurrentCommand();
-        } catch (EnumConstantNotPresentException e){
-            throw new CommandException(e);
-        }
-        return command;
+        return type.getCurrentCommand();
     }
 
-    public Command defineCommand(HttpServletRequest request) throws CommandException{
+    public Command defineCommand(HttpServletRequest request) throws CommandException {
         Command current;
         String commandName = request.getParameter(Parameters.ACTION);
-        try{
-            CommandType type = CommandType.valueOf(commandName.toUpperCase());
-            current = type.getCurrentCommand();
-        }
-        catch(NullPointerException | IllegalArgumentException e){
-            throw new CommandException(e);
-        }
+        CommandType type = CommandType.valueOf(commandName.toUpperCase());
+        current = type.getCurrentCommand();
+
         return current;
     }
 
