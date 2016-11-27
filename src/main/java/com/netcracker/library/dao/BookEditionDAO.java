@@ -15,4 +15,6 @@ public interface BookEditionDAO extends AbstractDAO<BookEdition> {
     BookEdition getBookEditionByBookId(int bookId) throws DAOException;
 
     Collection<BookEdition> getBookEditionsByGap(int offset, int quantity) throws DAOException;
+
+    int getNumberOfRecords() throws DAOException;
 }

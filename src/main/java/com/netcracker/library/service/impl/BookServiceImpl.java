@@ -187,6 +187,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public int numberOfRecords() throws ServiceException {
+        try {
+            return bookEditionDAO.getNumberOfRecords();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public int addAuthor(Author author) throws ServiceException {
         try {
             return authorDAO.insert(author);

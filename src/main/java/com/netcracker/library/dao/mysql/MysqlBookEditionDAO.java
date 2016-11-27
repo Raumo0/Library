@@ -31,7 +31,8 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             "INNER JOIN author_has_book_edition a ON be.id = a.book_edition_id WHERE a.author_id = ?";
     private static final String INSERT_AUTHOR_BOOK_EDITION = "INSERT INTO author_has_book_edition " +
             "(author_id, book_edition_id) VALUES(?,?)";
-    private static final String GET_BOOK_EDITIONS_BY_GAP = "SELECT SQL_CALC_FOUND_ROWS * FROM book_edition LIMIT ?, ?";
+    private static final String GET_BOOK_EDITIONS_BY_GAP = "SELECT * FROM book_edition LIMIT ?, ?";
+    private static final String GET_NUMBER_OF_RECORDS = "SELECT count(*) FROM book_edition";
 
     public MysqlBookEditionDAO() {}
 
@@ -283,5 +284,26 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
         return bookEditions;
+    }
+
+    @Override
+    public int getNumberOfRecords() throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        ResultSet result;
+        int count = 0;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(GET_NUMBER_OF_RECORDS);
+            result = statement.executeQuery();
+            while (result.next()) {
+                count = result.getInt("count(*)");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return count;
     }
 }

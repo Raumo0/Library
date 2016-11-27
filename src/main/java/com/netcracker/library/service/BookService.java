@@ -45,6 +45,8 @@ public interface BookService {
 
     Collection<BookEdition> getBookEditionsByGap(int offset, int quantity) throws ServiceException;
 
+    int numberOfRecords() throws ServiceException;
+
     int addAuthor(Author author) throws ServiceException;
 
     Author getAuthorById(int id) throws ServiceException;
