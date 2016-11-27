@@ -9,4 +9,5 @@ public class PageConstants {
     public static final String LOGIN = "path.page.login";
     public static final String REGISTRATION = "path.page.registration";
     public static final String PROFILE = "path.page.profile";
+    public static final String PAGE_NOT_FOUND = "path.page.404";
 }

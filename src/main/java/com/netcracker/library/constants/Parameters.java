@@ -13,4 +13,5 @@ public class Parameters {
     public static final String SALT = "salt";
     public static final String USER_ID = "user_id";
     public static final String ERROR_LOGIN = "errorLogin";
+    public static final String ID = "id";
 }

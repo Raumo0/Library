@@ -3,9 +3,8 @@ package com.netcracker.library.servlets;
 import com.netcracker.library.commands.Command;
 import com.netcracker.library.commands.CommandFactory;
 import com.netcracker.library.commands.CommandType;
-import com.netcracker.library.constants.PageConstants;
+import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.exceptions.CommandException;
-import com.netcracker.library.tools.ConfigurationManager;
 import com.netcracker.library.tools.SystemLogger;
 
 import javax.servlet.RequestDispatcher;
@@ -32,8 +31,10 @@ public class ProfileServlet extends HttpServlet {
         } catch (CommandException | NullPointerException e) {
             SystemLogger.getInstance().logError(getClass(), e.getMessage());
         }
-        if (page == null)
-            page = ConfigurationManager.getProperty(PageConstants.PROFILE);
+        if (page == null) {
+            resp.sendRedirect(RedirectConstants.INDEX);
+            return;
+        }
         dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(req, resp);
     }
