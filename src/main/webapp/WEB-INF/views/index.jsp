@@ -15,7 +15,7 @@
 
     <c:set var="counter" value="0" scope="page"/>
     <c:set var="color" value="" />
-    <c:forEach begin="1" var="book" items="${book_editions}">
+    <c:forEach var="book" items="${book_editions}">
         <c:set var="counter" value="${counter + 1}" scope="page"/>
         <c:if test="${counter % 2 == 0}">
             <c:set var="color" value="class=\"active\"" />

@@ -8,6 +8,8 @@ public class Parameters {
     public static final String ID = "id";
     public static final String ACTION = "action";
     public static final String PAGE_TITLE = "page_title";
+    public static final String PAGINATION_PARAMETER = "page";
+    public static final int RECORDS_PER_PAGE = 10;
 
     //navbar
     public static final String NAVBAR_ACTIVE = "class=\"active\"";
