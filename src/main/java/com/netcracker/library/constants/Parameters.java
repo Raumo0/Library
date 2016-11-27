@@ -7,6 +7,7 @@ public class Parameters {
     public static final String ERROR_LOGIN = "errorLogin";
     public static final String ID = "id";
     public static final String ACTION = "action";
+    public static final String PAGE_TITLE = "page_title";
 
     //user
     public static final String USER_ID = "user_id";

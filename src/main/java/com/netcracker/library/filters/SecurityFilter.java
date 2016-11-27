@@ -34,8 +34,9 @@ public class SecurityFilter implements Filter {
 
         User user;
         UserRole type = null;
+        int userId = 0;
         try {
-            int userId = (int) session.getAttribute(Parameters.USER_ID);
+            userId = (int) session.getAttribute(Parameters.USER_ID);
             user = UserServiceImpl.getInstance().getUserById(userId);
             type = user.getRole();
         } catch (ServiceException e) {
@@ -48,6 +49,8 @@ public class SecurityFilter implements Filter {
             response.sendRedirect(RedirectConstants.LOGIN);
             return;
         }
+        request.setAttribute(Parameters.USER_ID, userId);
+        request.setAttribute(Parameters.PAGE_TITLE, "Library");
         // pass the request along the filter chain
         filterChain.doFilter(servletRequest, servletResponse);
     }

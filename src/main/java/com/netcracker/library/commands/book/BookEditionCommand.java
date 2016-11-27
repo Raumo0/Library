@@ -33,6 +33,7 @@ public class BookEditionCommand implements Command {
             page = ConfigurationManager.getProperty(PageConstants.PAGE_NOT_FOUND);
             return page;
         }
+        req.setAttribute(Parameters.PAGE_TITLE, bookEdition.getTitle());
         req.setAttribute(Parameters.BOOK_EDITION_ID, bookEdition.getId());
         req.setAttribute(Parameters.BOOK_EDITION_TITLE, bookEdition.getTitle());
         req.setAttribute(Parameters.BOOK_EDITION_PAGE_COUNT, bookEdition.getPageCount());
