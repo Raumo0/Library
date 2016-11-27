@@ -1,12 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
-<footer>
-    <div>
-        <span>Created by Raumo0</span>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../../resources/js/bootstrap.min.js"></script>
-    </div>
+
+<footer class="modal-footer text-center">
+    <p>© 2016 Raumo0, Inc.</p>
 </footer>
+</div>
 </body>
 </html>

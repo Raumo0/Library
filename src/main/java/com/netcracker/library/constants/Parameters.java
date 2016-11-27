@@ -26,6 +26,7 @@ public class Parameters {
     public static final String SALT = "salt";
 
     //book edition
+    public static final String BOOK_EDITIONS = "book_editions";
     public static final String BOOK_EDITION_ID = "book_edition_id";
     public static final String BOOK_EDITION_TITLE = "book_edition_title";
     public static final String BOOK_EDITION_PAGE_COUNT = "book_edition_page_count";
