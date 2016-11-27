@@ -8,4 +8,5 @@ public class PageConstants {
     public static final String INDEX = "path.page.index";
     public static final String LOGIN = "path.page.login";
     public static final String REGISTRATION = "path.page.registration";
+    public static final String PROFILE = "path.page.profile";
 }

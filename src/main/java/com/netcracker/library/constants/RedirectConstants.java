@@ -8,4 +8,5 @@ public class RedirectConstants {
     public static final String LOGIN = "/login";
     public static final String REGISTRATION = "/registration";
     public static final String RESOURCES = "/resources";
+    public static final String PROFILE = "/profile";
 }
