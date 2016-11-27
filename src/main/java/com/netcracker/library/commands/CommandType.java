@@ -1,6 +1,8 @@
 package com.netcracker.library.commands;
 
 import com.netcracker.library.commands.book.BookEditionCommand;
+import com.netcracker.library.commands.library.AboutCommand;
+import com.netcracker.library.commands.library.ContactCommand;
 import com.netcracker.library.commands.user.LoginCommand;
 import com.netcracker.library.commands.user.LogoutCommand;
 import com.netcracker.library.commands.user.RegistrationCommand;
@@ -14,7 +16,7 @@ import java.util.TreeMap;
  * Created by raumo0 on 24.11.16.
  */
 public enum CommandType {
-    LOGOUT, REGISTRATION, LOGIN, USER_PAGE, BOOK_EDITION_PAGE;
+    LOGOUT, REGISTRATION, LOGIN, USER_PAGE, BOOK_EDITION_PAGE, ABOUT, CONTACT;
 
     private static Map<CommandType, Class> commands;
     static {
@@ -24,6 +26,8 @@ public enum CommandType {
         commands.put(CommandType.LOGIN, LoginCommand.class);
         commands.put(CommandType.USER_PAGE, UserPageCommand.class);
         commands.put(CommandType.BOOK_EDITION_PAGE, BookEditionCommand.class);
+        commands.put(CommandType.ABOUT, AboutCommand.class);
+        commands.put(CommandType.CONTACT, ContactCommand.class);
     }
 
     public Command getCurrentCommand() throws CommandException {

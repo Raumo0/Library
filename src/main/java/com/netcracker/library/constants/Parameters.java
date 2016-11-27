@@ -9,6 +9,13 @@ public class Parameters {
     public static final String ACTION = "action";
     public static final String PAGE_TITLE = "page_title";
 
+    //navbar
+    public static final String NAVBAR_ACTIVE = "class=\"active\"";
+    public static final String NAVBAR_ACTIVE_PROFILE = "navbar_active_profile";
+    public static final String NAVBAR_ACTIVE_HOME = "navbar_active_home";
+    public static final String NAVBAR_ACTIVE_ABOUT = "navbar_active_about";
+    public static final String NAVBAR_ACTIVE_CONTACT = "navbar_active_contact";
+
     //user
     public static final String USER_ID = "user_id";
     public static final String ROLE = "role";

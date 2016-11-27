@@ -33,6 +33,7 @@ public class UserPageCommand implements Command {
             page = ConfigurationManager.getProperty(PageConstants.PAGE_NOT_FOUND);
             return page;
         }
+        req.setAttribute(Parameters.NAVBAR_ACTIVE_PROFILE, Parameters.NAVBAR_ACTIVE);
         req.setAttribute(Parameters.PAGE_TITLE, user.getUsername());
         req.setAttribute(Parameters.USER_ID, user.getId());
         page = ConfigurationManager.getProperty(PageConstants.PROFILE);

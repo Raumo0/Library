@@ -49,8 +49,11 @@ public class SecurityFilter implements Filter {
             response.sendRedirect(RedirectConstants.LOGIN);
             return;
         }
+        if (path.equals(RedirectConstants.INDEX)){
+            request.setAttribute(Parameters.PAGE_TITLE, "Library");
+            request.setAttribute(Parameters.NAVBAR_ACTIVE_HOME, Parameters.NAVBAR_ACTIVE);
+        }
         request.setAttribute(Parameters.USER_ID, userId);
-        request.setAttribute(Parameters.PAGE_TITLE, "Library");
         // pass the request along the filter chain
         filterChain.doFilter(servletRequest, servletResponse);
     }

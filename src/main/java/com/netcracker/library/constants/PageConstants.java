@@ -11,4 +11,6 @@ public class PageConstants {
     public static final String PROFILE = "path.page.profile";
     public static final String PAGE_NOT_FOUND = "path.page.404";
     public static final String BOOK_EDITION = "path.page.bookEdition";
+    public static final String ABOUT = "path.page.about";
+    public static final String CONTACT = "path.page.contact";
 }
