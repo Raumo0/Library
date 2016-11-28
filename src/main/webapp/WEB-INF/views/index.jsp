@@ -4,6 +4,7 @@
 
 <table class="table table-bordered" border="1" cellpadding="5" cellspacing="5">
     <tr>
+        <th>In stock</th>
         <th>ID</th>
         <th>Title</th>
         <th>Page count</th>
@@ -33,8 +34,19 @@
             <c:set var="color" value="class=\"danger\"" />
         </c:if>
         <tr ${color}>
+
+            <c:set var="badge" value="success" scope="page"/>
+            <c:set var="badgeName" value="Yes" scope="page"/>
+            <c:if test="${book.books == null || book.books.size() == 0}">
+                <c:set var="badge" value="danger" scope="page"/>
+                <c:set var="badgeName" value="No " scope="page"/>
+            </c:if>
+            <td>
+                <button type="button" class="btn btn-sm btn-${badge}">${badgeName}</button>
+            </td>
+
             <td>${book.id}</td>
-            <td>${book.title}</td>
+            <td><a href="book?id=${book.id}">${book.title}</a></td>
             <td>${book.pageCount}</td>
             <td>${book.description}</td>
             <td>${book.isbn}</td>
@@ -73,6 +85,5 @@ The when condition does not display a link for the current page--%>
         </c:if>
     </ul>
 </table>
-
 
 <%@include file="/WEB-INF/jspf/footer.jspf" %>

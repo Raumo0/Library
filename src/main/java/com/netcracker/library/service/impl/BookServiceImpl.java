@@ -179,11 +179,18 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Collection<BookEdition> getBookEditionsByGap(int offset, int quantity) throws ServiceException {
+        Collection<BookEdition> bookEditions;
+        Collection<Book> books;
         try {
-            return bookEditionDAO.getBookEditionsByGap(offset, quantity);
+            bookEditions = bookEditionDAO.getBookEditionsByGap(offset, quantity);
+            for (BookEdition bookEdition : bookEditions){
+                books = bookDAO.getBooksByBookEditionId(bookEdition.getId());
+                bookEdition.setBooks(books);
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        return bookEditions;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
     private Language language;
     private Language originalLanguage;
     private LinkedList<Category> categories;
-    private LinkedList<Book> books;
+    private Collection<Book> books;
 
     public BookEdition() {}
 
@@ -149,11 +149,11 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         this.categories = categories;
     }
 
-    public LinkedList<Book> getBooks() {
+    public Collection<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(LinkedList<Book> books) {
+    public void setBooks(Collection<Book> books) {
         this.books = books;
     }
 
