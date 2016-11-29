@@ -6,9 +6,7 @@ import com.netcracker.library.beans.books.Book;
 import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.beans.business.Rental;
 import com.netcracker.library.beans.users.User;
-import com.netcracker.library.enums.BookPosition;
-import com.netcracker.library.enums.BookState;
-import com.netcracker.library.enums.Bookbinding;
+import com.netcracker.library.enums.*;
 import com.netcracker.library.tools.SystemLogger;
 
 import java.lang.reflect.InvocationTargetException;
@@ -56,11 +54,42 @@ public class BeanFactory {
     }
 
     private User getFillUser(){
-        return null;
+        User user;
+        user = getEmptyUser();
+        //todo
+        return user;
+    }
+
+    private User getEmptyUser() {
+        User user = new User();
+        user.setFirstName("Mike");
+        user.setLastName("Mickelson");
+        int username = (int)(counter + date.getTime());
+        counter += 1;
+        if (username < 0)
+            username *= -1;
+        user.setUsername("username" + username);
+        user.setPassword("password");
+        user.setSalt("salt");
+        user.setRole(UserRole.READER);
+        user.setId(0);
+        return user;
     }
 
     private Author getFillAuthor(){
-        return null;
+        Author author;
+        BookEdition bookEdition;
+        author = getEmptyAuthor();
+        author.setBookEditions(new LinkedList<BookEdition>());
+        Collection<Author> authors = new LinkedList<>();
+        authors.add(author);
+        int bookCount = random.nextInt(5);
+        for (int i = 0; i < bookCount; i++){
+            bookEdition = getEmptyBookEdition();
+            bookEdition.setAuthors(authors);
+            author.getBookEditions().add(bookEdition);
+        }
+        return author;
     }
 
     private Author getEmptyAuthor(){
@@ -101,7 +130,7 @@ public class BeanFactory {
         bookEdition.setTitle("title " + random.nextInt(100000));
         bookEdition.setPageCount(200 + random.nextInt(1000));
         bookEdition.setDescription("description " + random.nextInt(100000));
-        int isbn = (int)(date.getTime());
+        int isbn = (int)(counter + date.getTime());
         counter += 1;
         if (isbn < 0)
             isbn *= -1;
@@ -117,7 +146,12 @@ public class BeanFactory {
     }
 
     private Book getFillBook(){
-        return null;
+        Book book;
+        BookEdition bookEdition;
+        book = getEmptyBook();
+        bookEdition = getEmptyBookEdition();
+        book.setBookEdition(bookEdition);
+        return book;
     }
 
     private Book getEmptyBook(){
@@ -133,7 +167,27 @@ public class BeanFactory {
     }
 
     private Rental getFillRental(){
-        return null;
+        Rental rental;
+        User user;
+        Book book;
+        BookEdition bookEdition;
+        rental = getEmptyRental();
+        book = getEmptyBook();
+        bookEdition = getEmptyBookEdition();
+        book.setBookEdition(bookEdition);
+        user = getEmptyUser();
+        rental.setUser(user);
+        rental.setBook(book);
+        rental.setStateBefore(book.getBookState());
+        return rental;
+    }
+
+    private Rental getEmptyRental() {
+        Rental rental = new Rental();
+        rental.setComment("commentary");
+        rental.setBookIssue(BookIssue.ORDERED);
+        rental.setId(0);
+        return rental;
     }
 
     private static class SingletonHolder{
