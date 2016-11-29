@@ -113,7 +113,7 @@ public class MysqlBookEditionDAOTest {
         bookEdition.getAuthors().add(author);
         bookEditionDAO.update(bookEdition);
         BookEdition bookEdition2 = bookEditionDAO.getBookEditionsByAuthorId(
-                bookEdition.getAuthors().getFirst().getId()).getFirst();
+                bookEdition.getAuthors().iterator().next().getId()).getFirst();
         bookEdition2.setAuthors(new LinkedList<Author>());
         bookEdition2.getAuthors().add(factory.getAuthorDAO().getById(author.getId()));
         Assert.assertEquals(bookEdition, bookEdition2);

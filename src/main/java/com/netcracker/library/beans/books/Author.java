@@ -2,6 +2,7 @@ package com.netcracker.library.beans.books;
 
 import com.netcracker.library.beans.Person;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.LinkedList;
 public class Author extends Person implements Comparable<Author> {
     private static final long serialVersionUID = 1L;
     private String biography;
-    private LinkedList<BookEdition> bookEditions;
+    private Collection<BookEdition> bookEditions;
 
     public Author() {}
 
@@ -32,11 +33,11 @@ public class Author extends Person implements Comparable<Author> {
         this.biography = biography;
     }
 
-    public LinkedList<BookEdition> getBookEditions() {
+    public Collection<BookEdition> getBookEditions() {
         return bookEditions;
     }
 
-    public void setBookEditions(LinkedList<BookEdition> bookEditions) {
+    public void setBookEditions(Collection<BookEdition> bookEditions) {
         this.bookEditions = bookEditions;
     }
 
@@ -91,15 +92,14 @@ public class Author extends Person implements Comparable<Author> {
 
         Author author = (Author) o;
 
-        if (biography != null ? !biography.equals(author.biography) : author.biography != null) return false;
-        return bookEditions != null ? bookEditions.equals(author.bookEditions) : author.bookEditions == null;
+        return biography != null ? biography.equals(author.biography) : author.biography == null;
+
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (biography != null ? biography.hashCode() : 0);
-        result = 31 * result + (bookEditions != null ? bookEditions.hashCode() : 0);
         return result;
     }
 
@@ -107,7 +107,6 @@ public class Author extends Person implements Comparable<Author> {
     public String toString() {
         return "Author{" +
                 "biography='" + biography + '\'' +
-                ", bookEditions=" + bookEditions +
                 "} " + super.toString();
     }
 }

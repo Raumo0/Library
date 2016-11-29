@@ -13,8 +13,8 @@ import java.util.LinkedList;
 public class Book extends Entity {
     private static final long serialVersionUID = 1L;
     private BookPosition bookPosition;
-    private BookEdition bookEdition;
     private BookState bookState;
+    private BookEdition bookEdition;
     private LinkedList<Rental> rentals;
 
     public Book() {}
@@ -88,7 +88,7 @@ public class Book extends Entity {
     public String toString() {
         return "Book{" +
                 "bookPosition=" + bookPosition +
-                ", bookEdition=" + bookEdition +
+//                ", bookEdition=" + bookEdition +
                 ", bookState=" + bookState +
                 ", rentals=" + rentals +
                 "} " + super.toString();

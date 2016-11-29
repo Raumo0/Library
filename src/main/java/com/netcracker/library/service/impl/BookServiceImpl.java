@@ -12,6 +12,7 @@ import com.netcracker.library.exceptions.ServiceException;
 import com.netcracker.library.service.BookService;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * Created by raumo0 on 22.11.16.
@@ -107,20 +108,45 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int addBookEdition(BookEdition bookEdition) throws ServiceException {
+        int result;
         try {
-            return bookEditionDAO.insert(bookEdition);
+            result = bookEditionDAO.insert(bookEdition);
+            bookEdition.setId(result);
+            for (Author author : bookEdition.getAuthors()) {
+                if (authorDAO.getById(author.getId()) == null)
+                    author.setId(authorDAO.insert(author));
+            }
+            bookEditionDAO.createBookEditionWithAuthorRelation(bookEdition);
+            for (Book book : bookEdition.getBooks()){
+                if (bookDAO.getById(book.getId()) == null) {
+                    book.setId(bookDAO.insert(book));
+                }
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        return result;
     }
 
     @Override
     public BookEdition getBookEditionById(int id) throws ServiceException {
+        BookEdition bookEdition;
         try {
-            return bookEditionDAO.getById(id);
+            bookEdition = bookEditionDAO.getById(id);
+            bookEdition.setAuthors(
+                    authorDAO.getAuthorsByBookEditionId(bookEdition.getId()));
+            Collection<BookEdition> bookEditions = new LinkedList<>();
+            bookEditions.add(bookEdition);
+            for (Author author : bookEdition.getAuthors())
+                author.setBookEditions(bookEditions);
+            bookEdition.setBooks(
+                    bookDAO.getBooksByBookEditionId(bookEdition.getId()));
+            for (Book book : bookEdition.getBooks())
+                book.setBookEdition(bookEdition);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        return bookEdition;
     }
 
     @Override
@@ -180,12 +206,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public Collection<BookEdition> getBookEditionsByGap(int offset, int quantity) throws ServiceException {
         Collection<BookEdition> bookEditions;
-        Collection<Book> books;
         try {
             bookEditions = bookEditionDAO.getBookEditionsByGap(offset, quantity);
             for (BookEdition bookEdition : bookEditions){
-                books = bookDAO.getBooksByBookEditionId(bookEdition.getId());
-                bookEdition.setBooks(books);
+                fillBookEdition(bookEdition);
             }
         } catch (DAOException e) {
             throw new ServiceException(e);
@@ -272,6 +296,20 @@ public class BookServiceImpl implements BookService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
+
+    private BookEdition fillBookEdition(BookEdition bookEdition) throws ServiceException {
+        Collection<Book> books;
+        Collection<Author> authors;
+        try {
+            books = bookDAO.getBooksByBookEditionId(bookEdition.getId());
+            bookEdition.setBooks(books);
+            authors = authorDAO.getAuthorsByBookEditionId(bookEdition.getId());
+            bookEdition.setAuthors(authors);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+        return bookEdition;
     }
 
     private static class SingletonHolder{

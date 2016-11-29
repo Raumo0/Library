@@ -1,26 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
-<%--<%@include file="/WEB-INF/jspf/header.jspf" %>--%>
-
-<%--<form name="loginForm" method="POST" action="login">--%>
-    <%--<input type="hidden" name="command" value="login" />--%>
-    <%--Введите ваш логин и пароль: <br/>--%>
-    <%--<table>--%>
-        <%--<tr>--%>
-            <%--<td>Логин:</td>--%>
-            <%--<td><input type="text" name="username" value="" size="30"/></td>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-            <%--<td>Пароль:</td>--%>
-            <%--<td><input type="password" name="password" value="" size="30" /></td>--%>
-        <%--</tr>--%>
-    <%--</table>--%>
-    <%--${errorLoginOrPassword} <br />--%>
-    <%--<input type="submit" value="Войти" />--%>
-    <%--<a href="registration">Регистрация</a>--%>
-<%--</form>--%>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,11 +47,10 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <a class="btn btn-default btn-block" href="registration" role="button">Create an account</a>
     </form>
-</div> <!-- /container -->
+</div>
 
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../../resources/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
-<%--<%@include file="/WEB-INF/jspf/footer.jspf" %>--%>

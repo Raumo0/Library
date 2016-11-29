@@ -54,22 +54,43 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             statement.executeUpdate();
             result = statement.getGeneratedKeys();
             result.first();
-            int bookEditionId = result.getInt(1);
-            if (bookEdition.getAuthors() != null) {
-                for (Author author: bookEdition.getAuthors()) {
-                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
-                    statement.setInt(1, author.getId());
-                    statement.setInt(2, bookEditionId);
-                    statement.executeUpdate();
-                }
-            }
-            return bookEditionId;
+            return result.getInt(1);
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
+
+    public boolean createBookEditionWithAuthorRelation(BookEdition bookEdition) throws DAOException {
+        Connection connection = null;
+        PreparedStatement statement;
+        boolean created = false;
+        ResultSet result;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            if (bookEdition.getAuthors() != null) {
+                for (Author author: bookEdition.getAuthors()) {
+                    statement = connection.prepareStatement(GET_BOOK_EDITIONS_BY_AUTHOR_ID);
+                    statement.setString(1, String.valueOf(author.getId()));
+                    result = statement.executeQuery();
+                    if (!result.first()) {
+                        statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
+                        statement.setInt(1, author.getId());
+                        statement.setInt(2, bookEdition.getId());
+                        statement.executeUpdate();
+                    }
+                    created = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
+        return created;
+    }
+
 
     @Override
     public BookEdition getById(int id) throws DAOException {

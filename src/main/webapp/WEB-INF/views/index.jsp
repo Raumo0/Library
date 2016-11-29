@@ -42,12 +42,19 @@
                 <c:set var="badgeName" value="No " scope="page"/>
             </c:if>
             <td>
-                <button type="button" class="btn btn-sm btn-${badge}">${badgeName}</button>
+                <%--<button type="button" class="btn btn-sm btn-${badge}">${badgeName}</button>--%>
+                <div class="text-center centering">
+                    <h3>
+                        <span class="label label-${badge}">${badgeName}</span>
+                    </h3>
+                </div>
             </td>
 
             <td>${book.id}</td>
             <td><a href="book?id=${book.id}">${book.title}</a></td>
-            <td>${book.pageCount}</td>
+            <td>
+                <div class="text-center vcenter">${book.pageCount}</div>
+            </td>
             <td>${book.description}</td>
             <td>${book.isbn}</td>
             <td>${book.weight}</td>
@@ -62,6 +69,7 @@
 <%--For displaying Page numbers.
 The when condition does not display a link for the current page--%>
 <table class="table" border="1" cellpadding="5" cellspacing="5">
+    <div class="text-center">
     <ul class="pagination">
         <%--For displaying Previous link except for the 1st page --%>
         <c:if test="${currentPage != 1}">
@@ -84,6 +92,7 @@ The when condition does not display a link for the current page--%>
             <li class="next"><a href="/?page=${currentPage + 1}">Next &rarr;</a></li>
         </c:if>
     </ul>
+    </div>
 </table>
 
 <%@include file="/WEB-INF/jspf/footer.jspf" %>

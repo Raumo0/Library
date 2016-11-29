@@ -19,7 +19,7 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
     private Bookbinding bookbinding;
     private String image;
     private Publisher publisher;
-    private LinkedList<Author> authors;
+    private Collection<Author> authors;
     private Language language;
     private Language originalLanguage;
     private LinkedList<Category> categories;
@@ -117,11 +117,11 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         this.publisher = publisher;
     }
 
-    public LinkedList<Author> getAuthors() {
+    public Collection<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(LinkedList<Author> authors) {
+    public void setAuthors(Collection<Author> authors) {
         this.authors = authors;
     }
 
@@ -166,20 +166,13 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         BookEdition that = (BookEdition) o;
 
         if (pageCount != that.pageCount) return false;
+        if (isbn != that.isbn) return false;
         if (weight != that.weight) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (releaseYear != null ? !releaseYear.equals(that.releaseYear) : that.releaseYear != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (isbn != that.isbn) return false;
         if (bookbinding != that.bookbinding) return false;
-        if (image != null ? !image.equals(that.image) : that.image != null) return false;
-        if (publisher != null ? !publisher.equals(that.publisher) : that.publisher != null) return false;
-        if (authors != null ? !authors.equals(that.authors) : that.authors != null) return false;
-        if (language != null ? !language.equals(that.language) : that.language != null) return false;
-        if (originalLanguage != null ? !originalLanguage.equals(that.originalLanguage) : that.originalLanguage != null)
-            return false;
-        if (categories != null ? !categories.equals(that.categories) : that.categories != null) return false;
-        return books != null ? books.equals(that.books) : that.books == null;
+        return image != null ? image.equals(that.image) : that.image == null;
 
     }
 
@@ -194,12 +187,6 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         result = 31 * result + weight;
         result = 31 * result + (bookbinding != null ? bookbinding.hashCode() : 0);
         result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
-        result = 31 * result + (authors != null ? authors.hashCode() : 0);
-        result = 31 * result + (language != null ? language.hashCode() : 0);
-        result = 31 * result + (originalLanguage != null ? originalLanguage.hashCode() : 0);
-        result = 31 * result + (categories != null ? categories.hashCode() : 0);
-        result = 31 * result + (books != null ? books.hashCode() : 0);
         return result;
     }
 
@@ -210,16 +197,10 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
                 ", pageCount=" + pageCount +
                 ", releaseYear=" + releaseYear +
                 ", description='" + description + '\'' +
-                ", isbn='" + isbn + '\'' +
+                ", isbn=" + isbn +
                 ", weight=" + weight +
                 ", bookbinding=" + bookbinding +
                 ", image='" + image + '\'' +
-                ", publisher=" + publisher +
-                ", authors=" + authors +
-                ", language=" + language +
-                ", originalLanguage=" + originalLanguage +
-                ", categories=" + categories +
-                ", books=" + books +
                 "} " + super.toString();
     }
 

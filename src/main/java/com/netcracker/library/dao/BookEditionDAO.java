@@ -10,6 +10,8 @@ import java.util.LinkedList;
  * Created by raumo0 on 20.11.16.
  */
 public interface BookEditionDAO extends AbstractDAO<BookEdition> {
+    boolean createBookEditionWithAuthorRelation(BookEdition bookEdition) throws DAOException;
+
     LinkedList<BookEdition> getBookEditionsByAuthorId(int authorId) throws DAOException;
 
     BookEdition getBookEditionByBookId(int bookId) throws DAOException;

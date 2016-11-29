@@ -3,7 +3,7 @@
 <head>
     <title>404 page not found</title>
 </head>
-<body>
+<body class="has-error">
 404 page not found
 </body>
 </html>

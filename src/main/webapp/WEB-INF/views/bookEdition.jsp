@@ -3,6 +3,8 @@
 
 Book:
 <br>
+<img src="..." alt="..." class="img-thumbnail">
+<br>
 ID = ${book_edition_id}
 <br>
 title = ${book_edition_title}
