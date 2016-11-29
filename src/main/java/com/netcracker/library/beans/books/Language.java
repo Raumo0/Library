@@ -44,8 +44,7 @@ public class Language extends Entity {
 
         Language language1 = (Language) o;
 
-        if (language != null ? !language.equals(language1.language) : language1.language != null) return false;
-        return bookEditions != null ? bookEditions.equals(language1.bookEditions) : language1.bookEditions == null;
+        return language != null ? language.equals(language1.language) : language1.language == null;
 
     }
 
@@ -53,7 +52,6 @@ public class Language extends Entity {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (language != null ? language.hashCode() : 0);
-        result = 31 * result + (bookEditions != null ? bookEditions.hashCode() : 0);
         return result;
     }
 
@@ -61,7 +59,6 @@ public class Language extends Entity {
     public String toString() {
         return "Language{" +
                 "language='" + language + '\'' +
-                ", bookEditions=" + bookEditions +
                 "} " + super.toString();
     }
 }

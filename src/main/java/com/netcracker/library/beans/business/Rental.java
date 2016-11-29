@@ -124,10 +124,7 @@ public class Rental extends Entity {
         if (returnDate != null ? !returnDate.equals(rental.returnDate) : rental.returnDate != null) return false;
         if (stateBefore != rental.stateBefore) return false;
         if (stateAfter != rental.stateAfter) return false;
-        if (staff_user != null ? !staff_user.equals(rental.staff_user) : rental.staff_user != null) return false;
-        if (user != null ? !user.equals(rental.user) : rental.user != null) return false;
-        if (bookIssue != rental.bookIssue) return false;
-        return book != null ? book.equals(rental.book) : rental.book == null;
+        return bookIssue == rental.bookIssue;
 
     }
 
@@ -139,10 +136,7 @@ public class Rental extends Entity {
         result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
         result = 31 * result + (stateBefore != null ? stateBefore.hashCode() : 0);
         result = 31 * result + (stateAfter != null ? stateAfter.hashCode() : 0);
-        result = 31 * result + (staff_user != null ? staff_user.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (bookIssue != null ? bookIssue.hashCode() : 0);
-        result = 31 * result + (book != null ? book.hashCode() : 0);
         return result;
     }
 
@@ -154,10 +148,7 @@ public class Rental extends Entity {
                 ", returnDate=" + returnDate +
                 ", stateBefore=" + stateBefore +
                 ", stateAfter=" + stateAfter +
-                ", staff_user=" + staff_user +
-                ", user=" + user +
                 ", bookIssue=" + bookIssue +
-                ", book=" + book +
                 "} " + super.toString();
     }
 }

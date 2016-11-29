@@ -116,9 +116,7 @@ public class User extends Person {
         if (salt != null ? !salt.equals(user.salt) : user.salt != null) return false;
         if (mobile_phone != null ? !mobile_phone.equals(user.mobile_phone) : user.mobile_phone != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (address != null ? !address.equals(user.address) : user.address != null) return false;
-        if (rentals != null ? !rentals.equals(user.rentals) : user.rentals != null) return false;
-        return role != null ? role.equals(user.role) : user.role == null;
+        return role == user.role;
 
     }
 
@@ -130,8 +128,6 @@ public class User extends Person {
         result = 31 * result + (salt != null ? salt.hashCode() : 0);
         result = 31 * result + (mobile_phone != null ? mobile_phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (rentals != null ? rentals.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
@@ -144,9 +140,7 @@ public class User extends Person {
                 ", salt='" + salt + '\'' +
                 ", mobile_phone='" + mobile_phone + '\'' +
                 ", email='" + email + '\'' +
-                ", address=" + address +
-                ", rentals=" + rentals +
-                ", userRoles=" + role +
+                ", role=" + role +
                 "} " + super.toString();
     }
 }

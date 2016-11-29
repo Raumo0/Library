@@ -54,9 +54,7 @@ public class City extends Entity {
 
         City city = (City) o;
 
-        if (name != null ? !name.equals(city.name) : city.name != null) return false;
-        if (country != null ? !country.equals(city.country) : city.country != null) return false;
-        return addresses != null ? addresses.equals(city.addresses) : city.addresses == null;
+        return name != null ? name.equals(city.name) : city.name == null;
 
     }
 
@@ -64,8 +62,6 @@ public class City extends Entity {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (country != null ? country.hashCode() : 0);
-        result = 31 * result + (addresses != null ? addresses.hashCode() : 0);
         return result;
     }
 
@@ -73,8 +69,6 @@ public class City extends Entity {
     public String toString() {
         return "City{" +
                 "name='" + name + '\'' +
-                ", country=" + country +
-                ", addresses=" + addresses +
                 "} " + super.toString();
     }
 }

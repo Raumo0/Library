@@ -68,9 +68,7 @@ public class Book extends Entity {
         Book book = (Book) o;
 
         if (bookPosition != book.bookPosition) return false;
-        if (bookEdition != null ? !bookEdition.equals(book.bookEdition) : book.bookEdition != null) return false;
-        if (bookState != book.bookState) return false;
-        return rentals != null ? rentals.equals(book.rentals) : book.rentals == null;
+        return bookState == book.bookState;
 
     }
 
@@ -78,9 +76,7 @@ public class Book extends Entity {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (bookPosition != null ? bookPosition.hashCode() : 0);
-        result = 31 * result + (bookEdition != null ? bookEdition.hashCode() : 0);
         result = 31 * result + (bookState != null ? bookState.hashCode() : 0);
-        result = 31 * result + (rentals != null ? rentals.hashCode() : 0);
         return result;
     }
 
@@ -88,9 +84,7 @@ public class Book extends Entity {
     public String toString() {
         return "Book{" +
                 "bookPosition=" + bookPosition +
-//                ", bookEdition=" + bookEdition +
                 ", bookState=" + bookState +
-                ", rentals=" + rentals +
                 "} " + super.toString();
     }
 }

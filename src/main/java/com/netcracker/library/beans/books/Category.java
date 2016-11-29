@@ -44,8 +44,7 @@ public class Category extends Entity {
 
         Category category1 = (Category) o;
 
-        if (category != null ? !category.equals(category1.category) : category1.category != null) return false;
-        return bookEditions != null ? bookEditions.equals(category1.bookEditions) : category1.bookEditions == null;
+        return category != null ? category.equals(category1.category) : category1.category == null;
 
     }
 
@@ -53,7 +52,6 @@ public class Category extends Entity {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (bookEditions != null ? bookEditions.hashCode() : 0);
         return result;
     }
 
@@ -61,7 +59,6 @@ public class Category extends Entity {
     public String toString() {
         return "Category{" +
                 "category='" + category + '\'' +
-                ", bookEditions=" + bookEditions +
                 "} " + super.toString();
     }
 }

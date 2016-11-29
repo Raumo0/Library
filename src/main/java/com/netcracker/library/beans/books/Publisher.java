@@ -89,9 +89,7 @@ public class Publisher extends Entity {
         if (description != null ? !description.equals(publisher.description) : publisher.description != null)
             return false;
         if (image != null ? !image.equals(publisher.image) : publisher.image != null) return false;
-        if (address != null ? !address.equals(publisher.address) : publisher.address != null) return false;
-        if (email != null ? !email.equals(publisher.email) : publisher.email != null) return false;
-        return bookEditions != null ? bookEditions.equals(publisher.bookEditions) : publisher.bookEditions == null;
+        return email != null ? email.equals(publisher.email) : publisher.email == null;
 
     }
 
@@ -101,9 +99,7 @@ public class Publisher extends Entity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (image != null ? image.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (bookEditions != null ? bookEditions.hashCode() : 0);
         return result;
     }
 
@@ -113,9 +109,7 @@ public class Publisher extends Entity {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
-                ", address=" + address +
                 ", email='" + email + '\'' +
-                ", bookEditions=" + bookEditions +
                 "} " + super.toString();
     }
 }

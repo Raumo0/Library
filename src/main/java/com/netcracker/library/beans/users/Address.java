@@ -76,8 +76,7 @@ public class Address extends Entity {
         if (name != null ? !name.equals(address.name) : address.name != null) return false;
         if (district != null ? !district.equals(address.district) : address.district != null) return false;
         if (postalCode != null ? !postalCode.equals(address.postalCode) : address.postalCode != null) return false;
-        if (phone != null ? !phone.equals(address.phone) : address.phone != null) return false;
-        return city != null ? city.equals(address.city) : address.city == null;
+        return phone != null ? phone.equals(address.phone) : address.phone == null;
 
     }
 
@@ -88,7 +87,6 @@ public class Address extends Entity {
         result = 31 * result + (district != null ? district.hashCode() : 0);
         result = 31 * result + (postalCode != null ? postalCode.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
         return result;
     }
 
@@ -99,7 +97,6 @@ public class Address extends Entity {
                 ", district='" + district + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", phone='" + phone + '\'' +
-                ", city=" + city +
                 "} " + super.toString();
     }
 }
