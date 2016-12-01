@@ -89,6 +89,11 @@ public class BookServiceImplTest {
     }
 
     @Test
+    public void deleteBookEditionAll() throws Exception {
+        //todo
+    }
+
+    @Test
     public void getBookEditionsByAuthorId() throws Exception {
         Author author;
         Collection<BookEdition> bookEditions;
@@ -126,4 +131,87 @@ public class BookServiceImplTest {
         Assert.assertEquals(bookService.getBookEditionsByGap(6, 7), editions.subList(6, editions.size()));
     }
 
+    @Test
+    public void numberOfBookEditionRecords() throws Exception {
+        Assert.assertTrue(bookService.deleteBookEditionAll());
+        Assert.assertTrue(bookService.numberOfBookEditionRecords() == 0);
+        List<BookEdition> bookEditions = new LinkedList<>();
+        BookEdition edition;
+        for (int i = 0; i < 10; i++){
+            edition = (BookEdition) beanFactory.getBean(BeanType.BOOK_EDITION);
+            bookService.addBookEdition(edition);
+            bookEditions.add(edition);
+        }
+        Assert.assertTrue(bookService.numberOfBookEditionRecords() == 10);
+    }
+
+    @Test
+    public void addBook() throws Exception {
+
+    }
+
+    @Test
+    public void updateBook() throws Exception {
+
+    }
+
+    @Test
+    public void deleteBookById() throws Exception {
+
+    }
+
+    @Test
+    public void getBookAll() throws Exception {
+
+    }
+
+    @Test
+    public void deleteBookAll() throws Exception {
+
+    }
+
+    @Test
+    public void getBookByRentalId() throws Exception {
+
+    }
+
+    @Test
+    public void getBooksByBookEditionId() throws Exception {
+
+    }
+
+    @Test
+    public void addAuthor() throws Exception {
+
+    }
+
+    @Test
+    public void updateAuthor() throws Exception {
+
+    }
+
+    @Test
+    public void deleteAuthorById() throws Exception {
+
+    }
+
+    @Test
+    public void getAuthorAll() throws Exception {
+
+    }
+
+    @Test
+    public void deleteAuthorAll() throws Exception {
+
+    }
+
+    @Test
+    public void getAuthorByPersonId() throws Exception {
+
+    }
+
+    @Test
+    public void getAuthorsByBookEditionId() throws Exception {
+
+    }
 }

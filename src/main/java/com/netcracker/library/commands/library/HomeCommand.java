@@ -33,7 +33,7 @@ public class HomeCommand implements Command{
         try {
             bookEditions = BookServiceImpl.getInstance().getBookEditionsByGap((pageNumber - 1) * recordsPerPage,
                     recordsPerPage);
-            noOfRecords = BookServiceImpl.getInstance().numberOfRecords();
+            noOfRecords = BookServiceImpl.getInstance().numberOfBookEditionRecords();
         } catch (ServiceException e) {
             e.printStackTrace();
             noOfRecords = bookEditions.size();

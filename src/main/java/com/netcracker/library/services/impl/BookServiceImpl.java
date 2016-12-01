@@ -226,7 +226,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int numberOfRecords() throws ServiceException {
+    public int numberOfBookEditionRecords() throws ServiceException {
         try {
             return bookEditionDAO.getNumberOfRecords();
         } catch (DAOException e) {
