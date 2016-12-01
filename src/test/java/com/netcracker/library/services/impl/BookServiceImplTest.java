@@ -202,22 +202,61 @@ public class BookServiceImplTest {
 
     @Test
     public void getBookByRentalId() throws Exception {
-
+        Book book;
+        Book newBook;
+        book = (Book) beanFactory.getBean(BeanType.BOOK);
+        bookService.addBook(book);
+        newBook = bookService.getBookByRentalId(book.getRentals().iterator().next().getId());
+        Assert.assertEquals(book, newBook);
+        Assert.assertEquals(book.getRentals(), newBook.getRentals());
     }
 
     @Test
     public void getBooksByBookEditionId() throws Exception {
+        Book book;
+        Book newBook = null;
+        Collection<Book> books;
+        boolean flag = false;
 
+        book = (Book) beanFactory.getBean(BeanType.BOOK);
+        bookService.addBook(book);
+        books = bookService.getBooksByBookEditionId(book.getBookEdition().getId());
+
+        for (Book myBook : books){
+            if (book.equals(myBook)){
+                flag = true;
+                newBook = myBook;
+            }
+        }
+        Assert.assertTrue(flag);
+        Assert.assertEquals(book, newBook);
+        Assert.assertEquals(book.getRentals(), newBook.getRentals());
     }
 
     @Test
     public void addAuthor() throws Exception {
-
+        Author author;
+        Author newAuthor;
+        author = (Author) beanFactory.getBean(BeanType.AUTHOR);
+        int id = bookService.addAuthor(author);
+        newAuthor = bookService.getAuthorById(id);
+        Assert.assertEquals(author, newAuthor);
+        Assert.assertEquals(author.getBookEditions(), newAuthor.getBookEditions());
     }
 
     @Test
     public void updateAuthor() throws Exception {
-
+        Author author;
+        Author newAuthor;
+        author = (Author) beanFactory.getBean(BeanType.AUTHOR);
+        int id = bookService.addAuthor(author);
+        author.setBiography("new biography");
+        newAuthor = bookService.getAuthorById(id);
+        Assert.assertFalse(author.equals(newAuthor));
+        Assert.assertTrue(bookService.updateAuthor(author));
+        newAuthor = bookService.getAuthorById(id);
+        Assert.assertEquals(author, newAuthor);
+        Assert.assertEquals(author.getBookEditions(), newAuthor.getBookEditions());
     }
 
     @Test
