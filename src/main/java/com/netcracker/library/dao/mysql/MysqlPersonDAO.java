@@ -18,26 +18,35 @@ public abstract class MysqlPersonDAO {
     protected MysqlPersonDAO() { }
 
     protected int insertPerson(Person person, Connection connection) throws DAOException {
-        PreparedStatement statement;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         try {
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, person.getFirstName());
             statement.setString(2, person.getLastName());
             statement.executeUpdate();
-            ResultSet result = statement.getGeneratedKeys();
+            result = statement.getGeneratedKeys();
             result.first();
             return result.getInt(1);
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
         }
     }
 
     protected Person getPersonById(int id, Person person, Connection connection) throws DAOException {
-        PreparedStatement statement;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         try {
             statement = connection.prepareStatement(GET_BY_ID);
             statement.setString(1, String.valueOf(id));
-            ResultSet result = statement.executeQuery();
+            result = statement.executeQuery();
             while (result.next()) {
                 person.setPersonId(result.getInt("id"));
                 person.setFirstName(result.getString("first_name"));
@@ -45,12 +54,19 @@ public abstract class MysqlPersonDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
         }
         return person;
     }
 
     protected boolean updatePerson(Person person, Connection connection) throws DAOException {
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(UPDATE);
             statement.setString(1, person.getFirstName());
@@ -60,13 +76,17 @@ public abstract class MysqlPersonDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
         }
         return true;
     }
 
     protected boolean deletePersonById(int id, Connection connection) throws DAOException {
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         DAOManager daoManager = DAOManager.getInstance();
         try {
             if (daoManager.getUserDAO().getUserByPersonId(id) != null ||
@@ -78,6 +98,12 @@ public abstract class MysqlPersonDAO {
             return statement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
         }
     }
 }

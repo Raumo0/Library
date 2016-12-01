@@ -32,8 +32,8 @@ public class MysqlBookDAO implements BookDAO {
     @Override
     public int insert(Book book) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
@@ -47,16 +47,23 @@ public class MysqlBookDAO implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public Book getById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Book book = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BY_ID);
@@ -74,7 +81,14 @@ public class MysqlBookDAO implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return book;
     }
@@ -82,27 +96,31 @@ public class MysqlBookDAO implements BookDAO {
     @Override
     public boolean update(Book book) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
             statement.setString(1, book.getBookPosition().toString());
             statement.setString(2, book.getBookState().toString());
             statement.setInt(3, book.getId());
-            if (statement.executeUpdate() == 0)
-                return false;
+            return statement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
-        return true;
     }
 
     @Override
     public boolean deleteById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(DELETE);
@@ -111,15 +129,21 @@ public class MysqlBookDAO implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public Collection<Book> getAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         Book book;
         List<Book> books = new ArrayList<>();
         try {
@@ -139,7 +163,14 @@ public class MysqlBookDAO implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return books;
     }
@@ -147,7 +178,7 @@ public class MysqlBookDAO implements BookDAO {
     @Override
     public boolean deleteAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(DELETE_ALL);
@@ -155,16 +186,22 @@ public class MysqlBookDAO implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public Book getBookByRentalId(int rentalId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Book book = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BOOK_BY_RENTAL_ID);
@@ -182,7 +219,14 @@ public class MysqlBookDAO implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return book;
     }
@@ -190,10 +234,10 @@ public class MysqlBookDAO implements BookDAO {
     @Override
     public LinkedList<Book> getBooksByBookEditionId(int bookEditionId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Book book;
         LinkedList<Book> books = new LinkedList<>();
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BOOKS_BY_BOOK_EDITION_ID);
@@ -212,7 +256,14 @@ public class MysqlBookDAO implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return books;
     }

@@ -33,8 +33,8 @@ public class MysqlRentalDAO implements RentalDAO {
     @Override
     public int insert(Rental rental) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
@@ -54,16 +54,23 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public Rental getById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Rental rental = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BY_ID);
@@ -86,7 +93,14 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return rental;
     }
@@ -94,7 +108,7 @@ public class MysqlRentalDAO implements RentalDAO {
     @Override
     public boolean update(Rental rental) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
@@ -109,7 +123,13 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return true;
     }
@@ -117,7 +137,7 @@ public class MysqlRentalDAO implements RentalDAO {
     @Override
     public boolean deleteById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(DELETE);
@@ -126,15 +146,21 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public LinkedList<Rental> getAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         Rental rental;
         LinkedList<Rental> rentals = new LinkedList<>();
         try {
@@ -159,7 +185,14 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return rentals;
     }
@@ -167,7 +200,7 @@ public class MysqlRentalDAO implements RentalDAO {
     @Override
     public boolean deleteAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(DELETE_ALL);
@@ -175,16 +208,22 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public LinkedList<Rental> getRentalsByUserId(int userId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Rental rental;
-        ResultSet result;
+        ResultSet result = null;
         LinkedList<Rental> rentals = new LinkedList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -209,7 +248,14 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return rentals;
     }
@@ -217,9 +263,9 @@ public class MysqlRentalDAO implements RentalDAO {
     @Override
     public LinkedList<Rental> getRentalsByBookId(int bookId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Rental rental;
-        ResultSet result;
+        ResultSet result = null;
         LinkedList<Rental> rentals = new LinkedList<>();
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -244,7 +290,14 @@ public class MysqlRentalDAO implements RentalDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return rentals;
     }

@@ -39,8 +39,8 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public int insert(User user) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             if (user.getPersonId() == 0)
@@ -58,16 +58,23 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public User getById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         User user = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BY_ID);
@@ -86,7 +93,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return user;
     }
@@ -94,7 +108,7 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public boolean update(User user) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
@@ -108,20 +122,27 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public boolean deleteById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         int personId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_PERSON_ID_BY_USER_ID);
             statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
+            result = statement.executeQuery();
             while (result.next()) {
                 personId = result.getInt("person_id");
                 statement = connection.prepareStatement(DELETE);
@@ -132,15 +153,22 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return false;
     }
 
     public User getUserByPersonId(int personId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         User user = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -160,7 +188,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return user;
     }
@@ -168,9 +203,9 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public User getUserByRentalId(int rentalId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         User user = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_USER_BY_RENTAL_ID);
@@ -189,7 +224,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return user;
     }
@@ -197,9 +239,9 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public User getStaffUserByRentalId(int rentalId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         User user = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_STAFF_USER_BY_RENTAL_ID);
@@ -218,7 +260,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return user;
     }
@@ -226,10 +275,10 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public LinkedList<User> getUsersByRole(UserRole role) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         User user;
         LinkedList<User> users = new LinkedList<>();
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_USERS_BY_ROLE_ID);
@@ -249,7 +298,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return users;
     }
@@ -257,15 +313,16 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public User isAuthorized(String username, String password, String salt) throws DAOException {
         User user = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Connection connection = null;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(CHECK_AUTHORIZATION);
             statement.setString(1, username);
             statement.setString(2, password);
             statement.setString(3, salt);
-            ResultSet result = statement.executeQuery();
+            result = statement.executeQuery();
             if (result.next()) {
                 user = new User();
                 user.setId(result.getInt("id"));
@@ -279,7 +336,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return user;
     }
@@ -287,9 +351,9 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public LinkedList<User> getAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         LinkedList<User> users = new LinkedList<>();
-        ResultSet result;
+        ResultSet result = null;
         User user;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -309,7 +373,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return users;
     }
@@ -317,13 +388,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
     @Override
     public boolean deleteAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         int personId;
         boolean isPersonDelete = true;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_PERSONS_ID_BY_USERS);
-            ResultSet result = statement.executeQuery();
+            result = statement.executeQuery();
             statement = connection.prepareStatement(DELETE_ALL);
             statement.executeUpdate();
             while (result.next()) {
@@ -334,7 +406,14 @@ public class MysqlUserDAO extends MysqlPersonDAO implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return isPersonDelete;
     }

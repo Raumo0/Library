@@ -33,8 +33,8 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     @Override
     public int insert(Author author) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         int authorId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -51,16 +51,23 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public Author getById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Author author = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BY_ID);
@@ -76,7 +83,14 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return author;
     }
@@ -84,7 +98,7 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     @Override
     public boolean update(Author author) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(UPDATE);
@@ -109,20 +123,27 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public boolean deleteById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         int personId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_PERSON_ID_BY_AUTHOR_ID);
             statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
+            result = statement.executeQuery();
             while (result.next()) {
                 personId = result.getInt("person_id");
                 statement = connection.prepareStatement(DELETE);
@@ -133,7 +154,14 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return false;
     }
@@ -141,8 +169,8 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     @Override
     public Author getAuthorByPersonId(int personId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         Author author = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -159,7 +187,14 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return author;
     }
@@ -167,10 +202,10 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     @Override
     public LinkedList<Author> getAuthorsByBookEditionId(int bookEditionId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         LinkedList<Author> authors = new LinkedList<>();
         Author author;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_AUTHORS_BY_BOOK_EDITION_ID);
@@ -187,7 +222,14 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return authors;
     }
@@ -195,9 +237,9 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     @Override
     public Collection<Author> getAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         List<Author> authors = new ArrayList<>();
-        ResultSet result;
+        ResultSet result = null;
         Author author;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -214,7 +256,14 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return authors;
     }
@@ -222,13 +271,14 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
     @Override
     public boolean deleteAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         int personId;
         boolean isPersonDelete = true;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_PERSONS_ID_BY_AUTHORS);
-            ResultSet result = statement.executeQuery();
+            result = statement.executeQuery();
             statement = connection.prepareStatement(DELETE_ALL);
             statement.executeUpdate();
             while (result.next()) {
@@ -239,7 +289,14 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return isPersonDelete;
     }

@@ -39,8 +39,8 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public int insert(BookEdition bookEdition) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
@@ -58,15 +58,22 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     public boolean createBookEditionWithAuthorRelation(BookEdition bookEdition) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         boolean created = false;
-        ResultSet result;
+        ResultSet result = null;
         boolean flag;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -90,7 +97,14 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return created;
     }
@@ -99,9 +113,9 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public BookEdition getById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         BookEdition bookEdition = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BY_ID);
@@ -120,7 +134,14 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return bookEdition;
     }
@@ -128,7 +149,7 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public boolean update(BookEdition bookEdition) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         boolean result = false;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -141,19 +162,16 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             statement.setInt(6, bookEdition.getId());
             if (statement.executeUpdate() != 0)
                 result = true;
-//            if (bookEdition.getAuthors() != null) {
-//                for (Author author: bookEdition.getAuthors()) {
-//                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
-//                    statement.setInt(1, author.getId());
-//                    statement.setInt(2, bookEdition.getId());
-//                    statement.executeUpdate();
-//                    result = true;
-//                }
-//            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return result;
     }
@@ -161,7 +179,7 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public boolean deleteById(int id) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(DELETE);
@@ -170,15 +188,21 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public Collection<BookEdition> getAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         BookEdition bookEdition;
         List<BookEdition> bookEditions = new ArrayList<>();
         try {
@@ -199,7 +223,14 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return bookEditions;
     }
@@ -207,7 +238,7 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public boolean deleteAll() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(DELETE_ALL);
@@ -215,17 +246,23 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
     }
 
     @Override
     public LinkedList<BookEdition> getBookEditionsByAuthorId(int authorId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         LinkedList<BookEdition> bookEditions = new LinkedList<>();
         BookEdition bookEdition;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BOOK_EDITIONS_BY_AUTHOR_ID);
@@ -245,7 +282,14 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return bookEditions;
     }
@@ -253,9 +297,9 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public BookEdition getBookEditionByBookId(int bookId) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         BookEdition bookEdition = null;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BOOK_EDITION_BY_BOOK_ID);
@@ -274,7 +318,14 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return bookEdition;
     }
@@ -282,10 +333,10 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public Collection<BookEdition> getBookEditionsByGap(int offset, int quantity) throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
+        PreparedStatement statement = null;
         Collection<BookEdition> bookEditions = new LinkedList<>();
         BookEdition bookEdition;
-        ResultSet result;
+        ResultSet result = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             statement = connection.prepareStatement(GET_BOOK_EDITIONS_BY_GAP);
@@ -306,7 +357,14 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return bookEditions;
     }
@@ -314,8 +372,8 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
     @Override
     public int getNumberOfRecords() throws DAOException {
         Connection connection = null;
-        PreparedStatement statement;
-        ResultSet result;
+        PreparedStatement statement = null;
+        ResultSet result = null;
         int count = 0;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -327,7 +385,14 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
+            try {
+                if (result != null) result.close();
+                if (statement != null) statement.close();
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            } finally {
+                ConnectionPool.getInstance().releaseConnection(connection);
+            }
         }
         return count;
     }
