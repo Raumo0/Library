@@ -36,11 +36,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int addBook(Book book) throws ServiceException {
+        int result;
+        int editionId;
         try {
-            return bookDAO.insert(book);
+            if (bookEditionDAO.getById(book.getBookEdition().getId()) == null) {
+                editionId = bookEditionDAO.insert(book.getBookEdition());
+                book.getBookEdition().setId(editionId);
+            }
+            result = bookDAO.insert(book);
+            book.setId(result);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        return result;
     }
 
     @Override
