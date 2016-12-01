@@ -130,7 +130,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookEdition getBookEditionById(int id) throws ServiceException {
-        BookEdition bookEdition;
+        BookEdition bookEdition = null;
         try {
             bookEdition = bookEditionDAO.getById(id);
             bookEdition.setAuthors(
@@ -145,7 +145,7 @@ public class BookServiceImpl implements BookService {
                 book.setBookEdition(bookEdition);
         } catch (DAOException e) {
             throw new ServiceException(e);
-        }
+        } catch (NullPointerException e){}
         return bookEdition;
     }
 
@@ -228,11 +228,31 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public int addAuthor(Author author) throws ServiceException {
+        int result;
         try {
-            return authorDAO.insert(author);
+            result = authorDAO.insert(author);
+            author.setId(result);
+            //todo
+            for (BookEdition bookEdition : author.getBookEditions()) {
+                if (bookEditionDAO.getById(bookEdition.getId()) == null) {
+                    bookEdition.setId(bookEditionDAO.insert(bookEdition));
+                }
+                Collection<BookEdition> editions = bookEditionDAO.getBookEditionsByAuthorId(author.getId());
+                if (editions.size() == 0){
+                    bookEditionDAO.createBookEditionWithAuthorRelation(bookEdition);
+                }
+                else {
+                    for (BookEdition edition : editions)
+                        if (bookEdition.getId() != edition.getId()) {
+                            bookEditionDAO.createBookEditionWithAuthorRelation(bookEdition);
+                            break;
+                        }
+                }
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        return result;
     }
 
     @Override

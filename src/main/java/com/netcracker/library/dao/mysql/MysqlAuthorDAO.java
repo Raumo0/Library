@@ -47,14 +47,6 @@ public class MysqlAuthorDAO extends MysqlPersonDAO implements AuthorDAO {
             result = statement.getGeneratedKeys();
             result.first();
             authorId = result.getInt(1);
-            if (author.getBookEditions() != null) {
-                for (BookEdition bookEdition : author.getBookEditions()) {
-                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
-                    statement.setInt(1, authorId);
-                    statement.setInt(2, bookEdition.getId());
-                    statement.executeUpdate();
-                }
-            }
             return authorId;
         } catch (SQLException e) {
             throw new DAOException(e);

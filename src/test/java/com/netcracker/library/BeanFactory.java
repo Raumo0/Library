@@ -83,7 +83,7 @@ public class BeanFactory {
         author.setBookEditions(new LinkedList<BookEdition>());
         Collection<Author> authors = new LinkedList<>();
         authors.add(author);
-        int bookCount = random.nextInt(5);
+        int bookCount = random.nextInt(5) + 1;
         for (int i = 0; i < bookCount; i++){
             bookEdition = getEmptyBookEdition();
             bookEdition.setAuthors(authors);

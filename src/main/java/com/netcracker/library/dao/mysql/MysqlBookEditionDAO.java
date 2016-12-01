@@ -67,6 +67,7 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
         PreparedStatement statement;
         boolean created = false;
         ResultSet result;
+        boolean flag;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             if (bookEdition.getAuthors() != null) {
@@ -74,12 +75,15 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
                     statement = connection.prepareStatement(GET_BOOK_EDITIONS_BY_AUTHOR_ID);
                     statement.setString(1, String.valueOf(author.getId()));
                     result = statement.executeQuery();
-                    if (!result.first()) {
-                        statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
-                        statement.setInt(1, author.getId());
-                        statement.setInt(2, bookEdition.getId());
-                        statement.executeUpdate();
-                    }
+                    do {
+                        flag = result.next();
+                        if (!flag || result.getInt("id") == bookEdition.getId()) {
+                            statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
+                            statement.setInt(1, author.getId());
+                            statement.setInt(2, bookEdition.getId());
+                            statement.executeUpdate();
+                        }
+                    } while (flag);
                     created = true;
                 }
             }
@@ -137,15 +141,15 @@ public class MysqlBookEditionDAO implements BookEditionDAO {
             statement.setInt(6, bookEdition.getId());
             if (statement.executeUpdate() != 0)
                 result = true;
-            if (bookEdition.getAuthors() != null) {
-                for (Author author: bookEdition.getAuthors()) {
-                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
-                    statement.setInt(1, author.getId());
-                    statement.setInt(2, bookEdition.getId());
-                    statement.executeUpdate();
-                    result = true;
-                }
-            }
+//            if (bookEdition.getAuthors() != null) {
+//                for (Author author: bookEdition.getAuthors()) {
+//                    statement = connection.prepareStatement(INSERT_AUTHOR_BOOK_EDITION);
+//                    statement.setInt(1, author.getId());
+//                    statement.setInt(2, bookEdition.getId());
+//                    statement.executeUpdate();
+//                    result = true;
+//                }
+//            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {

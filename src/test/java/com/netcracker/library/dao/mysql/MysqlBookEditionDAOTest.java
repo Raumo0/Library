@@ -111,7 +111,7 @@ public class MysqlBookEditionDAOTest {
 
         bookEdition.setAuthors(new LinkedList<Author>());
         bookEdition.getAuthors().add(author);
-        bookEditionDAO.update(bookEdition);
+        bookEditionDAO.createBookEditionWithAuthorRelation(bookEdition);
         BookEdition bookEdition2 = bookEditionDAO.getBookEditionsByAuthorId(
                 bookEdition.getAuthors().iterator().next().getId()).getFirst();
         bookEdition2.setAuthors(new LinkedList<Author>());
