@@ -1,19 +1,15 @@
-package com.netcracker.library.service.impl;
+package com.netcracker.library.services.impl;
 
 import com.netcracker.library.BeanFactory;
 import com.netcracker.library.BeanType;
 import com.netcracker.library.beans.books.Author;
-import com.netcracker.library.beans.books.Book;
 import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.dao.mysql.ContextTest;
 import com.netcracker.library.enums.Bookbinding;
-import com.netcracker.library.service.BookService;
+import com.netcracker.library.services.BookService;
 import org.junit.*;
 
 import java.util.Collection;
-import java.util.LinkedList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by raumo0 on 28.11.16.

@@ -1,4 +1,4 @@
-package com.netcracker.library.service.impl;
+package com.netcracker.library.services.impl;
 
 import com.netcracker.library.beans.users.User;
 import com.netcracker.library.dao.DAOFactory;
@@ -6,7 +6,7 @@ import com.netcracker.library.dao.UserDAO;
 import com.netcracker.library.enums.UserRole;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.exceptions.ServiceException;
-import com.netcracker.library.service.UserService;
+import com.netcracker.library.services.UserService;
 
 import java.util.Collection;
 

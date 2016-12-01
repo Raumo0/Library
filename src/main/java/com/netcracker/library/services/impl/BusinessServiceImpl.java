@@ -1,11 +1,11 @@
-package com.netcracker.library.service.impl;
+package com.netcracker.library.services.impl;
 
 import com.netcracker.library.beans.business.Rental;
 import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.dao.RentalDAO;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.exceptions.ServiceException;
-import com.netcracker.library.service.BusinessService;
+import com.netcracker.library.services.BusinessService;
 
 import java.util.Collection;
 

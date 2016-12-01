@@ -7,7 +7,7 @@ import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.exceptions.ServiceException;
 import com.netcracker.library.exceptions.ToolException;
-import com.netcracker.library.service.impl.UserServiceImpl;
+import com.netcracker.library.services.impl.UserServiceImpl;
 import com.netcracker.library.tools.ConfigurationManager;
 import com.netcracker.library.tools.MessageManager;
 import com.netcracker.library.tools.PasswordGenerator;

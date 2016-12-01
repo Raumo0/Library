@@ -1,4 +1,4 @@
-package com.netcracker.library.service.impl;
+package com.netcracker.library.services.impl;
 
 import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.beans.books.Book;
@@ -9,7 +9,7 @@ import com.netcracker.library.dao.BookEditionDAO;
 import com.netcracker.library.dao.DAOFactory;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.exceptions.ServiceException;
-import com.netcracker.library.service.BookService;
+import com.netcracker.library.services.BookService;
 
 import java.util.Collection;
 import java.util.LinkedList;

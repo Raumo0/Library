@@ -1,4 +1,4 @@
-package com.netcracker.library.service;
+package com.netcracker.library.services;
 
 import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.beans.books.Book;

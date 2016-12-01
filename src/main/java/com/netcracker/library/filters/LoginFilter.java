@@ -4,7 +4,7 @@ import com.netcracker.library.beans.users.User;
 import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.constants.RedirectConstants;
 import com.netcracker.library.exceptions.ServiceException;
-import com.netcracker.library.service.impl.UserServiceImpl;
+import com.netcracker.library.services.impl.UserServiceImpl;
 import com.netcracker.library.tools.SystemLogger;
 
 import javax.servlet.*;

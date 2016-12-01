@@ -5,7 +5,7 @@ import com.netcracker.library.commands.Command;
 import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.constants.Parameters;
 import com.netcracker.library.exceptions.ServiceException;
-import com.netcracker.library.service.impl.BookServiceImpl;
+import com.netcracker.library.services.impl.BookServiceImpl;
 import com.netcracker.library.tools.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
