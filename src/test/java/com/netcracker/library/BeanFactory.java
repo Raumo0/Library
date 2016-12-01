@@ -6,6 +6,7 @@ import com.netcracker.library.beans.books.Book;
 import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.beans.business.Rental;
 import com.netcracker.library.beans.users.User;
+import com.netcracker.library.commands.Command;
 import com.netcracker.library.enums.*;
 import com.netcracker.library.tools.SystemLogger;
 
@@ -21,6 +22,11 @@ public class BeanFactory {
     private Date date = new Date();
     private int counter;
     private Random random;
+    private User user;
+    private Author author;
+    private BookEdition edition;
+    private Book book;
+    private Rental rental;
 
     private BeanFactory() {
         beans = new TreeMap<>();
@@ -42,6 +48,11 @@ public class BeanFactory {
     }
 
     public Entity getBean(BeanType beanType){
+        user = null;
+        author = null;
+        edition = null;
+        book = null;
+        rental = null;
         Entity entity = null;
         Method method;
         method = beans.get(beanType);
@@ -54,10 +65,8 @@ public class BeanFactory {
     }
 
     private User getFillUser(){
-        User user;
-        user = getEmptyUser();
-        //todo
-        return user;
+        generateEntities();
+        return this.user;
     }
 
     private User getEmptyUser() {
@@ -77,19 +86,8 @@ public class BeanFactory {
     }
 
     private Author getFillAuthor(){
-        Author author;
-        BookEdition bookEdition;
-        author = getEmptyAuthor();
-        author.setBookEditions(new LinkedList<BookEdition>());
-        Collection<Author> authors = new LinkedList<>();
-        authors.add(author);
-        int bookCount = random.nextInt(5) + 1;
-        for (int i = 0; i < bookCount; i++){
-            bookEdition = getEmptyBookEdition();
-            bookEdition.setAuthors(authors);
-            author.getBookEditions().add(bookEdition);
-        }
-        return author;
+        generateEntities();
+        return this.author;
     }
 
     private Author getEmptyAuthor(){
@@ -102,27 +100,8 @@ public class BeanFactory {
     }
 
     private BookEdition getFillBookEdition(){
-        BookEdition bookEdition;
-        bookEdition = getEmptyBookEdition();
-        bookEdition.setAuthors(new LinkedList<Author>());
-        int authorCount = random.nextInt(4) + 1;
-        for (int i = 0; i < authorCount; i++){
-            Author author = getEmptyAuthor();
-            author.setBookEditions(new LinkedList<BookEdition>());
-            author.getBookEditions().add(bookEdition);
-            bookEdition.getAuthors().add(author);
-        }
-        bookEdition.setBooks(new LinkedList<Book>());
-        if (random.nextInt(5) != 0) {
-            int bookCount = random.nextInt(20);
-            for (int i = 0; i < bookCount; i++) {
-                Book book = getEmptyBook();
-                book.setBookEdition(bookEdition);
-                bookEdition.getBooks().add(book);
-            }
-        }
-        bookEdition.setId(0);
-        return bookEdition;
+        generateEntities();
+        return this.edition;
     }
 
     private BookEdition getEmptyBookEdition(){
@@ -146,12 +125,8 @@ public class BeanFactory {
     }
 
     private Book getFillBook(){
-        Book book;
-        BookEdition bookEdition;
-        book = getEmptyBook();
-        bookEdition = getEmptyBookEdition();
-        book.setBookEdition(bookEdition);
-        return book;
+        generateEntities();
+        return this.book;
     }
 
     private Book getEmptyBook(){
@@ -167,19 +142,8 @@ public class BeanFactory {
     }
 
     private Rental getFillRental(){
-        Rental rental;
-        User user;
-        Book book;
-        BookEdition bookEdition;
-        rental = getEmptyRental();
-        book = getEmptyBook();
-        bookEdition = getEmptyBookEdition();
-        book.setBookEdition(bookEdition);
-        user = getEmptyUser();
-        rental.setUser(user);
-        rental.setBook(book);
-        rental.setStateBefore(book.getBookState());
-        return rental;
+        generateEntities();
+        return this.rental;
     }
 
     private Rental getEmptyRental() {
@@ -188,6 +152,74 @@ public class BeanFactory {
         rental.setBookIssue(BookIssue.ORDERED);
         rental.setId(0);
         return rental;
+    }
+
+    private void generateEntities() {
+        User user;
+        List<Book> books = new LinkedList<>();
+        List<BookEdition> editions = new LinkedList<>();
+        List<Rental> rentals = new LinkedList<>();
+        List<Author> authors = new LinkedList<>();
+        int count = random.nextInt(3) + 2;
+        int counter;
+
+        user = getEmptyUser();
+        user.setRentals(new LinkedList<Rental>());
+        for (int i = 0; i < count * count; i++){
+            books.add(getEmptyBook());
+        }
+        for (int i = 0; i < count; i++){
+            editions.add(getEmptyBookEdition());
+        }
+        for (int i = 0; i < count * count * count; i++){
+            rentals.add(getEmptyRental());
+        }
+        for (int i = 0; i < count; i++){
+            authors.add(getEmptyAuthor());
+        }
+
+        counter = 0;
+        for (Book book : books){
+            book.setRentals(new LinkedList<Rental>());
+            for (int i = 0; i < count; i++){
+                book.getRentals().add(rentals.get(i + counter));
+                rentals.get(i + counter).setBook(book);
+
+                rentals.get(i + counter).setStateBefore(book.getBookState());
+                rentals.get(i + counter).setUser(user);
+                user.getRentals().add(rentals.get(i + counter));
+            }
+            counter += count;
+        }
+        counter = 0;
+        for (BookEdition edition : editions){
+            edition.setBooks(new LinkedList<Book>());
+            for (int i = 0; i < count; i++){
+                edition.getBooks().add(books.get(i + counter));
+                books.get(i + counter).setBookEdition(edition);
+            }
+            counter += count;
+        }
+
+        for (int i = 0; i < count; i++){
+            editions.get(i).setAuthors(new LinkedList<Author>());
+            authors.get(i).setBookEditions(new LinkedList<BookEdition>());
+        }
+        for (int i = 0; i < count; i++){
+            editions.get(i).getAuthors().add(authors.get(i));
+            authors.get(i).getBookEditions().add(editions.get(i));
+            //Maybe too many relations
+//            for (int j = count-1; j >= 0; j--) {
+//                editions.get(i).getAuthors().add(authors.get(j));
+//                authors.get(j).getBookEditions().add(editions.get(i));
+//            }
+        }
+
+        this.user = user;
+        this.rental = rentals.get(0);
+        this.edition = editions.get(0);
+        this.book = books.get(0);
+        this.author = authors.get(0);
     }
 
     private static class SingletonHolder{
