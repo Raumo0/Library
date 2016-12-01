@@ -3,10 +3,9 @@ package com.netcracker.library.services.impl;
 import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.beans.books.Book;
 import com.netcracker.library.beans.books.BookEdition;
-import com.netcracker.library.dao.AuthorDAO;
-import com.netcracker.library.dao.BookDAO;
-import com.netcracker.library.dao.BookEditionDAO;
-import com.netcracker.library.dao.DAOFactory;
+import com.netcracker.library.beans.business.Rental;
+import com.netcracker.library.beans.users.User;
+import com.netcracker.library.dao.*;
 import com.netcracker.library.exceptions.DAOException;
 import com.netcracker.library.exceptions.ServiceException;
 import com.netcracker.library.services.BookService;
@@ -22,12 +21,16 @@ public class BookServiceImpl implements BookService {
     private BookDAO bookDAO;
     private BookEditionDAO bookEditionDAO;
     private AuthorDAO authorDAO;
+    private RentalDAO rentalDAO;
+    private UserDAO userDAO;
 
     private BookServiceImpl(){
         factory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
         bookDAO = factory.getBookDAO();
         bookEditionDAO = factory.getBookEditionDAO();
         authorDAO = factory.getAuthorDAO();
+        rentalDAO = factory.getRentalDAO();
+        userDAO = factory.getUserDAO();
     }
 
     public static BookServiceImpl getInstance(){
@@ -38,6 +41,8 @@ public class BookServiceImpl implements BookService {
     public int addBook(Book book) throws ServiceException {
         int result;
         int editionId;
+        int userId;
+        int rentalId;
         try {
             if (bookEditionDAO.getById(book.getBookEdition().getId()) == null) {
                 editionId = bookEditionDAO.insert(book.getBookEdition());
@@ -45,6 +50,16 @@ public class BookServiceImpl implements BookService {
             }
             result = bookDAO.insert(book);
             book.setId(result);
+            for (Rental rental : book.getRentals()) {
+                if (rentalDAO.getById(rental.getId()) == null) {
+                    if (userDAO.getById(rental.getUser().getId()) == null){
+                        userId = userDAO.insert(rental.getUser());
+                        rental.getUser().setId(userId);
+                    }
+                    rentalId = rentalDAO.insert(rental);
+                    rental.setId(rentalId);
+                }
+            }
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -53,11 +68,26 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBookById(int id) throws ServiceException {
+        Book book;
+        BookEdition edition;
+        User user;
+        Collection<Rental> rentals;
         try {
-            return bookDAO.getById(id);
+            book = bookDAO.getById(id);
+            if (book == null)
+                return null;
+            edition = bookEditionDAO.getBookEditionByBookId(book.getId());
+            rentals = rentalDAO.getRentalsByBookId(book.getId());
+            for (Rental rental : rentals) {
+                user = userDAO.getUserByRentalId(rental.getId());
+                rental.setUser(user);
+            }
+            book.setBookEdition(edition);
+            book.setRentals(rentals);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+        return book;
     }
 
     @Override

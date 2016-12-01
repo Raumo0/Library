@@ -6,6 +6,8 @@ import com.netcracker.library.beans.books.Author;
 import com.netcracker.library.beans.books.Book;
 import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.dao.mysql.ContextTest;
+import com.netcracker.library.enums.BookPosition;
+import com.netcracker.library.enums.BookState;
 import com.netcracker.library.enums.Bookbinding;
 import com.netcracker.library.services.BookService;
 import org.junit.*;
@@ -61,6 +63,8 @@ public class BookServiceImplTest {
         bookEdition.setDescription("newDescription");
         bookEdition.setWeight(935);
         bookEdition.setBookbinding(Bookbinding.SOFT);
+        newBookEdition = bookService.getBookEditionById(id);
+        Assert.assertFalse(bookEdition.equals(newBookEdition));
         Assert.assertTrue(bookService.updateBookEdition(bookEdition));
         newBookEdition = bookService.getBookEditionById(id);
         Assert.assertEquals(bookEdition, newBookEdition);
@@ -147,27 +151,53 @@ public class BookServiceImplTest {
 
     @Test
     public void addBook() throws Exception {
-
+        Book book;
+        Book newBook;
+        book = (Book) beanFactory.getBean(BeanType.BOOK);
+        int id = bookService.addBook(book);
+        newBook = bookService.getBookById(id);
+        Assert.assertEquals(book, newBook);
+        Assert.assertEquals(book.getRentals(), newBook.getRentals());
+        Assert.assertEquals(book.getBookEdition(), newBook.getBookEdition());
     }
 
     @Test
     public void updateBook() throws Exception {
-
+        Book book;
+        Book newBook;
+        book = (Book) beanFactory.getBean(BeanType.BOOK);
+        int id = bookService.addBook(book);
+        book.setBookState(BookState.BAD);
+        newBook = bookService.getBookById(id);
+        Assert.assertFalse(book.equals(newBook));
+        Assert.assertTrue(bookService.updateBook(book));
+        newBook = bookService.getBookById(id);
+        Assert.assertEquals(book, newBook);
+        Assert.assertEquals(book.getRentals(), newBook.getRentals());
     }
 
     @Test
     public void deleteBookById() throws Exception {
-
+        Book book;
+        Book newBook;
+        book = (Book) beanFactory.getBean(BeanType.BOOK);
+        int id = bookService.addBook(book);
+        newBook = bookService.getBookById(id);
+        Assert.assertEquals(book, newBook);
+        Assert.assertEquals(book.getRentals(), newBook.getRentals());
+        Assert.assertTrue(bookService.deleteBookById(id));
+        newBook = bookService.getBookById(id);
+        Assert.assertNull(newBook);
     }
 
     @Test
     public void getBookAll() throws Exception {
-
+        //todo
     }
 
     @Test
     public void deleteBookAll() throws Exception {
-
+        //todo
     }
 
     @Test
