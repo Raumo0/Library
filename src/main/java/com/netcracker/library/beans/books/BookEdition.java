@@ -18,11 +18,7 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
     private int weight;
     private Bookbinding bookbinding;
     private String image;
-    private Publisher publisher;
     private Collection<Author> authors;
-    private Language language;
-    private Language originalLanguage;
-    private LinkedList<Category> categories;
     private Collection<Book> books;
 
     public BookEdition() {}
@@ -37,11 +33,7 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         this.weight = bookEdition.getWeight();
         this.bookbinding = bookEdition.getBookbinding();
         this.image = bookEdition.getImage();
-        this.publisher = bookEdition.getPublisher();
         this.authors = bookEdition.getAuthors();
-        this.language = bookEdition.getLanguage();
-        this.originalLanguage = bookEdition.getOriginalLanguage();
-        this.categories = bookEdition.getCategories();
         this.books = bookEdition.getBooks();
     }
 
@@ -109,44 +101,12 @@ public class BookEdition extends Entity implements Comparable<BookEdition> {
         this.image = image;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
-
     public Collection<Author> getAuthors() {
         return authors;
     }
 
     public void setAuthors(Collection<Author> authors) {
         this.authors = authors;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public Language getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage(Language originalLanguage) {
-        this.originalLanguage = originalLanguage;
-    }
-
-    public LinkedList<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(LinkedList<Category> categories) {
-        this.categories = categories;
     }
 
     public Collection<Book> getBooks() {

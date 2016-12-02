@@ -16,7 +16,6 @@ public class User extends Person {
     private String salt;
     private String mobile_phone;
     private String email;
-    private Address address;
     private LinkedList<Rental> rentals;
     private UserRole role;
 
@@ -30,7 +29,6 @@ public class User extends Person {
         this.salt = user.getSalt();
         this.mobile_phone = user.getMobile_phone();
         this.email = user.getEmail();
-        this.address = user.getAddress();
         this.rentals = user.getRentals();
         this.role = user.getRole();
     }
@@ -77,14 +75,6 @@ public class User extends Person {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public LinkedList<Rental> getRentals() {
