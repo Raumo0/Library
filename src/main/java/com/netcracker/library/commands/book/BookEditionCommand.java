@@ -1,9 +1,11 @@
 package com.netcracker.library.commands.book;
 
+import com.netcracker.library.beans.books.Book;
 import com.netcracker.library.beans.books.BookEdition;
 import com.netcracker.library.commands.Command;
 import com.netcracker.library.constants.PageConstants;
 import com.netcracker.library.constants.Parameters;
+import com.netcracker.library.enums.BookPosition;
 import com.netcracker.library.exceptions.ServiceException;
 import com.netcracker.library.services.impl.BookServiceImpl;
 import com.netcracker.library.tools.ConfigurationManager;
@@ -40,6 +42,12 @@ public class BookEditionCommand implements Command {
         req.setAttribute(Parameters.BOOK_EDITION_DESCRIPTION, bookEdition.getDescription());
         req.setAttribute(Parameters.BOOK_EDITION_ISBN, bookEdition.getIsbn());
         req.setAttribute(Parameters.BOOK_EDITION_BOOKBINDING, bookEdition.getBookbinding());
+        int counter = 0;
+        for (Book book : bookEdition.getBooks()){
+            if (book.getBookPosition() == BookPosition.STORE)
+                counter += 1;
+        }
+        req.setAttribute(Parameters.BOOK_IN_STORE_COUNT, counter);
         page = ConfigurationManager.getProperty(PageConstants.BOOK_EDITION);
         return page;
     }

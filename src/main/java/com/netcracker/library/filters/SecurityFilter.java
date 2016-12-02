@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Created by raumo0 on 24.11.16.
  */
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"*"})
 public class SecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,6 +31,8 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
+
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 
         User user;
         UserRole type = null;

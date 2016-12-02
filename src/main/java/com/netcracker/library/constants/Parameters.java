@@ -35,4 +35,5 @@ public class Parameters {
     public static final String BOOK_EDITION_DESCRIPTION = "book_edition_description";
     public static final String BOOK_EDITION_ISBN = "book_edition_isbn";
     public static final String BOOK_EDITION_BOOKBINDING = "book_edition_bookbinding";
+    public static final String BOOK_IN_STORE_COUNT = "book_edition_book_count";
 }
